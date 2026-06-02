@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(mkdir -p '/c/Users/timon/Documents/Claude/Projects/Elearning AI voor beginners/src/modules/__TRACKED_VAR__')",
+      "Bash(touch '/c/Users/timon/Documents/Claude/Projects/Elearning AI voor beginners/src/modules/__TRACKED_VAR__/.gitkeep')"
+    ]
+  }
+}

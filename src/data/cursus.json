@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "_docs": {
+      "versie": "1.0",
+      "beschrijving": "Cursusinhoud voor 'Werken met AI', e-learning voor medewerkers en vrijwilligers in de sociale sector.",
+      "velden": {
+        "beoordelingsinstructie": "Nooit renderen in de UI. Alleen als systeeminstructie in de API-aanroep.",
+        "voorbeeld_antwoord": "Tonen als inklapbaar blok na AI-feedback, nooit automatisch."
+      }
+    },
+    "taal": "nl",
+    "titel": "Werken met AI"
+  },
+  "modules": [
+    {
+      "id": "module-0",
+      "titel": "Welkom en koppeling",
+      "duur": 10,
+      "kleur": "#3a4a38",
+      "beschrijving": "Maak kennis met de cursus en koppel je eigen AI-sleutel.",
+      "externe_tool_vereist": false,
+      "voltooiing": false,
+      "lessen": []
+    },
+    {
+      "id": "module-1",
+      "titel": "Wat is AI eigenlijk?",
+      "duur": 35,
+      "kleur": "#6b8068",
+      "beschrijving": "Ontdek hoe AI werkt en wat het kan doen voor jou.",
+      "externe_tool_vereist": false,
+      "voltooiing": false,
+      "lessen": []
+    },
+    {
+      "id": "module-2",
+      "titel": "Veilig gebruik",
+      "duur": 30,
+      "kleur": "#6b8068",
+      "beschrijving": "Leer hoe je AI veilig en verantwoord inzet in je werk.",
+      "externe_tool_vereist": false,
+      "voltooiing": false,
+      "lessen": []
+    },
+    {
+      "id": "module-3",
+      "titel": "Goede prompts schrijven",
+      "duur": 40,
+      "kleur": "#6b8068",
+      "beschrijving": "Schrijf betere instructies voor AI en krijg betere resultaten.",
+      "externe_tool_vereist": false,
+      "voltooiing": false,
+      "lessen": []
+    },
+    {
+      "id": "module-4",
+      "titel": "Oefenen in de praktijk",
+      "duur": 45,
+      "kleur": "#6b8068",
+      "beschrijving": "Drie doorlopende oefeningen met echte AI-tools.",
+      "externe_tool_vereist": true,
+      "voltooiing": false,
+      "lessen": []
+    },
+    {
+      "id": "module-5",
+      "titel": "Afsluiting en certificaat",
+      "duur": 15,
+      "kleur": "#3a4a38",
+      "beschrijving": "Rond de cursus af en download je certificaat.",
+      "externe_tool_vereist": false,
+      "voltooiing": false,
+      "lessen": []
+    }
+  ]
+}
