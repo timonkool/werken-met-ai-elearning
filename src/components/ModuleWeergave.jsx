@@ -1,10 +1,22 @@
 import React from 'react'
+import Module0 from '../modules/module-0/Module0.jsx'
 
 const FONT_SIZE = 48
 
 export default function ModuleWeergave({ module, modules, onVolgende }) {
   if (!module) return null
 
+  // Module 0 heeft een eigen weergave met sub-schermen
+  if (module.id === 'module-0') {
+    return (
+      <Module0
+        modules={modules}
+        onVolgende={onVolgende}
+      />
+    )
+  }
+
+  // Standaard moduleweergave met kleurwissel-kop
   const index = modules.findIndex(m => m.id === module.id)
   const heeftVolgende = index < modules.length - 1
 

@@ -1,0 +1,81 @@
+import React from 'react'
+
+export default function Welkom({ modules, onStart }) {
+  return (
+    <div className="welkom">
+
+      {/* Hero */}
+      <div className="welkom-hero">
+        <p className="welkom-label">E-learning</p>
+        <h1 className="welkom-titel">Welkom bij<br />Werken met AI</h1>
+        <p className="welkom-lead">
+          Je staat op het punt om te ontdekken hoe AI jouw werk makkelijker kan maken,
+          zonder dat je technische kennis nodig hebt.
+        </p>
+      </div>
+
+      {/* Drie alinea's */}
+      <div className="welkom-intro">
+        <div className="welkom-blok">
+          <h2 className="welkom-blok-titel">Wat is deze cursus?</h2>
+          <p>
+            Dit is een praktische cursus over het gebruik van AI op de werkvloer.
+            Je leert wat AI is, hoe het werkt en hoe jij het kunt inzetten in je
+            dagelijkse werk bij een stichting of vrijwilligersorganisatie.
+          </p>
+        </div>
+
+        <div className="welkom-blok">
+          <h2 className="welkom-blok-titel">Wat ga je doen?</h2>
+          <p>
+            Je doorloopt zes modules in je eigen tempo. Elke module bevat korte
+            theorie, een kennischeck en een oefening met echte AI-feedback.
+            Je sluit af met een persoonlijk actieplan en een certificaat.
+          </p>
+        </div>
+
+        <div className="welkom-blok">
+          <h2 className="welkom-blok-titel">Wat heb je nodig?</h2>
+          <p>
+            Alleen een computer, tablet of telefoon met internet. Je koppelt straks
+            een gratis API-sleutel van Anthropic, zodat de cursus je persoonlijke
+            feedback kan geven. Dat duurt ongeveer twee minuten.
+          </p>
+        </div>
+      </div>
+
+      {/* Moduleoverzicht */}
+      <div className="welkom-modules">
+        <h2 className="welkom-modules-titel">Wat ga je leren?</h2>
+        <div className="welkom-module-grid">
+          {modules.map((module, index) => (
+            <div key={module.id} className="welkom-module-kaart">
+              <div
+                className="welkom-module-kaart-streep"
+                style={{ background: module.kleur }}
+              />
+              <div className="welkom-module-kaart-inhoud">
+                <span className="welkom-module-nummer">{index}</span>
+                <div>
+                  <p className="welkom-module-titel">{module.titel}</p>
+                  <p className="welkom-module-duur">{module.duur} min</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="welkom-cta">
+        <button className="primary welkom-knop" onClick={onStart}>
+          Start de cursus
+        </button>
+        <p className="welkom-cta-toelichting">
+          Je koppelt eerst je API-sleutel. Dat duurt twee minuten.
+        </p>
+      </div>
+
+    </div>
+  )
+}

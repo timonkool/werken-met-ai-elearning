@@ -324,6 +324,215 @@ textarea:focus {
   justify-content: center;
 }
 
+/* ─── Welkomstscherm (Module 0) ───────────────────────────── */
+
+.welkom {
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+/* Hero */
+.welkom-hero {
+  background: var(--sage-ink);
+  padding: 64px 48px 72px;
+  text-align: center;
+}
+
+.welkom-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sage-soft);
+  margin-bottom: 24px;
+}
+
+.welkom-titel {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+.welkom-lead {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--sage-soft);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Drie alinea's */
+.welkom-intro {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--sage-soft);
+}
+
+.welkom-blok {
+  padding: 40px 36px;
+  border-right: 1px solid var(--sage-soft);
+}
+
+.welkom-blok:last-child {
+  border-right: none;
+}
+
+.welkom-blok-titel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 12px;
+}
+
+.welkom-blok p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* Moduleoverzicht */
+.welkom-modules {
+  padding: 48px 48px 40px;
+}
+
+.welkom-modules-titel {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.welkom-module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.welkom-module-kaart {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.welkom-module-kaart-streep {
+  height: 4px;
+  flex-shrink: 0;
+}
+
+.welkom-module-kaart-inhoud {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+}
+
+.welkom-module-nummer {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--sage-mist);
+  border: 1.5px solid var(--sage-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sage-ink);
+  line-height: 1;
+}
+
+.welkom-module-titel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.welkom-module-duur {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* CTA */
+.welkom-cta {
+  padding: 40px 48px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.welkom-knop {
+  font-size: 15px;
+  padding: 0 40px;
+  height: 52px;
+  min-height: 52px;
+}
+
+.welkom-cta-toelichting {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Mobiel */
+@media (max-width: 768px) {
+  .welkom-hero {
+    padding: 48px 24px 56px;
+  }
+
+  .welkom-titel {
+    font-size: 36px;
+  }
+
+  .welkom-lead {
+    font-size: 16px;
+  }
+
+  .welkom-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .welkom-blok {
+    border-right: none;
+    border-bottom: 1px solid var(--sage-soft);
+    padding: 28px 24px;
+  }
+
+  .welkom-blok:last-child {
+    border-bottom: none;
+  }
+
+  .welkom-modules {
+    padding: 36px 24px 32px;
+  }
+
+  .welkom-module-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .welkom-cta {
+    padding: 32px 24px 48px;
+    align-items: center;
+    text-align: center;
+  }
+}
+
 /* ─── Moduleweergave ──────────────────────────────────────── */
 
 .module-weergave {
