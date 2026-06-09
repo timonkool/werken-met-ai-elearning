@@ -1,25 +1,63 @@
 import React from 'react'
 
-export default function ModuleWeergave({ module }) {
+const FONT_SIZE = 48
+
+export default function ModuleWeergave({ module, modules, onVolgende }) {
   if (!module) return null
 
+  const index = modules.findIndex(m => m.id === module.id)
+  const heeftVolgende = index < modules.length - 1
+
   return (
-    <main style={{ flex: 1, padding: '48px 40px', maxWidth: '760px' }}>
-      <p style={{
-        fontSize: '11px',
-        fontWeight: 500,
-        letterSpacing: '3px',
-        textTransform: 'uppercase',
-        color: 'var(--muted)',
-        marginBottom: '16px',
-      }}>
-        MODULE
-      </p>
-      <h1 style={{ fontSize: '36px', marginBottom: '12px' }}>{module.titel}</h1>
-      <p style={{ color: 'var(--muted)', marginBottom: '32px' }}>{module.beschrijving}</p>
-      <p style={{ color: 'var(--muted)', fontStyle: 'italic' }}>
-        Inhoud volgt zodra de lessen zijn toegevoegd.
-      </p>
-    </main>
+    <div className="module-weergave">
+
+      {/* Kleurwissel kop */}
+      <div className="module-kop">
+        <div
+          className="module-kop-band"
+          style={{ background: module.kleur }}
+        >
+          <span className="module-kop-label">Module {index}</span>
+          <span className="module-kop-duur">{module.duur} min</span>
+        </div>
+
+        <div
+          className="module-titel-zone"
+          style={{
+            height: FONT_SIZE,
+            marginTop: -(FONT_SIZE * 2 / 3),
+          }}
+        >
+          <h1
+            className="module-titel module-titel--wit"
+            style={{ fontSize: FONT_SIZE }}
+          >
+            {module.titel}
+          </h1>
+          <h1
+            className="module-titel module-titel--kleur"
+            style={{ fontSize: FONT_SIZE, color: module.kleur }}
+          >
+            {module.titel}
+          </h1>
+        </div>
+      </div>
+
+      {/* Beschrijving en inhoud */}
+      <div className="module-body">
+        <p className="module-beschrijving">{module.beschrijving}</p>
+
+        <div className="module-placeholder">
+          <p>Inhoud volgt binnenkort.</p>
+        </div>
+
+        {heeftVolgende && (
+          <button className="primary" onClick={onVolgende}>
+            Volgende module
+          </button>
+        )}
+      </div>
+
+    </div>
   )
 }

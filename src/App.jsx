@@ -4,13 +4,30 @@ import Navigatie from './components/Navigatie.jsx'
 import ModuleWeergave from './components/ModuleWeergave.jsx'
 import { useVoortgang } from './hooks/useVoortgang.js'
 
+const OPSLAG_KEY = 'actieve_module'
+
 export default function App() {
-  const [actieveModuleId, setActieveModuleId] = useState(null)
   const modules = cursusData.modules
   const { isModuleVoltooid, getLesVoortgang } = useVoortgang()
 
+  // Herstel actieve module uit localStorage; terugkerende bezoekers slaan de startpagina over
+  const [actieveModuleId, setActieveModuleId] = useState(
+    () => localStorage.getItem(OPSLAG_KEY) || null
+  )
+
+  function navigeerNaar(moduleId) {
+    setActieveModuleId(moduleId)
+    localStorage.setItem(OPSLAG_KEY, moduleId)
+  }
+
+  function navigeerVolgende() {
+    const huidigIndex = modules.findIndex(m => m.id === actieveModuleId)
+    const volgende = modules[huidigIndex + 1]
+    if (volgende) navigeerNaar(volgende.id)
+  }
+
   if (!actieveModuleId) {
-    return <Startpagina onStart={() => setActieveModuleId('module-0')} />
+    return <Startpagina onStart={() => navigeerNaar('module-0')} />
   }
 
   const actieveModule = modules.find(m => m.id === actieveModuleId)
@@ -20,12 +37,16 @@ export default function App() {
       <Navigatie
         modules={modules}
         actieveModuleId={actieveModuleId}
-        onSelecteer={setActieveModuleId}
+        onSelecteer={navigeerNaar}
         isModuleVoltooid={isModuleVoltooid}
         getLesVoortgang={getLesVoortgang}
       />
       <main className="app-inhoud">
-        <ModuleWeergave module={actieveModule} />
+        <ModuleWeergave
+          module={actieveModule}
+          modules={modules}
+          onVolgende={navigeerVolgende}
+        />
       </main>
     </div>
   )

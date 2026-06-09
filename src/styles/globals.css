@@ -324,6 +324,95 @@ textarea:focus {
   justify-content: center;
 }
 
+/* ─── Moduleweergave ──────────────────────────────────────── */
+
+.module-weergave {
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+/* Gekleurde band bovenaan */
+.module-kop-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 72px;
+}
+
+.module-kop-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.85;
+}
+
+.module-kop-duur {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.7;
+}
+
+/* Kleurwissel titelzone */
+.module-titel-zone {
+  position: relative;
+  margin-left: 48px;
+  margin-right: 48px;
+}
+
+.module-titel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  line-height: 1; /* VERPLICHT voor clip-path */
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.module-titel--wit {
+  color: var(--cream);
+  clip-path: inset(0 0 50% 0);
+}
+
+.module-titel--kleur {
+  clip-path: inset(45% 0 0 0);
+}
+
+/* Beschrijving en inhoud */
+.module-body {
+  padding: 48px 48px 64px;
+  max-width: 720px;
+}
+
+.module-beschrijving {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text);
+  border-left: 3px solid var(--sage-deep);
+  padding-left: 16px;
+  margin-bottom: 40px;
+}
+
+.module-placeholder {
+  background: var(--sage-mist);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 40px;
+  color: var(--muted);
+  font-style: italic;
+}
+
 /* ─── Mobiel (max 768px) ──────────────────────────────────── */
 
 @media (max-width: 768px) {
@@ -345,5 +434,27 @@ textarea:focus {
 
   .app-inhoud {
     padding-top: 72px;
+  }
+
+  .module-kop-band {
+    padding: 0 20px;
+  }
+
+  .module-titel-zone {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .module-titel {
+    font-size: 32px !important;
+  }
+
+  .module-titel-zone {
+    height: 32px !important;
+    margin-top: calc(-32px * 2 / 3) !important;
+  }
+
+  .module-body {
+    padding: 36px 20px 48px;
   }
 }
