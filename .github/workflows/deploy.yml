@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy naar timonkool.nl
 
 on:
   push:
@@ -8,11 +8,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      - name: Checkout
+      - name: Checkout e-learning repo
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -21,14 +19,21 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Installeer dependencies
         run: npm ci
 
-      - name: Build
+      - name: Bouw de e-learning
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+      - name: Kopieer naar website-repo
+        run: |
+          git clone https://x-access-token:${{ secrets.WEBSITE_DEPLOY_TOKEN }}@github.com/timonkool/timonkool.github.io.git website
+          rm -rf website/elearning-ai-voor-beginners
+          mkdir -p website/elearning-ai-voor-beginners
+          cp -r dist/. website/elearning-ai-voor-beginners/
+          cd website
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add elearning-ai-voor-beginners/
+          git diff --staged --quiet || git commit -m "Update e-learning (automatisch)"
+          git push
