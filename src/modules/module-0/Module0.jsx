@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Welkom from './Welkom.jsx'
 import ApiKoppeling from './ApiKoppeling.jsx'
-
-// Module 0 heeft drie sub-schermen: welkom, api-koppeling, api-succes
-// ApiSucces wordt in een volgende stap gebouwd
+import ApiSucces from './ApiSucces.jsx'
+import { useVoortgang } from '../../hooks/useVoortgang.js'
 
 export default function Module0({ modules, onVolgende }) {
   const [scherm, setScherm] = useState('welkom')
+  const { setModuleVoltooid } = useVoortgang()
+
+  // Markeer module-0 als voltooid zodra het successcherm wordt getoond
+  useEffect(() => {
+    if (scherm === 'api-succes') {
+      setModuleVoltooid('module-0')
+    }
+  }, [scherm])
 
   if (scherm === 'welkom') {
     return (
@@ -25,10 +32,13 @@ export default function Module0({ modules, onVolgende }) {
     )
   }
 
-  // Tijdelijke placeholder voor api-succes
-  return (
-    <div style={{ padding: '48px', color: 'var(--muted)', fontStyle: 'italic' }}>
-      Verbinding gelukt. ApiSucces volgt binnenkort.
-    </div>
-  )
+  if (scherm === 'api-succes') {
+    return (
+      <ApiSucces
+        onVolgende={onVolgende}
+      />
+    )
+  }
+
+  return null
 }
