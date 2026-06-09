@@ -32,7 +32,7 @@ export function useAnthropicApi() {
   const [laden, setLaden] = useState(false)
   const [fout, setFout] = useState(null)
 
-  async function stuurBericht(gebruikersBericht, beoordelingsinstructie = '') {
+  async function stuurVerzoek(gebruikersBericht, beoordelingsinstructie = '') {
     setFout(null)
 
     const apiSleutel = localStorage.getItem('anthropic_api_key')
@@ -42,7 +42,7 @@ export function useAnthropicApi() {
     }
 
     if (getAantalVandaag() >= DAGELIJKS_LIMIET) {
-      setFout('Je hebt het daglimiet bereikt. Probeer het morgen opnieuw.')
+      setFout('Je hebt het dagelijkse aantal van 20 vragen bereikt. Morgen kun je weer verder.')
       return null
     }
 
@@ -71,7 +71,7 @@ export function useAnthropicApi() {
 
       if (!response.ok) {
         if (response.status === 401) {
-          setFout('Je API-sleutel klopt niet. Controleer hem via de instellingen.')
+          setFout('Je API-sleutel klopt niet. Controleer of je hem goed hebt geplakt via de knop Sleutel wijzigen.')
         } else if (response.status === 429) {
           setFout('Je hebt het limiet bereikt. Wacht even en probeer opnieuw.')
         } else {
@@ -91,5 +91,5 @@ export function useAnthropicApi() {
     }
   }
 
-  return { stuurBericht, laden, fout, setFout }
+  return { stuurVerzoek, laden, fout, setFout }
 }
