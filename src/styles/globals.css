@@ -533,6 +533,232 @@ textarea:focus {
   }
 }
 
+/* ─── API-koppelscherm (Module 0, scherm 2) ───────────────── */
+
+.api-koppeling {
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+.api-kop {
+  background: var(--sage-ink);
+  padding: 48px 48px 56px;
+}
+
+.api-kop-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sage-soft);
+  opacity: 0.8;
+  margin-bottom: 16px;
+}
+
+.api-kop-titel {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.api-kop-tekst {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--sage-soft);
+  max-width: 540px;
+}
+
+.api-body {
+  padding: 48px 48px 64px;
+  max-width: 640px;
+}
+
+/* Stappen */
+.api-stappen {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 40px;
+}
+
+.api-stap {
+  display: flex;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--sage-soft);
+}
+
+.api-stap:last-child {
+  border-bottom: none;
+}
+
+.api-stap-nummer {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--sage-deep);
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.api-stap-inhoud {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.api-stap-tekst {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.api-stap-waarschuwing {
+  font-size: 13px;
+  color: var(--sage-ink);
+  font-weight: 600;
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 8px 12px;
+}
+
+.api-extern-knop {
+  display: inline-flex;
+  align-items: center;
+  background: var(--sage-deep);
+  color: var(--cream);
+  border-radius: var(--radius-pill);
+  padding: 0 20px;
+  height: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  width: fit-content;
+  transition: opacity 0.15s ease;
+}
+
+.api-extern-knop:hover {
+  opacity: 0.88;
+}
+
+/* Invoerveld */
+.api-invoer {
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--sage-soft);
+  padding: 12px 16px;
+  background: var(--paper);
+  color: var(--text);
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.api-invoer:focus {
+  outline: none;
+  border-color: var(--sage-deep);
+}
+
+.api-fout {
+  font-size: 13px;
+  color: var(--sage-ink);
+  font-weight: 600;
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 8px 12px;
+}
+
+/* Acties */
+.api-acties {
+  margin-bottom: 24px;
+}
+
+.api-geruststelling {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  border-top: 1px solid var(--sage-soft);
+  padding-top: 20px;
+}
+
+/* Gekoppeld-staat */
+.api-gekoppeld-blok {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--sage-mist);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.api-vinkje {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sage-ink);
+  color: var(--cream);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.api-gekoppeld-titel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 4px;
+}
+
+.api-gekoppeld-subtekst {
+  font-size: 13px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+}
+
+.api-gekoppeld-knoppen {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.api-verwijder-knop {
+  color: var(--muted);
+  border-color: var(--sage-soft);
+}
+
+/* Mobiel */
+@media (max-width: 768px) {
+  .api-kop {
+    padding: 36px 24px 44px;
+  }
+
+  .api-kop-titel {
+    font-size: 28px;
+  }
+
+  .api-body {
+    padding: 32px 24px 48px;
+  }
+}
+
 /* ─── Moduleweergave ──────────────────────────────────────── */
 
 .module-weergave {
