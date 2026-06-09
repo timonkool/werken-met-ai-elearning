@@ -14,10 +14,10 @@
   "modules": [
     {
       "id": "module-0",
-      "titel": "Welkom en koppeling",
-      "duur": 10,
+      "titel": "Welkom en aan de slag",
+      "duur": 20,
       "kleur": "#3a4a38",
-      "beschrijving": "Maak kennis met de cursus en koppel je eigen AI-sleutel.",
+      "beschrijving": "Maak kennis met de cursus en ontdek wat je de komende modules gaat leren. Je koppelt je eigen AI-sleutel en maakt je eerste contact met de leercoach.",
       "externe_tool_vereist": false,
       "voltooiing": false,
       "lessen": []
@@ -27,7 +27,7 @@
       "titel": "Wat is AI eigenlijk?",
       "duur": 35,
       "kleur": "#6b8068",
-      "beschrijving": "Ontdek hoe AI werkt en wat het kan doen voor jou.",
+      "beschrijving": "Je ontdekt hoe AI werkt, wat het wel en niet kan, en waar het vandaan komt. Na deze module snap je de basis en kun je er nuchter over praten.",
       "externe_tool_vereist": false,
       "voltooiing": false,
       "lessen": []
@@ -36,8 +36,8 @@
       "id": "module-2",
       "titel": "Veilig gebruik",
       "duur": 30,
-      "kleur": "#6b8068",
-      "beschrijving": "Leer hoe je AI veilig en verantwoord inzet in je werk.",
+      "kleur": "#5a6e58",
+      "beschrijving": "Je leert welke informatie je wel en niet deelt met AI, en hoe je verantwoord omgaat met de uitkomsten. Veiligheid en privacy staan centraal.",
       "externe_tool_vereist": false,
       "voltooiing": false,
       "lessen": []
@@ -46,28 +46,28 @@
       "id": "module-3",
       "titel": "Goede prompts schrijven",
       "duur": 40,
-      "kleur": "#6b8068",
-      "beschrijving": "Schrijf betere instructies voor AI en krijg betere resultaten.",
+      "kleur": "#8ba287",
+      "beschrijving": "Je oefent met het schrijven van duidelijke instructies voor AI, zodat je betere en bruikbaardere antwoorden krijgt. Een vaardigheid die je meteen in de praktijk kunt gebruiken.",
       "externe_tool_vereist": false,
       "voltooiing": false,
       "lessen": []
     },
     {
       "id": "module-4",
-      "titel": "Oefenen in de praktijk",
-      "duur": 45,
-      "kleur": "#6b8068",
-      "beschrijving": "Drie doorlopende oefeningen met echte AI-tools.",
+      "titel": "De drie oefeningen",
+      "duur": 50,
+      "kleur": "#4a5e48",
+      "beschrijving": "Je werkt drie doorlopende oefeningen uit met echte AI-tools, gebaseerd op situaties uit de sociale sector. Dit is het hart van de cursus.",
       "externe_tool_vereist": true,
       "voltooiing": false,
       "lessen": []
     },
     {
       "id": "module-5",
-      "titel": "Afsluiting en certificaat",
+      "titel": "Jouw eerste echte stap",
       "duur": 15,
       "kleur": "#3a4a38",
-      "beschrijving": "Rond de cursus af en download je certificaat.",
+      "beschrijving": "Je rondt de cursus af met een persoonlijk actieplan voor de komende week. Als afsluiting ontvang je een certificaat van deelname.",
       "externe_tool_vereist": false,
       "voltooiing": false,
       "lessen": []
