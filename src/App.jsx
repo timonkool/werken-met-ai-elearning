@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import cursusData from './data/cursus.json'
 import Navigatie from './components/Navigatie.jsx'
 import ModuleWeergave from './components/ModuleWeergave.jsx'
+import { useVoortgang } from './hooks/useVoortgang.js'
 
 export default function App() {
   const [actieveModuleId, setActieveModuleId] = useState(null)
   const modules = cursusData.modules
+  const { isModuleVoltooid, getLesVoortgang } = useVoortgang()
 
   if (!actieveModuleId) {
     return <Startpagina onStart={() => setActieveModuleId('module-0')} />
@@ -14,13 +16,17 @@ export default function App() {
   const actieveModule = modules.find(m => m.id === actieveModuleId)
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div className="app-layout">
       <Navigatie
         modules={modules}
-        actieveModule={actieveModuleId}
+        actieveModuleId={actieveModuleId}
         onSelecteer={setActieveModuleId}
+        isModuleVoltooid={isModuleVoltooid}
+        getLesVoortgang={getLesVoortgang}
       />
-      <ModuleWeergave module={actieveModule} />
+      <main className="app-inhoud">
+        <ModuleWeergave module={actieveModule} />
+      </main>
     </div>
   )
 }

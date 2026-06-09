@@ -1,51 +1,104 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function Navigatie({ modules, actieveModule, onSelecteer }) {
-  return (
-    <nav style={{
-      width: '260px',
-      minHeight: '100vh',
-      background: 'var(--sage-mist)',
-      borderRight: '1px solid var(--sage-soft)',
-      padding: '32px 16px',
-      flexShrink: 0,
-    }}>
-      <p style={{
-        fontSize: '11px',
-        fontWeight: 500,
-        letterSpacing: '3px',
-        textTransform: 'uppercase',
-        color: 'var(--muted)',
-        marginBottom: '24px',
-        paddingLeft: '8px',
-      }}>
-        Modules
-      </p>
-      <ul style={{ listStyle: 'none' }}>
-        {modules.map((module) => (
-          <li key={module.id}>
-            <button
-              onClick={() => onSelecteer(module.id)}
-              style={{
-                display: 'block',
-                width: '100%',
-                textAlign: 'left',
-                background: actieveModule === module.id ? 'var(--sage-soft)' : 'transparent',
-                color: actieveModule === module.id ? 'var(--sage-ink)' : 'var(--text)',
-                borderRadius: 'var(--radius-md)',
-                minHeight: 'auto',
-                padding: '10px 12px',
-                fontSize: '14px',
-                fontWeight: actieveModule === module.id ? 600 : 400,
-                border: 'none',
-                marginBottom: '4px',
-              }}
-            >
-              {module.titel}
-            </button>
-          </li>
-        ))}
+export default function Navigatie({ modules, actieveModuleId, onSelecteer, isModuleVoltooid, getLesVoortgang }) {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  function berekenVoortgang(module) {
+    if (!module.lessen || module.lessen.length === 0) return 0
+    const afgerond = module.lessen.filter(les => {
+      const v = getLesVoortgang(les.id)
+      return v.afgerond
+    }).length
+    return Math.round((afgerond / module.lessen.length) * 100)
+  }
+
+  function sluitMenu() {
+    setMenuOpen(false)
+  }
+
+  const navInhoud = (
+    <nav className="navigatie">
+      <p className="navigatie-koplabel">Werken met AI</p>
+      <ul className="navigatie-lijst">
+        {modules.map((module, index) => {
+          const actief = actieveModuleId === module.id
+          const voltooid = isModuleVoltooid(module.id)
+          const voortgang = berekenVoortgang(module)
+
+          return (
+            <li key={module.id}>
+              <button
+                className={
+                  'navigatie-item' +
+                  (actief ? ' navigatie-item--actief' : '') +
+                  (voltooid ? ' navigatie-item--voltooid' : '')
+                }
+                onClick={() => {
+                  onSelecteer(module.id)
+                  sluitMenu()
+                }}
+              >
+                <div className="navigatie-item-rij">
+                  <span className="navigatie-nummer">
+                    {voltooid
+                      ? <span className="navigatie-vinkje">✓</span>
+                      : index
+                    }
+                  </span>
+                  <span className="navigatie-titel">{module.titel}</span>
+                </div>
+                <div className="navigatie-balk-wrap">
+                  <div
+                    className="navigatie-balk-vulling"
+                    style={{ width: `${voortgang}%` }}
+                  />
+                </div>
+              </button>
+            </li>
+          )
+        })}
       </ul>
     </nav>
+  )
+
+  return (
+    <>
+      {/* Hamburger knop — alleen zichtbaar op mobiel */}
+      <button
+        className="hamburger"
+        onClick={() => setMenuOpen(true)}
+        aria-label="Menu openen"
+      >
+        <span className="hamburger-streep" />
+        <span className="hamburger-streep" />
+        <span className="hamburger-streep" />
+      </button>
+
+      {/* Navigatie op desktop */}
+      <div className="navigatie-desktop">
+        {navInhoud}
+      </div>
+
+      {/* Navigatie als overlay op mobiel */}
+      {menuOpen && (
+        <>
+          <div
+            className="navigatie-backdrop"
+            onClick={sluitMenu}
+            aria-hidden="true"
+          />
+          <div className="navigatie-overlay">
+            <button
+              className="navigatie-sluit"
+              onClick={sluitMenu}
+              aria-label="Menu sluiten"
+            >
+              ✕
+            </button>
+            {navInhoud}
+          </div>
+        </>
+      )}
+    </>
   )
 }

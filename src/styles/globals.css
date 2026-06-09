@@ -102,3 +102,248 @@ textarea:focus {
   outline: none;
   border-color: var(--sage-deep);
 }
+
+/* ─── App layout ─────────────────────────────────────────── */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-inhoud {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ─── Navigatie desktop ───────────────────────────────────── */
+
+.navigatie-desktop {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.navigatie {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--sage-mist);
+  border-right: 1px solid var(--sage-soft);
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.navigatie-koplabel {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  padding-left: 8px;
+}
+
+.navigatie-lijst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ─── Navigatie item ──────────────────────────────────────── */
+
+.navigatie-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border-radius: var(--radius-md);
+  border: none;
+  min-height: auto;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.navigatie-item:hover {
+  background: var(--sage-soft);
+  opacity: 1;
+}
+
+.navigatie-item--actief {
+  background: var(--sage-soft);
+}
+
+.navigatie-item-rij {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navigatie-nummer {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--sage-soft);
+  border: 1.5px solid var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  line-height: 1;
+}
+
+.navigatie-item--actief .navigatie-nummer {
+  background: var(--sage-deep);
+  border-color: var(--sage-deep);
+  color: var(--cream);
+}
+
+.navigatie-item--voltooid .navigatie-nummer {
+  background: var(--sage-ink);
+  border-color: var(--sage-ink);
+  color: var(--cream);
+}
+
+.navigatie-vinkje {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.navigatie-titel {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.navigatie-item--actief .navigatie-titel {
+  font-weight: 600;
+  color: var(--sage-ink);
+}
+
+.navigatie-item--voltooid .navigatie-titel {
+  color: var(--muted);
+}
+
+/* ─── Voortgangsbalk ──────────────────────────────────────── */
+
+.navigatie-balk-wrap {
+  height: 3px;
+  background: var(--sage-soft);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-left: 32px;
+}
+
+.navigatie-balk-vulling {
+  height: 100%;
+  background: var(--sage-deep);
+  border-radius: var(--radius-pill);
+  transition: width 0.3s ease;
+}
+
+.navigatie-item--voltooid .navigatie-balk-vulling {
+  background: var(--sage-ink);
+}
+
+/* ─── Hamburger knop (alleen mobiel) ──────────────────────── */
+
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  min-height: auto;
+  padding: 0;
+  background: var(--sage-deep);
+  border-radius: var(--radius-md);
+  border: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.hamburger-streep {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--cream);
+  border-radius: 2px;
+}
+
+/* ─── Mobiel overlay ──────────────────────────────────────── */
+
+.navigatie-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 53, 44, 0.4);
+  z-index: 110;
+}
+
+.navigatie-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 120;
+  background: var(--sage-mist);
+  box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+}
+
+.navigatie-overlay .navigatie {
+  border-right: none;
+}
+
+.navigatie-sluit {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  min-height: auto;
+  padding: 0;
+  background: var(--sage-soft);
+  border-radius: 50%;
+  border: none;
+  font-size: 14px;
+  color: var(--sage-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Mobiel (max 768px) ──────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .navigatie-desktop {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .navigatie-backdrop {
+    display: block;
+  }
+
+  .navigatie-overlay {
+    display: block;
+  }
+
+  .app-inhoud {
+    padding-top: 72px;
+  }
+}
