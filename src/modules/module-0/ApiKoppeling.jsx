@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 const OPSLAG_KEY = 'anthropic_api_key'
 
 export default function ApiKoppeling({ onVerbonden }) {
-  const bestaandeSleutel = localStorage.getItem(OPSLAG_KEY)
-
+  const [sleutel, setSleutel] = useState(() => localStorage.getItem(OPSLAG_KEY))
   const [invoer, setInvoer] = useState('')
   const [fout, setFout] = useState('')
   const [wijzigenActief, setWijzigenActief] = useState(false)
@@ -20,14 +19,14 @@ export default function ApiKoppeling({ onVerbonden }) {
 
   function verwijder() {
     localStorage.removeItem(OPSLAG_KEY)
+    setSleutel(null)
     setInvoer('')
     setFout('')
-    // Herlaad de component door de pagina te herladen
-    window.location.reload()
+    setWijzigenActief(false)
   }
 
   // Toon gekoppeld-scherm als er al een sleutel is en niet in wijzig-modus
-  if (bestaandeSleutel && !wijzigenActief) {
+  if (sleutel && !wijzigenActief) {
     return (
       <div className="api-koppeling">
         <div className="api-kop">
@@ -45,7 +44,7 @@ export default function ApiKoppeling({ onVerbonden }) {
             <div>
               <p className="api-gekoppeld-titel">Je AI is gekoppeld</p>
               <p className="api-gekoppeld-subtekst">
-                Sleutel eindigt op ···{bestaandeSleutel.slice(-4)}
+                Sleutel eindigt op ···{sleutel.slice(-4)}
               </p>
             </div>
           </div>

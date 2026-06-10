@@ -837,6 +837,12 @@ textarea:focus {
   color: var(--sage-ink);
 }
 
+.api-succes-fout-knoppen {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 /* Welkomstbericht van de AI */
 .api-succes-welkom {
   background: var(--paper);

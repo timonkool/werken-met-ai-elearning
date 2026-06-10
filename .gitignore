@@ -1,0 +1,21 @@
+# Afhankelijkheden
+node_modules/
+
+# Build-output (GitHub Actions bouwt dit zelf)
+dist/
+
+# Lokale Claude-instellingen
+.claude/settings.local.json
+
+# Logs en caches
+*.log
+npm-debug.log*
+.vite/
+
+# Besturingssysteem
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

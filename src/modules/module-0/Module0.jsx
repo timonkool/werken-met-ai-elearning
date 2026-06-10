@@ -36,6 +36,7 @@ export default function Module0({ modules, onVolgende }) {
     return (
       <ApiSucces
         onVolgende={onVolgende}
+        onOpnieuwKoppelen={() => setScherm('api-koppeling')}
       />
     )
   }

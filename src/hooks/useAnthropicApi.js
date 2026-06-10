@@ -71,6 +71,8 @@ export function useAnthropicApi() {
 
       if (!response.ok) {
         if (response.status === 401) {
+          // Ongeldige sleutel wissen zodat de gebruiker schoon opnieuw koppelt
+          localStorage.removeItem('anthropic_api_key')
           setFout('Je API-sleutel klopt niet. Controleer of je hem goed hebt geplakt via de knop Sleutel wijzigen.')
         } else if (response.status === 429) {
           setFout('Je hebt het limiet bereikt. Wacht even en probeer opnieuw.')

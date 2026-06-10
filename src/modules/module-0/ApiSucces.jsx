@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { useAnthropicApi } from '../../hooks/useAnthropicApi.js'
 
 const SYSTEEM_INSTRUCTIE =
@@ -11,17 +11,22 @@ const WELKOMST_BERICHT =
   'Dit is mijn eerste stap. Reageer met een oprecht en persoonlijk welkomstbericht ' +
   'en een compliment over wat ik zojuist heb bereikt.'
 
-export default function ApiSucces({ onVolgende }) {
+export default function ApiSucces({ onVolgende, onOpnieuwKoppelen }) {
   const { stuurVerzoek, laden, fout } = useAnthropicApi()
   const [welkomstTekst, setWelkomstTekst] = useState(null)
+  const heeftAangevraagd = useRef(false)
+
+  const haalWelkomstBericht = useCallback(async () => {
+    const antwoord = await stuurVerzoek(WELKOMST_BERICHT, SYSTEEM_INSTRUCTIE)
+    if (antwoord) setWelkomstTekst(antwoord)
+  }, [stuurVerzoek])
 
   useEffect(() => {
-    async function haalWelkomstBericht() {
-      const antwoord = await stuurVerzoek(WELKOMST_BERICHT, SYSTEEM_INSTRUCTIE)
-      if (antwoord) setWelkomstTekst(antwoord)
-    }
+    // Bewaak tegen de dubbele aanroep die React StrictMode lokaal veroorzaakt
+    if (heeftAangevraagd.current) return
+    heeftAangevraagd.current = true
     haalWelkomstBericht()
-  }, [])
+  }, [haalWelkomstBericht])
 
   return (
     <div className="api-succes">
@@ -52,12 +57,16 @@ export default function ApiSucces({ onVolgende }) {
         {fout && (
           <div className="api-succes-fout">
             <p>{fout}</p>
-            <button
-              className="secondary"
-              onClick={() => window.location.reload()}
-            >
-              Probeer opnieuw
-            </button>
+            <div className="api-succes-fout-knoppen">
+              <button className="secondary" onClick={haalWelkomstBericht}>
+                Probeer opnieuw
+              </button>
+              {onOpnieuwKoppelen && (
+                <button className="secondary" onClick={onOpnieuwKoppelen}>
+                  Sleutel opnieuw koppelen
+                </button>
+              )}
+            </div>
           </div>
         )}
 
