@@ -1,5 +1,6 @@
 import React from 'react'
 import Module0 from '../modules/module-0/Module0.jsx'
+import LesBlok from './LesBlok.jsx'
 
 const FONT_SIZE = 48
 
@@ -59,9 +60,13 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
       <div className="module-body">
         <p className="module-beschrijving">{module.beschrijving}</p>
 
-        <div className="module-placeholder">
-          <p>Inhoud volgt binnenkort.</p>
-        </div>
+        {module.lessen && module.lessen.length > 0 ? (
+          module.lessen.map((les) => <LesBlok key={les.id} les={les} />)
+        ) : (
+          <div className="module-placeholder">
+            <p>Inhoud volgt binnenkort.</p>
+          </div>
+        )}
 
         {heeftVolgende && (
           <button className="primary" onClick={onVolgende}>

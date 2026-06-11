@@ -15,6 +15,11 @@
   --text:       #2d352c;
   --muted:      #6b7268;
 
+  /* Gedempt warm, uitsluitend voor de kennischeck-correctie (fout antwoord) */
+  --klei-mist:  #f1e6dc;
+  --klei-rand:  #b98a63;
+  --klei-ink:   #8a5a38;
+
   /* Rondingen */
   --radius-sm:   6px;
   --radius-md:   10px;
@@ -1005,5 +1010,332 @@ textarea:focus {
 
   .module-body {
     padding: 36px 20px 48px;
+  }
+}
+
+/* ─── LesBlok ──────────────────────────────────────────────── */
+
+.lesblok {
+  margin-bottom: 56px;
+}
+
+.lesblok-titel {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 24px;
+}
+
+/* Eenmalige kostenmelding */
+.lesblok-kosten {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.lesblok-kosten button {
+  align-self: flex-start;
+}
+
+/* ── Theorieblok ── */
+.theorieblok {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+}
+
+.theorieblok-tekst {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.theorieblok-tekst p {
+  margin-bottom: 12px;
+}
+
+.theorieblok-tekst p:last-child {
+  margin-bottom: 0;
+}
+
+.theorieblok-tekst h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* ── Kennischeck ── */
+.kennischeck {
+  margin-bottom: 32px;
+}
+
+.kennischeck-vraag {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 16px;
+}
+
+.kennischeck-opties {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.kennischeck-optie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: var(--paper);
+  border: 1.5px solid var(--sage-soft);
+  border-radius: var(--radius-md);
+  min-height: auto;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.kennischeck-optie:not(:disabled):hover {
+  border-color: var(--sage);
+  opacity: 1;
+}
+
+.kennischeck-optie:disabled {
+  cursor: default;
+}
+
+.kennischeck-optie--correct {
+  background: var(--sage-mist);
+  border-color: var(--sage-deep);
+  color: var(--sage-ink);
+  font-weight: 600;
+}
+
+.kennischeck-optie--fout {
+  background: var(--klei-mist);
+  border-color: var(--klei-rand);
+  color: var(--klei-ink);
+  font-weight: 600;
+}
+
+.kennischeck-optie-tekst {
+  flex: 1;
+}
+
+.kennischeck-vink {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--sage-deep);
+  color: var(--cream);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.kennischeck-uitleg {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-soft);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.kennischeck-oordeel {
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 6px;
+}
+
+/* ── Opdrachtblok ── */
+.opdrachtblok {
+  background: var(--cream);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+}
+
+.opdrachtblok-tekst {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: 16px;
+  white-space: pre-line;
+}
+
+.opdrachtblok-veld {
+  margin-bottom: 16px;
+}
+
+.lesblok-inline-fout {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--klei-ink);
+  margin-bottom: 14px;
+}
+
+/* Laadstatus tijdens AI-feedback */
+.lesblok-laden {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 16px;
+}
+
+.lesblok-laden-stip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sage);
+  animation: stip-knipogen 1.2s ease-in-out infinite;
+}
+
+.lesblok-laden-stip:nth-child(2) { animation-delay: 0.2s; }
+.lesblok-laden-stip:nth-child(3) { animation-delay: 0.4s; }
+
+/* Foutmelding API */
+.lesblok-fout {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--sage-ink);
+}
+
+.lesblok-fout button {
+  align-self: flex-start;
+}
+
+/* ── Feedbackblok ── */
+.feedbackblok {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-soft);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 24px 28px;
+  margin-top: 24px;
+}
+
+.feedbackblok-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.feedbackblok-tekst {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.feedbackblok-tekst p {
+  margin-bottom: 12px;
+}
+
+.feedbackblok-tekst p:last-child {
+  margin-bottom: 0;
+}
+
+.feedbackblok-disclaimer {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--sage-soft);
+}
+
+/* Inklapbaar voorbeeldantwoord */
+.voorbeeld {
+  margin-top: 18px;
+}
+
+.voorbeeld-knop {
+  background: var(--cream);
+  color: var(--sage-deep);
+  border: 1.5px solid var(--sage);
+  font-size: 13px;
+}
+
+.voorbeeld-tekst {
+  margin-top: 14px;
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.voorbeeld-tekst p {
+  margin-bottom: 10px;
+}
+
+.voorbeeld-tekst p:last-child {
+  margin-bottom: 0;
+}
+
+/* Acties onder de feedback */
+.feedbackblok-acties {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.lesblok-afgerond {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  background: var(--sage-soft);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+}
+
+@media (max-width: 768px) {
+  .theorieblok,
+  .opdrachtblok,
+  .feedbackblok {
+    padding: 20px 18px;
+  }
+
+  .opdrachtblok-veld {
+    min-height: 140px;
   }
 }

@@ -30,7 +30,34 @@
       "beschrijving": "Je ontdekt hoe AI werkt, wat het wel en niet kan, en waar het vandaan komt. Na deze module snap je de basis en kun je er nuchter over praten.",
       "externe_tool_vereist": false,
       "voltooiing": false,
-      "lessen": []
+      "lessen": [
+        {
+          "id": "les-test-voorbeeld",
+          "titel": "Voorbeeldles (tijdelijke test van LesBlok)",
+          "externe_tool_vereist": false,
+          "theorie": {
+            "tekst": "Stel je voor dat iemand alle boeken, artikelen en websites ter wereld heeft gelezen. Als jij een zin begint, voorspelt diegene razendsnel wat er daarna het meest logisch staat.\n\nDat is **AI**. Het voorspelt het meest waarschijnlijke volgende woord, op basis van alles wat het heeft 'gelezen'. Het begrijpt niets. Het herkent patronen.",
+            "video_url": null,
+            "video_beschrijving": "Korte uitleg over hoe AI tekst voorspelt."
+          },
+          "kennischeck": {
+            "vraag": "Wat doet AI als jij een vraag stelt?",
+            "opties": [
+              "Het denkt na en begrijpt je vraag",
+              "Het zoekt het antwoord op het internet",
+              "Het voorspelt het meest waarschijnlijke antwoord op basis van patronen in tekst",
+              "Het herhaalt wat het eerder al heeft gezegd"
+            ],
+            "correct": 2,
+            "uitleg_correct": "AI heeft enorm veel tekst verwerkt en kan op basis daarvan voorspellen wat een logisch antwoord is op jouw vraag. Het begrijpt je vraag niet, maar herkent patronen die op jouw situatie lijken."
+          },
+          "opdracht": {
+            "tekst": "Beschrijf in je eigen woorden aan iemand zonder AI-kennis wat AI is. Gebruik een eigen vergelijking, niet de belezen-collega-analogie die je net hebt gelezen, maar iets wat bij jouw eigen werk of leven past. Schrijf minimaal drie zinnen.",
+            "beoordelingsinstructie": "Je beoordeelt de uitleg die een deelnemer heeft geschreven. Controleer drie dingen: (1) is de uitleg begrijpelijk voor iemand zonder AI-kennis, (2) zit het idee van voorspellen in plaats van begrijpen er impliciet of expliciet in, (3) is er een eigen analogie gebruikt die logisch klopt. Geef een oprecht compliment voor wat goed is. Benoem één concreet verbeterpunt als dat er is. Sluit aanmoedigend af. Maximaal 100 woorden. Schrijf in het Nederlands.",
+            "voorbeeld_antwoord": "AI is een beetje als een heel ervaren tekstschrijver die duizenden brieven heeft gelezen. Als jij begint met 'Geachte mevrouw, ik schrijf u in verband met...', dan weet die schrijver op basis van alle eerdere brieven ongeveer hoe zo'n zin verder gaat. Niet omdat hij jouw situatie begrijpt, maar omdat hij het patroon herkent. Dat is handig voor standaardteksten, maar je moet altijd zelf controleren of de inhoud ook echt klopt voor jouw specifieke situatie."
+          }
+        }
+      ]
     },
     {
       "id": "module-2",

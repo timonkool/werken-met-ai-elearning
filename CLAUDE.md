@@ -107,11 +107,13 @@ Dit zijn harde regels zonder uitzonderingen:
 Alle instellingen staan als constanten bovenaan `src/hooks/useAnthropicApi.js`:
 
 ```javascript
-const MODEL = "claude-haiku-4-5";       // Pas hier aan bij modelwijziging
-const MAX_TOKENS = 600;
+const MODEL = "claude-sonnet-4-6";      // Pas hier aan bij modelwijziging
+const MAX_TOKENS = 800;                  // Standaard voor feedbacktaken
 const TEMPERATURE = 0.4;
 const ENDPOINT = "https://api.anthropic.com/v1/messages";
 ```
+
+`stuurVerzoek(bericht, beoordelingsinstructie, maxTokens)` accepteert een optionele derde parameter `maxTokens`. Standaard is dat `MAX_TOKENS` (800) voor feedbacktaken. Voor afwijkende taken (zoals de HTML-flyer in module 1) geef je een hogere waarde mee, bijvoorbeeld 4000.
 
 ### Verplichte headers
 
@@ -137,14 +139,15 @@ Toon altijd een zichtbare foutmelding in de UI, nooit alleen in de console:
 
 Foutmeldingen verschijnen in een oranje blok in de UI. Nooit als browser `alert()`.
 
-### Budgetbescherming
+### Kostenwaarschuwing (geen daglimiet)
 
-Houd in `localStorage` bij hoeveel API-aanroepen er vandaag zijn gedaan (key: `"api_calls_[datum]"`, formaat: `"2026-04-23"`). Na 20 aanroepen per dag: toon een vriendelijke melding dat het daglimiet bereikt is. Dit is een zachte limiet per browser per apparaat en geen absolute beveiliging. Voeg een comment toe in de code:
+Er is **geen** dagelijkse limiet op het aantal API-aanroepen. Niets blokkeert de deelnemer.
 
-```javascript
-// Budgetlimiet is per browser/apparaat, niet absoluut.
-// Voldoende voor kleine schaal gebruik.
-```
+Houd in `localStorage` het totale aantal API-aanroepen bij (key: `"api_aanroepen_totaal"`). Zodra de teller de grens van 50 bereikt, toon je **eenmalig** de volgende geruststellende melding bovenaan het scherm in een neutraal kader:
+
+> "Je hebt inmiddels 50 vragen aan AI gesteld in deze cursus. Tot nu toe heb je naar schatting 0,08 euro aan API-krediet gebruikt. Dat valt ruimschoots binnen het startkrediet van je account. Je kunt gewoon doorgaan."
+
+De melding verschijnt maar één keer (bewaakt via de key `"kostenwaarschuwing_getoond"`) en blokkeert niets. De teller loopt daarna gewoon door. De teller en de melding zijn per browser/apparaat en geen absolute beveiliging.
 
 ### Leegte-validatie
 
@@ -389,7 +392,8 @@ in het Nederlands. Houd je aan de beoordelingsinstructie.
 | `anthropic_api_key` | API-sleutel van de gebruiker |
 | `voortgang_[les-id]` | `{ afgerond: true/false, antwoord: "..." }` |
 | `module_[module-id]_voltooid` | `true` als alle lessen afgerond zijn |
-| `api_calls_[datum]` | Aantal API-aanroepen vandaag (budgetbescherming) |
+| `api_aanroepen_totaal` | Totaal aantal API-aanroepen (voor de kostenwaarschuwing) |
+| `kostenwaarschuwing_getoond` | `true` als de eenmalige kostenmelding al is getoond |
 | `actieplan` | JSON-object met het persoonlijke actieplan van de deelnemer |
 
 Voortgang wordt nooit naar een server gestuurd. Als iemand localStorage wist, verliest hij zijn voortgang. Dat is bewust geaccepteerd voor versie 1.
