@@ -6,8 +6,6 @@ import Module3 from '../modules/module-3/Module3.jsx'
 import Module4 from '../modules/module-4/Module4.jsx'
 import LesBlok from './LesBlok.jsx'
 
-const FONT_SIZE = 48
-
 export default function ModuleWeergave({ module, modules, onVolgende }) {
   if (!module) return null
 
@@ -33,36 +31,13 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
   return (
     <div className="module-weergave">
 
-      {/* Kleurwissel kop */}
+      {/* Donkergroene kop in dezelfde stijl als module 0 */}
       <div className="module-kop">
-        <div
-          className="module-kop-band"
-          style={{ background: module.kleur }}
-        >
+        <div className="module-kop-meta">
           <span className="module-kop-label">Module {index}</span>
           <span className="module-kop-duur">{module.duur} min</span>
         </div>
-
-        <div
-          className="module-titel-zone"
-          style={{
-            height: FONT_SIZE,
-            marginTop: -(FONT_SIZE * 2 / 3),
-          }}
-        >
-          <h1
-            className="module-titel module-titel--wit"
-            style={{ fontSize: FONT_SIZE }}
-          >
-            {module.titel}
-          </h1>
-          <h1
-            className="module-titel module-titel--kleur"
-            style={{ fontSize: FONT_SIZE, color: module.kleur }}
-          >
-            {module.titel}
-          </h1>
-        </div>
+        <h1 className="module-titel">{module.titel}</h1>
       </div>
 
       {/* Beschrijving en inhoud */}

@@ -891,13 +891,17 @@ textarea:focus {
   background: var(--cream);
 }
 
-/* Gekleurde band bovenaan */
-.module-kop-band {
+/* Donkergroene kop, gelijke kleur en stijl voor alle modules (zoals module 0) */
+.module-kop {
+  background: var(--sage-ink);
+  padding: 26px 48px 30px;
+}
+
+.module-kop-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
-  height: 72px;
+  margin-bottom: 14px;
 }
 
 .module-kop-label {
@@ -905,8 +909,7 @@ textarea:focus {
   font-weight: 500;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--cream);
-  opacity: 0.85;
+  color: var(--sage-soft);
 }
 
 .module-kop-duur {
@@ -914,36 +917,18 @@ textarea:focus {
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--cream);
-  opacity: 0.7;
-}
-
-/* Kleurwissel titelzone */
-.module-titel-zone {
-  position: relative;
-  margin-left: 48px;
-  margin-right: 48px;
+  color: var(--sage-soft);
+  opacity: 0.8;
 }
 
 .module-titel {
-  position: absolute;
-  top: 0;
-  left: 0;
   font-family: 'Quicksand', sans-serif;
+  font-size: 36px;
   font-weight: 700;
-  line-height: 1; /* VERPLICHT voor clip-path */
+  line-height: 1.1;
   letter-spacing: -0.5px;
-  white-space: nowrap;
-  margin: 0;
-}
-
-.module-titel--wit {
   color: var(--cream);
-  clip-path: inset(0 0 50% 0);
-}
-
-.module-titel--kleur {
-  clip-path: inset(45% 0 0 0);
+  margin: 0;
 }
 
 /* Beschrijving en inhoud */
@@ -996,22 +981,12 @@ textarea:focus {
     padding-top: 72px;
   }
 
-  .module-kop-band {
-    padding: 0 20px;
-  }
-
-  .module-titel-zone {
-    margin-left: 20px;
-    margin-right: 20px;
+  .module-kop {
+    padding: 22px 20px 26px;
   }
 
   .module-titel {
-    font-size: 32px !important;
-  }
-
-  .module-titel-zone {
-    height: 32px !important;
-    margin-top: calc(-32px * 2 / 3) !important;
+    font-size: 28px;
   }
 
   .module-body {
