@@ -15,7 +15,12 @@
         "originele_situatie": "Voorbeeldtekst met persoonsgegevens die de deelnemer moet anonimiseren (module 2 les 3).",
         "demo": "Gesimuleerde prompt-demo met twee vaste standen (slecht/goed). Geen AI-aanroep; alle teksten staan vast (module 3 les 1).",
         "elementen": "Drie uitlegkaarten ROL, TAAK en CONTEXT, elk met uitleg en voorbeeld (module 3 les 2).",
-        "bonus": "Compacte lijst met bonustechnieken naast de drie elementen (module 3 les 2)."
+        "bonus": "Compacte lijst met bonustechnieken naast de drie elementen (module 3 les 2).",
+        "intro": "Module-niveau (module 4). Persoonlijk kader bovenaan de module dat het in module 1 opgeslagen antwoord (bron_key) toont. Wordt verborgen als er niets is opgeslagen.",
+        "rode_draad": "Module-niveau (module 4). Uitlegscherm 4.0 dat de werkwijze van de drie oefeningen toelicht. Geen opdracht.",
+        "instructieblok": "Module-niveau (module 4). Herbruikbaar instructieblok dat boven elke opdracht met externe_tool_vereist verschijnt. Conditie op het les-veld externe_tool_vereist, nooit op de module-id.",
+        "informatie": "Casusmateriaal dat de deelnemer leest vóór de opdracht (ruw plan, mail, statusupdate). type 'lijst' rendert punten, type 'mail' rendert kop en regels.",
+        "eigen_taak": "Zelfstandige slotoefening (module 4 les 4). Geen AI-aanroep. Toont tekst_met_taak (met bron_key uit module 1) of tekst_zonder, slaat het antwoord op onder opslag_key in localStorage."
       }
     },
     "taal": "nl",
@@ -404,7 +409,117 @@
       "beschrijving": "Je werkt drie doorlopende oefeningen uit met echte AI-tools, gebaseerd op situaties uit de sociale sector. Dit is het hart van de cursus.",
       "externe_tool_vereist": true,
       "voltooiing": false,
-      "lessen": []
+      "afsluittekst": "Module 4 voltooid. Je hebt drie werkende AI-processen gemaakt die je direct kunt hergebruiken.",
+      "intro": {
+        "voor": "In module 1 schreef jij:",
+        "na": "Houd dat in gedachten terwijl je de oefeningen hieronder maakt. Na de drie casus-oefeningen is er ruimte om ook jouw eigen taak te oefenen.",
+        "bron_key": "module1_eigen_taak"
+      },
+      "rode_draad": {
+        "titel": "De rode draad",
+        "alineas": [
+          "In de komende drie oefeningen organiseer jij een inloopmiddag voor mensen met geldzorgen. Je werkt daarvoor in de echte AI-tool die je na deze cursus ook in je dagelijkse werk zult gebruiken: claude.ai of chatgpt.com. Beide zijn gratis toegankelijk.",
+          "De werkwijze in elke oefening is hetzelfde:"
+        ],
+        "stappen": [
+          "Lees de informatie die je krijgt",
+          "Schrijf een prompt met ROL, TAAK en CONTEXT",
+          "Open claude.ai of chatgpt.com in een nieuw tabblad",
+          "Voer je prompt in, plus de bijgeleverde informatie",
+          "Kopieer je prompt en de eerste vijf regels van het resultaat terug in het veld hieronder"
+        ],
+        "na": "De cursus geeft je daarna feedback op je aanpak, niet op het AI-resultaat zelf. Want dat resultaat is ook afhankelijk van hoe goed jij de vraag hebt gesteld.",
+        "knop": "Begin met oefening 1"
+      },
+      "instructieblok": "Open claude.ai of chatgpt.com in een nieuw tabblad. Gebruik de informatie hierboven als onderdeel van je prompt. Voer de opdracht uit. Kopieer daarna je prompt en de eerste vijf regels van het resultaat terug in het veld hieronder.",
+      "lessen": [
+        {
+          "id": "les-4-1",
+          "titel": "Van ruw plan naar draaiboek",
+          "externe_tool_vereist": true,
+          "informatie": {
+            "type": "lijst",
+            "titel": "Ruw plan: inloopmiddag mensen met geldzorgen",
+            "punten": [
+              "Gratis, laagdrempelig, ergens in april",
+              "Informatietafel gemeente over toeslagen en regelingen",
+              "Schuldhulpverlener aanwezig voor gesprekken",
+              "Koffie, thee, misschien wat te eten",
+              "Activiteit voor kinderen zodat ouders rustig kunnen praten",
+              "Aanmelden niet verplicht maar handig voor de catering",
+              "Flyer ophangen bij voedselbank en wijkcentrum",
+              "Gewenst eindproduct: draaiboek met tijdsblokken, taakverdeling en checklist"
+            ]
+          },
+          "opdracht": {
+            "tekst": "Schrijf een prompt met ROL, TAAK en CONTEXT om van dit ruwe plan een gestructureerd draaiboek te laten maken. Geef in je prompt een maximale lengte op: maximaal twee pagina's A4. Gebruik het instructieblok hierboven. Plak je prompt en de eerste vijf regels van het resultaat terug.",
+            "beoordelingsinstructie": "Je beoordeelt of de ingediende prompt ROL, TAAK en CONTEXT bevat en of het resultaat erop lijkt te wijzen dat de prompt goed heeft gewerkt. Controleer ook of de deelnemer een maximale lengte heeft opgegeven voor het draaiboek. Als dat ontbreekt, wijs er dan vriendelijk op dat een lengte-instructie helpt om een beknopt en bruikbaar resultaat te krijgen. Maximaal 150 woorden. Schrijf in het Nederlands.",
+            "voorbeeld_antwoord": "Je bent een ervaren eventcoördinator bij een wijkorganisatie. Maak een gestructureerd draaiboek voor een gratis inloopmiddag voor mensen met geldzorgen. Gebruik de volgende ruwe informatie: [plak het ruwe plan hierboven]. Het draaiboek bevat: tijdsblokken van 30 minuten, een taakverdeling per verantwoordelijke, en een afvinklijst van wat er geregeld moet worden. Maximaal twee pagina's A4. Toon: praktisch en overzichtelijk."
+          }
+        },
+        {
+          "id": "les-4-2",
+          "titel": "Actiepunten uit een mail halen",
+          "externe_tool_vereist": true,
+          "informatie": {
+            "type": "mail",
+            "van": "Marieke",
+            "onderwerp": "Update inloopmiddag",
+            "regels": [
+              "Hoi,",
+              "Ik zat net alles op een rijtje te zetten. De zaal staat voor 15 april, 13:00–15:30, en Sandra van de schuldhulpverlening heeft bevestigd. Goed nieuws.",
+              "Wat mij zorgen baart is de gemeente. Ik heb vorige week gemaild maar nog niks gehoord. Kun jij ze nabellen? Voor vrijdag graag, anders kunnen we het niet meenemen in het programma.",
+              "De flyer: Jan heeft het te druk. Heb jij iemand die dat kan maken? Volgende week af graag.",
+              "De kinderopvang tijdens de middag is nog helemaal niet geregeld. Laten we dit week even afstemmen.",
+              "Groetjes, Marieke"
+            ]
+          },
+          "opdracht": {
+            "tekst": "Schrijf een prompt die AI vraagt om een actielijst te maken uit deze mail, met per punt: wat er moet gebeuren, door wie, en wanneer. Onderscheid ook wat al geregeld is van wat nog open staat. Gebruik het instructieblok. Plak je prompt en de eerste vijf regels van het resultaat terug.",
+            "beoordelingsinstructie": "Je beoordeelt of de prompt duidelijk maakt dat de mail volledig moet worden meegenomen en of de gewenste structuur van de actielijst concreet is geformuleerd. Beoordeel ook wat AI goed heeft kunnen oppikken en wat het mogelijk heeft gemist. Maximaal 100 woorden. Schrijf in het Nederlands.",
+            "voorbeeld_antwoord": "Lees de volgende mail van een collega. Maak een gestructureerde actielijst met drie kolommen: wat er moet gebeuren, wie dat moet doen, en wanneer de deadline is. Onderscheid ook duidelijk wat al geregeld is van wat nog open staat. [plak de mail hierboven]"
+          }
+        },
+        {
+          "id": "les-4-3",
+          "titel": "Draaiboek updaten en team informeren",
+          "externe_tool_vereist": true,
+          "informatie": {
+            "type": "mail",
+            "van": "Joost",
+            "onderwerp": "Even bijpraten, inloopmiddag",
+            "intro": "Je hebt een vrije dag gehad. Je collega Joost heeft ondertussen wat taken opgepakt en stuurt de volgende update:",
+            "regels": [
+              "Hey,",
+              "Even een korte update over wat ik heb gedaan terwijl jij er niet was.",
+              "Gemeente gebeld! Ze komen inderdaad. Ze brengen niet alleen een informatietafel mee over toeslagen en regelingen, maar sturen ook een sociaal werker die een eigen tafel wil hebben voor individuele gesprekken. Mooi, maar betekent wel dat we ruimte voor twee gemeentetafels nodig hebben.",
+              "Ik heb ook wat uitstaan voor activiteiten voor de kinderen. Heb navraag gedaan bij een paar vrijwilligers, wacht nog op antwoord. Staat nu dus op: wachten op bevestiging.",
+              "Oh, en via via hoorde ik dat iemand in de wijk schminkactiviteiten doet voor kinderen. Zou dat niet leuk zijn? Maar dat moet iemand nog concreet benaderen. Misschien iets voor jou?",
+              "Groet, Joost"
+            ]
+          },
+          "opdracht": {
+            "tekst": "Combineer het draaiboek van oefening 1 en de actielijst van oefening 2 met de statusupdate van Joost. Vraag AI om twee dingen: (1) het draaiboek bij te werken met de nieuwe informatie en (2) een korte informele update-mail naar het team te schrijven over de voortgang. Beide in één prompt, één resultaat. Gebruik het instructieblok. Plak je prompt en de eerste vijf regels van het resultaat terug.",
+            "beoordelingsinstructie": "Je beoordeelt of de prompt de statusupdate van Joost heeft gecombineerd met het eerdere draaiboek en de actielijst. Controleer ook of de deelnemer AI heeft gevraagd om twee dingen te leveren: een bijgewerkt draaiboek én een update-mail. Sluit af met een oprecht compliment voor het doorlopen van alle drie de oefeningen. Maximaal 120 woorden. Schrijf in het Nederlands.",
+            "voorbeeld_antwoord": "Je bent een coördinator bij een wijkorganisatie. Gebruik het volgende draaiboek [plak draaiboek], de actielijst [plak actielijst] en de statusupdate van een collega [plak update Joost].\n\nLever twee dingen op:\n1. Een bijgewerkt draaiboek dat de nieuwe informatie verwerkt: twee gemeentetafels, activiteiten voor kinderen (status: wachten op bevestiging), en de mogelijkheid voor schminkactiviteiten (nog te bevestigen).\n2. Een korte, informele update-mail aan het team (maximaal 100 woorden) over de voortgang en wat er nog open staat.\n\nHoud het draaiboek maximaal twee pagina's A4. Toon voor de mail: collegiaal en praktisch."
+          }
+        },
+        {
+          "id": "les-4-4",
+          "titel": "Jouw eigen taak",
+          "externe_tool_vereist": false,
+          "eigen_taak": {
+            "tekst_met_taak_voor": "Je schreef in module 1 dat je",
+            "tekst_met_taak_na": "als eerste met AI wil proberen. Schrijf nu een prompt voor die taak. Gebruik ROL, TAAK en CONTEXT. Je hoeft het resultaat niet terug te brengen in de cursus. Dit is puur voor jou.",
+            "tekst_zonder": "Kies een taak uit jouw eigen werk die je regelmatig doet. Schrijf daarvoor een prompt met ROL, TAAK en CONTEXT. Dit is puur voor jou, er is geen beoordeling.",
+            "bron_key": "module1_eigen_taak",
+            "opslag_key": "module4_eigen_prompt",
+            "placeholder": "Schrijf hier je eigen prompt...",
+            "knop": "Sla op voor mezelf",
+            "afrond_knop": "Sluit module 4 af"
+          }
+        }
+      ]
     },
     {
       "id": "module-5",

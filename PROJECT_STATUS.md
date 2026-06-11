@@ -1,13 +1,13 @@
 # PROJECT_STATUS — Werken met AI (e-learning)
 
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
-> Laatste update: 2026-06-11 (sessie: module 3 gebouwd)
+> Laatste update: 2026-06-11 (sessie: module 4 gebouwd)
 
 ---
 
 ## Waar staan we
 
-Module 0, 1, 2 en 3 zijn volledig gebouwd. Modules 4 en 5 bestaan nog als lege hulls in `cursus.json` (titel, duur, kleur, beschrijving, lege `lessen: []`). De volgende stap is **module 4**.
+Module 0, 1, 2, 3 en 4 zijn volledig gebouwd. Module 5 bestaat nog als lege hull in `cursus.json` (titel, duur, kleur, beschrijving, lege `lessen: []`). De volgende stap is **module 5 + afwerking**.
 
 ## Live & deployment
 
@@ -16,7 +16,7 @@ Module 0, 1, 2 en 3 zijn volledig gebouwd. Modules 4 en 5 bestaan nog als lege h
 - **Hoe:** elke push naar `master` triggert `.github/workflows/deploy.yml`. Die bouwt de Vite-app en kopieert `dist/` naar de submap `elearning-ai-voor-beginners/` in de website-repo `timonkool.github.io` (branch `main`).
 - De kopieer-stap gebruikt het secret `WEBSITE_DEPLOY_TOKEN` (al ingesteld in de repo).
 - `vite.config.js` heeft `base: '/elearning-ai-voor-beginners/'` — niet wijzigen zonder reden.
-- Afspraak met eigenaar: alle wijzigingen meteen live zetten, **maar pas na zijn goedkeuring**. Module 1 + 2 + 3 staan nog **niet** gepusht; wachten op goedkeuring.
+- Afspraak met eigenaar: alle wijzigingen meteen live zetten, **maar pas na zijn goedkeuring**. Module 1 + 2 + 3 + 4 staan nog **niet** gepusht; wachten op goedkeuring.
 
 ## Wat is gebouwd (klaar)
 
@@ -41,17 +41,26 @@ Module 0, 1, 2 en 3 zijn volledig gebouwd. Modules 4 en 5 bestaan nog als lege h
   - Les 2 — `DrieElementenLes`: drie uitlegkaarten ROL/TAAK/CONTEXT (`elementen`), kennischeck 3.2.B (**juist = A/index 0**), en de vijf bonustechnieken (`bonus`) als genummerde lijst.
   - Les 3 — `VerbeterPromptLes`: standaard `OpdrachtFeedback` (slechte prompt staat in `opdracht.tekst`).
   - Les 4 — `EigenPromptLes`: standaard `OpdrachtFeedback`, afrondknop "Bewaar mijn antwoord en sluit module 3 af" → markeert module-3 voltooid.
-- **Module-afsluiting** — modules 1, 2 en 3 tonen onderaan (zodra voltooid) een afsluitblok met `module.afsluittekst` + knop "Volgende module".
-- **CSS** — alle nieuwe klassen toegevoegd onderaan `globals.css`, strikt binnen de saliegroen/cream + klei-palette. Mobiel: flyer/kaarten/herkenning stapelen onder 768px; prompt-demo, element-kaarten en bonus krijgen smallere padding.
+- **Module 4** (`modules/module-4/Module4.jsx`):
+  - **Introkader** (`IntroKader`): toont het in module 1 opgeslagen antwoord (`module1_eigen_taak`) als Fraunces-citaat. Wordt niet getoond als de sleutel leeg/afwezig is.
+  - **4.0 De rode draad** (`RodeDraad`): uitlegscherm, geen opdracht. Twee alinea's + genummerde 5-stappenlijst + afsluitende na-tekst. Inhoud in `module.rode_draad`.
+  - **Herbruikbaar instructieblok** (`Instructieblok`): gedempt lucht-blauw kader met de exacte tekst uit `module.instructieblok`. Verschijnt boven les 1–3 op conditie `les.externe_tool_vereist === true` (niet op module-id). Les 4 heeft `externe_tool_vereist: false` en toont het blok dus niet.
+  - **Casus-informatie** (`Informatie`): `type: "lijst"` rendert het ruwe plan (les 1), `type: "mail"` rendert de mail van Marieke (les 2) en de statusupdate van Joost (les 3, met `intro`-regel). Alle casusteksten letterlijk uit de inhoudsbrief.
+  - Les 1–3 — `OefeningLes`: informatie + instructieblok + standaard `OpdrachtFeedback` (AI-feedback op de aanpak). Les 1 opdrachttekst bevat expliciet de lengte-instructie "maximaal twee pagina's A4"; de system-prompt controleert of de deelnemer een lengte heeft opgegeven.
+  - Les 4 — `EigenTaakLes`: **geen AI-aanroep**. Toont `tekst_met_taak_*` (met `module1_eigen_taak`) of `tekst_zonder`. Knop "Sla op voor mezelf" slaat op in `localStorage` onder `module4_eigen_prompt`. Daarna verschijnt "Sluit module 4 af" → markeert module-4 voltooid.
+- **Module-afsluiting** — modules 1, 2, 3 en 4 tonen onderaan (zodra voltooid) een afsluitblok met `module.afsluittekst` + knop "Volgende module".
+- **CSS** — alle nieuwe klassen toegevoegd onderaan `globals.css`, strikt binnen de saliegroen/cream + klei-palette (plus het nieuwe gedempte `--lucht-*` blauw, uitsluitend voor het module 4-instructieblok). Mobiel: flyer/kaarten/herkenning stapelen onder 768px; prompt-demo, element-kaarten en bonus krijgen smallere padding; m4-intro en casuskaders krijgen smallere padding.
 
 ## Lokaal getest deze sessie (preview)
 
-- Build is schoon (`npm run build`), geen console-errors. 451 modules, geen nieuwe waarschuwingen.
-- Module 3 rendert correct: alle vier de lessen, de drie elementkaarten, de bonuslijst en beide opdrachtblokken.
-- **PromptDemo:** toggle wisselt correct tussen stand 1 (slecht, klei-vlag "Vaag in = vaag uit", oordeel "Generiek...") en stand 2 (goed, sage-vlag "Specifiek in = bruikbaar uit", oordeel "Direct bruikbaar..."). Knoplabel wisselt mee. ✓
-- **Kennischeck les 2** (juist = A) gecontroleerd: optie A markeert groen + "Goed gekozen." ✓
-- Mobiel (375px): prompt-demo, kaarten en bonus stapelen netjes binnen de viewport (335px in 375px, geen overflow van de content). Enige horizontale overflow komt van de decoratieve kleurwissel-titel (zie aandachtspunt hieronder).
-- **Nog niet live getest: de AI-feedback in les 3 en les 4.** Dit vereist de persoonlijke API-sleutel van de eigenaar (CLAUDE.md §5, alleen in de browser). Eigenaar test dit zelf in de draaiende dev-app. De PromptDemo en kennischecks werken zonder sleutel.
+- Build is schoon (`npm run build`), geen console-errors. 452 modules, geen nieuwe waarschuwingen.
+- Module 4 rendert correct (geverifieerd via DOM-inspectie in de preview): introkader met het module 1-antwoord, de rode draad (5 stappen + na-tekst), het ruwe plan (8 punten), beide mails (Marieke + Joost), **3** instructieblokken (alleen les 1–3), **4** opdrachtblokken, en de eigen-taak met aanhaling + twee knoppen.
+- **Introkader-conditie** getest: met `module1_eigen_taak` gevuld verschijnt het kader; leeg/afwezig → niet getoond.
+- **Instructieblok-kleur** (`--lucht-mist` = rgb(231,238,242), rand rgb(124,151,168)) bevestigd: gedempt lucht-blauw, niet fel.
+- **Eigen-taak-opslag** getest: "Sla op voor mezelf" schrijft naar `localStorage["module4_eigen_prompt"]`. ✓ (testwaarde daarna weer verwijderd)
+- Mobiel (375px): geen horizontale overflow in `.module-body` (scrollWidth = 375). De casuskaders, instructieblokken en lijsten stapelen netjes.
+- **Nog niet live getest: de AI-feedback in les 1–3.** Dit vereist de persoonlijke API-sleutel van de eigenaar (CLAUDE.md §5, alleen in de browser). Eigenaar test dit zelf in de draaiende dev-app. Het introkader, de rode draad, de casusweergave en de eigen-taak-opslag werken zonder sleutel.
+- **Testdata in de dev-browser:** voor de controle staan `module1_eigen_taak` (gevraagd testantwoord) en de voltooid-vlaggen van module 0–3 nog in `localStorage`. Wis ze desgewenst handmatig of via "Begin opnieuw" (komt in module 5).
 
 ## Belangrijke beslissingen / aandachtspunten deze sessie
 
@@ -60,12 +69,14 @@ Module 0, 1, 2 en 3 zijn volledig gebouwd. Modules 4 en 5 bestaan nog als lege h
 - **cursus.json schema-uitbreiding:** voor de bijzondere lessen zijn extra velden toegevoegd (zie `meta._docs`). Dit is een uitbreiding, geen breuk van de standaardstructuur; bij twijfel met eigenaar afstemmen.
 - **Module-voltooiing modules 1–5:** gebeurt nu in de module-component zelf (`setModuleVoltooid` bij de afrondactie van de laatste les). Houd dit patroon aan voor module 4–5.
 - **Beoordelingsinstructies module 3 letterlijk overgenomen** uit de inhoudsbrief, maar **zonder** de openingszin "Je bent een (vriendelijke) promptcoach...". Reden: `stuurVerzoek` zet `SYSTEM_BASE` (de leercoach-rol) altijd ervoor, en modules 1 en 2 trimden die rol-introzin op dezelfde manier. Zo blijft het consistent en is er geen dubbele rol-toewijzing. Wil de eigenaar de "promptcoach"-framing toch expliciet, dan kan die zin terug in `cursus.json` (raakt alleen de systeeminstructie, niet de UI).
+- **Beoordelingsinstructies module 4** op dezelfde manier behandeld: letterlijk uit de inhoudsbrief, maar **zonder** de openingszin "Je bent een coach voor vrijwilligers...". Consistent met module 1–3.
+- **Lichtblauw instructieblok — bewuste afwijking van §8:** CLAUDE.md §8 verbiedt blauw, maar §12 (module-specifiek) **én** de inhoudsbrief schrijven een "lichtblauw instructieblok" voor module 4 expliciet voor. Opgelost als functionele uitzondering, net als de gekleurde randen van de cursusblokken in §8: een nieuw, **gedempt** lucht-blauw (`--lucht-mist/-rand/-ink`), geen fel blauw. Wil de eigenaar tóch volledig binnen sage/klei blijven, dan is het een kwestie van die drie variabelen ompunten naar bv. `--sage-soft/--sage/--sage-ink`.
 - **Mobiel: kleurwissel-titel "Goede prompts schrijven" steekt ~20px buiten de viewport op 375px** (white-space: nowrap is verplicht voor de clip-path, stijlgids §8). Dit geldt voor elke langere moduletitel en is inherent aan de signature-kop, niet aan module 3. Niet aangepast omdat dit de beschermde signature-kop raakt (CLAUDE.md §4/§8, eerst voorleggen). Mogelijke opties als de eigenaar dit wil oplossen: titel iets kleiner schalen op mobiel, of de kop laten clampen/afkappen.
 
 ## Nog te doen (volgende stappen)
 
-1. **Module 4** — drie doorlopende oefeningen; lichtblauw instructieblok bij lessen met `externe_tool_vereist: true` (conditie op het JSON-veld, niet op module-id). Intro toont `module1_eigen_taak` uit localStorage. Casus-teksten staan in de inhoudsbrief.
-2. **Module 5** — certificaat via jsPDF; voorbeeld in `context/Voorbeeld_certificaat.html`. Actieplan (3 velden, opslag `actieplan`). Markeer voltooid na download.
+1. **Module 5** — vier schermen (zie inhoudsbrief §Module 5): terugblik (kernzin per module), actieplan (3 vrije velden, opslag `actieplan`), certificaat (naam-invoer + jsPDF, referentie `context/Voorbeeld_certificaat.html`), eindscherm met "Download opnieuw" + "Begin opnieuw" (wist alle voortgang na bevestiging). Markeer module-5 voltooid na certificaatdownload.
+2. **Afwerking vóór push** — eigenaar test de AI-feedback van module 4 (les 1–3) met eigen sleutel; daarna goedkeuring → push module 1+2+3+4(+5) naar `master`.
 
 ## Belangrijke aandachtspunten (algemeen)
 

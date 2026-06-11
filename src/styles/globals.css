@@ -20,6 +20,12 @@
   --klei-rand:  #b98a63;
   --klei-ink:   #8a5a38;
 
+  /* Gedempt lucht-blauw, uitsluitend voor het externe-tool-instructieblok
+     in module 4 (CLAUDE.md §12). Bewust zacht en rustig, geen fel blauw. */
+  --lucht-mist: #e7eef2;
+  --lucht-rand: #7c97a8;
+  --lucht-ink:  #3f5667;
+
   /* Rondingen */
   --radius-sm:   6px;
   --radius-md:   10px;
@@ -2197,6 +2203,226 @@ textarea:focus {
   color: var(--text);
 }
 
+/* ─── Module 4: drie oefeningen ───────────────────────────────── */
+
+/* Persoonlijk introkader (toont het module 1-antwoord) */
+.m4-intro {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 22px 26px;
+  margin-bottom: 40px;
+}
+
+.m4-intro-voor {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.m4-intro-taak {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--sage-ink);
+  margin-bottom: 12px;
+}
+
+.m4-intro-na {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+/* 4.0 — de rode draad */
+.m4-rodedraad-alinea {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.m4-rodedraad-stappen {
+  margin: 4px 0 18px;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: rd;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m4-rodedraad-stappen li {
+  counter-increment: rd;
+  position: relative;
+  padding-left: 36px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.m4-rodedraad-stappen li::before {
+  content: counter(rd);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--sage-soft);
+  color: var(--sage-ink);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.m4-rodedraad-na {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--sage-ink);
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 14px 18px;
+}
+
+/* Herbruikbaar externe-tool-instructieblok (gedempt lucht-blauw) */
+.m4-instructieblok {
+  background: var(--lucht-mist);
+  border-left: 3px solid var(--lucht-rand);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.m4-instructieblok-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lucht-ink);
+  margin-bottom: 8px;
+}
+
+.m4-instructieblok p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+/* Casus-informatie: ruw plan (lijst) */
+.m4-info {
+  margin-bottom: 20px;
+}
+
+.m4-info--lijst {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+}
+
+.m4-info-titel {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--sage-ink);
+  margin-bottom: 16px;
+}
+
+.m4-info-lijst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.m4-info-lijst li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.m4-info-lijst li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+/* Casus-informatie: mail */
+.m4-info-intro {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.m4-info--mail {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+}
+
+.m4-mail-kop {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--sage-soft);
+  font-size: 14px;
+  color: var(--sage-ink);
+}
+
+.m4-mail-veld {
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.m4-mail-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.m4-mail-body p {
+  margin-bottom: 12px;
+}
+
+.m4-mail-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Les 4: jouw eigen taak */
+.m4-eigen-taak-aanhaling {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: var(--sage-ink);
+}
+
+.m4-eigen-taak-acties {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
 /* ─── Mobiel ──────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
@@ -2222,5 +2448,11 @@ textarea:focus {
   .element-kaart,
   .bonus {
     padding: 20px 18px;
+  }
+
+  .m4-intro,
+  .m4-info--lijst,
+  .m4-info--mail {
+    padding: 18px 18px;
   }
 }
