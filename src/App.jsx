@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import cursusData from './data/cursus.json'
 import Navigatie from './components/Navigatie.jsx'
 import ModuleWeergave from './components/ModuleWeergave.jsx'
@@ -14,6 +14,12 @@ export default function App() {
   const [actieveModuleId, setActieveModuleId] = useState(
     () => localStorage.getItem(OPSLAG_KEY) || null
   )
+
+  // Bij elke modulewissel terug naar de bovenkant, zodat je niet
+  // onderaan de volgende module begint.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 })
+  }, [actieveModuleId])
 
   function navigeerNaar(moduleId) {
     setActieveModuleId(moduleId)

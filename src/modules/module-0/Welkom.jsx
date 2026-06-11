@@ -14,6 +14,16 @@ export default function Welkom({ modules, onStart }) {
         </p>
       </div>
 
+      {/* CTA — direct onder de koptekst zodat starten geen scrollen vereist */}
+      <div className="welkom-cta">
+        <button className="primary welkom-knop" onClick={onStart}>
+          Start de cursus
+        </button>
+        <p className="welkom-cta-toelichting">
+          Je koppelt eerst je API-sleutel. Dat duurt twee minuten.
+        </p>
+      </div>
+
       {/* Drie alinea's */}
       <div className="welkom-intro">
         <div className="welkom-blok">
@@ -64,16 +74,6 @@ export default function Welkom({ modules, onStart }) {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* CTA */}
-      <div className="welkom-cta">
-        <button className="primary welkom-knop" onClick={onStart}>
-          Start de cursus
-        </button>
-        <p className="welkom-cta-toelichting">
-          Je koppelt eerst je API-sleutel. Dat duurt twee minuten.
-        </p>
       </div>
 
     </div>

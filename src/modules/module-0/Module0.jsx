@@ -15,6 +15,11 @@ export default function Module0({ modules, onVolgende }) {
     }
   }, [scherm])
 
+  // Bij wissel van sub-scherm terug naar boven scrollen
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 })
+  }, [scherm])
+
   if (scherm === 'welkom') {
     return (
       <Welkom
