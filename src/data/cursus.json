@@ -12,7 +12,10 @@
         "eigenschappen / kolommen": "Twee kaarten of kolommen naast elkaar (goed/niet kunnen, nooit/veilig invoeren).",
         "flyer_systeeminstructie": "System-prompt uitsluitend voor de HTML-flyergeneratie. Gaat naar de AI, nooit zichtbaar.",
         "afsluitvraag": "Vrije reflectievraag na de feedback; antwoord wordt opgeslagen onder opslag_key in localStorage.",
-        "originele_situatie": "Voorbeeldtekst met persoonsgegevens die de deelnemer moet anonimiseren (module 2 les 3)."
+        "originele_situatie": "Voorbeeldtekst met persoonsgegevens die de deelnemer moet anonimiseren (module 2 les 3).",
+        "demo": "Gesimuleerde prompt-demo met twee vaste standen (slecht/goed). Geen AI-aanroep; alle teksten staan vast (module 3 les 1).",
+        "elementen": "Drie uitlegkaarten ROL, TAAK en CONTEXT, elk met uitleg en voorbeeld (module 3 les 2).",
+        "bonus": "Compacte lijst met bonustechnieken naast de drie elementen (module 3 les 2)."
       }
     },
     "taal": "nl",
@@ -284,7 +287,114 @@
       "beschrijving": "Je oefent met het schrijven van duidelijke instructies voor AI, zodat je betere en bruikbaardere antwoorden krijgt. Een vaardigheid die je meteen in de praktijk kunt gebruiken.",
       "externe_tool_vereist": false,
       "voltooiing": false,
-      "lessen": []
+      "afsluittekst": "Module 3 voltooid. Je schrijft nu prompts die echt werken.",
+      "lessen": [
+        {
+          "id": "les-3-1",
+          "titel": "Ervaar het verschil",
+          "externe_tool_vereist": false,
+          "demo": {
+            "toggle": {
+              "naar_goed": "Bekijk de goede prompt →",
+              "naar_slecht": "← Bekijk de slechte prompt"
+            },
+            "standen": [
+              {
+                "id": "slecht",
+                "label": "Vaag in = vaag uit",
+                "toon": "rood",
+                "prompt": "Schrijf iets over onze activiteit.",
+                "antwoord": "Beste deelnemers,\n\nBinnenkort organiseren wij een interessante activiteit. Er zullen diverse mogelijkheden zijn om elkaar te ontmoeten en informatie te krijgen. We hopen u te verwelkomen op dit evenement.\n\nMet vriendelijke groet,\nHet organisatieteam",
+                "oordeel": "Generiek, geen datums, geen toon, niet voor jouw doelgroep."
+              },
+              {
+                "id": "goed",
+                "label": "Specifiek in = bruikbaar uit",
+                "toon": "groen",
+                "prompt": "Je bent een vriendelijke communicatiemedewerker bij een wijkorganisatie. Schrijf een uitnodigingstekst van maximaal 80 woorden voor een gratis inloopmiddag op 15 april van 13:00 tot 15:30 in het wijkcentrum. De middag is voor mensen met geldzorgen. Toon: warm en laagdrempelig. Geen ambtelijk taalgebruik.",
+                "antwoord": "Heb je zorgen over geld? Je bent niet alleen, en er is hulp.\n\nOp 15 april van 13:00 tot 15:30 verwelkomen we je in het wijkcentrum voor een gratis inloopmiddag. Er zijn mensen van de gemeente en een schuldhulpverlener aanwezig die je vrijblijvend te woord staan. Kom gewoon langs, aanmelden is niet nodig.",
+                "oordeel": "Direct bruikbaar. Juiste toon, juiste doelgroep, juiste lengte."
+              }
+            ]
+          },
+          "kennischeck": {
+            "vraag": "Welk van de drie elementen ROL, TAAK en CONTEXT ontbreekt in de slechte prompt?",
+            "opties": [
+              "Alleen ROL",
+              "Alleen TAAK",
+              "Alle drie: ROL, TAAK én CONTEXT"
+            ],
+            "correct": 2,
+            "uitleg_correct": "In de slechte prompt ontbreekt de ROL (wie moet AI zijn), de TAAK (wat precies, voor wie, welk format) en de CONTEXT (doelgroep, toon, datum). De volgende les legt uit wat elk element betekent."
+          }
+        },
+        {
+          "id": "les-3-2",
+          "titel": "De drie elementen",
+          "externe_tool_vereist": false,
+          "elementen": [
+            {
+              "nummer": 1,
+              "naam": "ROL",
+              "uitleg": "Vertel AI wie hij moet zijn. AI past zijn woordkeuze, toon en niveau aan op de rol die jij geeft. Zonder rol spreekt AI als een anonieme assistent: correct maar generiek.",
+              "voorbeeld": "Je bent een vriendelijke communicatiemedewerker bij een wijkorganisatie."
+            },
+            {
+              "nummer": 2,
+              "naam": "TAAK",
+              "uitleg": "Beschrijf wat je wilt: het formaat, de lengte, het doel. Hoe specifieker je bent, hoe bruikbaarder het resultaat.",
+              "voorbeeld": "Schrijf een uitnodigingstekst van maximaal 80 woorden voor een gratis inloopmiddag."
+            },
+            {
+              "nummer": 3,
+              "naam": "CONTEXT",
+              "uitleg": "Geef de informatie die AI nodig heeft: voor wie is het, wanneer, welke toon past, wat zijn de bijzonderheden?",
+              "voorbeeld": "De middag is voor mensen met geldzorgen, op 15 april van 13:00 tot 15:30, in het wijkcentrum. Toon: warm en laagdrempelig."
+            }
+          ],
+          "kennischeck": {
+            "vraag": "Welke elementen ontbreken in deze prompt: 'Je bent een communicatiemedewerker bij een welzijnsorganisatie. Schrijf iets voor de bewoners over de inloopmiddag.'",
+            "opties": [
+              "Alleen TAAK ontbreekt: er is geen format, lengte of doel opgegeven",
+              "Alleen CONTEXT ontbreekt: er is geen datum, doelgroep of toon meegegeven",
+              "ROL én CONTEXT ontbreken: er is geen beschrijving van wie AI moet zijn en er is geen doelgroep of toon",
+              "ROL, TAAK én CONTEXT ontbreken alle drie"
+            ],
+            "correct": 0,
+            "uitleg_correct": "Deze prompt heeft wel een ROL (communicatiemedewerker bij een welzijnsorganisatie) en CONTEXT (bewoners, inloopmiddag). Maar de TAAK ontbreekt: wat voor tekst, hoe lang, in welk format, met welk doel? Zonder die specificaties kiest AI zelf en is het resultaat een gok."
+          },
+          "bonus": {
+            "titel": "Vijf technieken die direct werken:",
+            "technieken": [
+              { "kop": "Geef een voorbeeld", "tekst": "'Net als deze tekst: [plak voorbeeld]'" },
+              { "kop": "Zeg wat je niet wilt", "tekst": "'Geen jargon', 'niet formeel', 'zonder opsomming'" },
+              { "kop": "Vraag meerdere versies", "tekst": "'Geef me drie varianten'" },
+              { "kop": "Bouw voort", "tekst": "'Maak dit korter', 'schrijf het vriendelijker'" },
+              { "kop": "Vraag door", "tekst": "'Waarom kies je voor deze aanpak?'" }
+            ]
+          }
+        },
+        {
+          "id": "les-3-3",
+          "titel": "Verbeter een slechte prompt",
+          "externe_tool_vereist": false,
+          "opdracht": {
+            "tekst": "Hieronder staat een slechte prompt. Verbeter hem door ROL, TAAK en CONTEXT toe te voegen. Je hoeft de verbeterde prompt niet echt naar AI te sturen. Schrijf hem in het veld hieronder.\n\nDe slechte prompt:\n'Schrijf iets voor onze nieuwsbrief.'",
+            "beoordelingsinstructie": "Je beoordeelt een verbeterde prompt. Controleer drie dingen: (1) is er een ROL aanwezig, (2) is de TAAK concreet omschreven, (3) is er CONTEXT gegeven over de doelgroep en/of het onderwerp. Benoem per element kort of het aanwezig is. Complimenteer wat goed is. Geef aan wat er eventueel nog mist. Maximaal 100 woorden. Schrijf in het Nederlands.",
+            "voorbeeld_antwoord": "Je bent een communicatiemedewerker bij een welzijnsorganisatie. Schrijf een nieuwsbrieftekst van maximaal 100 woorden over onze gratis inloopmiddag voor mensen met geldzorgen op 15 april. Doelgroep: bewoners van de wijk die weinig lezen. Toon: warm, eenvoudig taalgebruik, geen jargon. Vermeld de datum, het tijdstip en dat aanmelden niet nodig is."
+          }
+        },
+        {
+          "id": "les-3-4",
+          "titel": "Schrijf een prompt voor je eigen werk",
+          "externe_tool_vereist": false,
+          "opdracht": {
+            "tekst": "Kies een taak die jij regelmatig doet in je werk of als vrijwilliger. Schrijf daarvoor een prompt met ROL, TAAK en CONTEXT. Het hoeft niet perfect te zijn. Het doel is dat jij een prompt schrijft die je na deze cursus echt kunt gebruiken.",
+            "beoordelingsinstructie": "Je beoordeelt een zelfgeschreven prompt. Controleer: (1) is ROL aanwezig, (2) is TAAK concreet, (3) is CONTEXT gegeven. Beoordeel ook of de taak geschikt is voor AI. Als de taak persoonsgegevens bevat, wijs hier dan vriendelijk op en stel een anonieme versie voor. Als alle drie elementen aanwezig zijn, bevestig dat de prompt klaar voor gebruik is. Sluit aanmoedigend af. Maximaal 120 woorden. Schrijf in het Nederlands.",
+            "voorbeeld_antwoord": "Je bent een ervaren notulist bij een welzijnsorganisatie. Vat de volgende vergadernotities samen in maximaal 150 woorden. Vermeld per agendapunt het besluit en de actiepunten met naam en deadline. Laat algemene discussie weg. Toon: zakelijk en bondig. Doelgroep: teamleden die de vergadering hebben gemist."
+          }
+        }
+      ]
     },
     {
       "id": "module-4",

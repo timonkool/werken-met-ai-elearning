@@ -1954,6 +1954,249 @@ textarea:focus {
   font-weight: 500;
 }
 
+/* ─── Module 3, les 1: prompt-demo ────────────────────────────── */
+
+.prompt-demo {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  padding: 24px 26px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  margin-bottom: 32px;
+}
+
+.prompt-demo-vlag {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  margin-bottom: 20px;
+}
+
+.prompt-demo-vlag--slecht {
+  background: var(--klei-mist);
+  color: var(--klei-ink);
+}
+
+.prompt-demo-vlag--goed {
+  background: var(--sage-mist);
+  color: var(--sage-ink);
+}
+
+.prompt-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.prompt-chat-rij {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prompt-chat-rol {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.prompt-chat-bel {
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.prompt-chat-bel--vraag {
+  background: var(--sage-soft);
+  color: var(--sage-ink);
+  font-weight: 500;
+}
+
+.prompt-chat-bel--antwoord {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.prompt-chat-bel--antwoord p {
+  margin-bottom: 10px;
+}
+
+.prompt-chat-bel--antwoord p:last-child {
+  margin-bottom: 0;
+}
+
+.prompt-demo-oordeel {
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.prompt-demo-oordeel--slecht {
+  background: var(--klei-mist);
+  border-left: 3px solid var(--klei-rand);
+  color: var(--klei-ink);
+}
+
+.prompt-demo-oordeel--goed {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  color: var(--sage-ink);
+}
+
+.prompt-demo-toggle {
+  font-size: 14px;
+}
+
+/* ─── Module 3, les 2: drie uitlegkaarten + bonus ─────────────── */
+
+.element-kaarten {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.element-kaart {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 22px 26px;
+}
+
+.element-kaart-kop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.element-kaart-nummer {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sage-deep);
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.element-kaart-naam {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--sage-ink);
+}
+
+.element-kaart-uitleg {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.element-kaart-voorbeeld {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--sage-ink);
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+
+.element-kaart-voorbeeld-label {
+  display: block;
+  font-family: 'Quicksand', sans-serif;
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.bonus {
+  background: var(--cream);
+  border: 1px solid var(--sage-soft);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  margin-bottom: 32px;
+}
+
+.bonus-titel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 16px;
+}
+
+.bonus-lijst {
+  list-style: none;
+  counter-reset: bonus;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bonus-lijst li {
+  counter-increment: bonus;
+  position: relative;
+  padding-left: 34px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.bonus-lijst li::before {
+  content: counter(bonus);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--sage-soft);
+  color: var(--sage-ink);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.bonus-kop {
+  font-weight: 600;
+  color: var(--sage-ink);
+}
+
+.bonus-kop::after {
+  content: ' — ';
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.bonus-tekst {
+  color: var(--text);
+}
+
 /* ─── Mobiel ──────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
@@ -1973,5 +2216,11 @@ textarea:focus {
 
   .gouden-regel-tekst {
     font-size: 19px;
+  }
+
+  .prompt-demo,
+  .element-kaart,
+  .bonus {
+    padding: 20px 18px;
   }
 }
