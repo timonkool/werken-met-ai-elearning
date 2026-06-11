@@ -12,6 +12,8 @@ const AI_DISCLAIMER = 'Dit is feedback van een AI. Gebruik je eigen oordeel, AI 
 // Props:
 // - lesId            id voor voortgangsopslag
 // - opdracht         { tekst, beoordelingsinstructie, voorbeeld_antwoord }
+// - nummer           optioneel opdrachtnummer; toont "Opdracht N" (alleen meegeven bij
+//                    meerdere opdrachten per module), anders enkel "Opdracht"
 // - inleiding        optioneel JSX boven het tekstveld (bv. de te anonimiseren situatie)
 // - placeholder      optionele placeholder voor het tekstveld
 // - afrondLabel      label van de afrondknop (standaard 'Markeer als afgerond')
@@ -20,6 +22,7 @@ const AI_DISCLAIMER = 'Dit is feedback van een AI. Gebruik je eigen oordeel, AI 
 export default function OpdrachtFeedback({
   lesId,
   opdracht,
+  nummer = null,
   inleiding = null,
   placeholder = 'Schrijf hier je antwoord...',
   afrondLabel = 'Markeer als afgerond',
@@ -68,6 +71,8 @@ export default function OpdrachtFeedback({
 
   return (
     <section className="opdrachtblok">
+      <h3 className="opdrachtblok-kop">Opdracht{nummer ? ` ${nummer}` : ''}</h3>
+
       {/* Eenmalige kostenmelding, blokkeert niets */}
       {kostenWaarschuwing && (
         <div className="lesblok-kosten">

@@ -151,6 +151,7 @@ function VerbeterPromptLes({ les, onAfgerond }) {
       <OpdrachtFeedback
         lesId={les.id}
         opdracht={les.opdracht}
+        nummer={1}
         placeholder="Schrijf hier je verbeterde prompt..."
         onAfgerond={onAfgerond}
       />
@@ -167,6 +168,7 @@ function EigenPromptLes({ les, onAfgerond }) {
       <OpdrachtFeedback
         lesId={les.id}
         opdracht={les.opdracht}
+        nummer={2}
         placeholder="Schrijf hier je eigen prompt..."
         afrondLabel="Bewaar mijn antwoord en sluit module 3 af"
         onAfgerond={onAfgerond}

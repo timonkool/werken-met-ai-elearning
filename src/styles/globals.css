@@ -1005,6 +1005,8 @@ textarea:focus {
   font-weight: 600;
   color: var(--sage-ink);
   margin-bottom: 24px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--sage);
 }
 
 /* Eenmalige kostenmelding */
@@ -1156,6 +1158,15 @@ textarea:focus {
   border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   padding: 24px 28px;
   margin-bottom: 32px;
+}
+
+.opdrachtblok-kop {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--sage-ink);
+  margin: 0 0 16px;
 }
 
 .opdrachtblok-tekst {

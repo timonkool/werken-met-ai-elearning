@@ -31,6 +31,7 @@ export default function Module4({ module, onVolgende }) {
 
       <OefeningLes
         les={les1}
+        nummer={1}
         instructieblok={module.instructieblok}
         placeholder="Plak hier je prompt en de eerste vijf regels van het resultaat..."
         onAfgerond={() => markeerLes(les1.id)}
@@ -38,6 +39,7 @@ export default function Module4({ module, onVolgende }) {
 
       <OefeningLes
         les={les2}
+        nummer={2}
         instructieblok={module.instructieblok}
         placeholder="Plak hier je prompt en de eerste vijf regels van het resultaat..."
         onAfgerond={() => markeerLes(les2.id)}
@@ -45,6 +47,7 @@ export default function Module4({ module, onVolgende }) {
 
       <OefeningLes
         les={les3}
+        nummer={3}
         instructieblok={module.instructieblok}
         placeholder="Plak hier je prompt en de eerste vijf regels van het resultaat..."
         onAfgerond={() => markeerLes(les3.id)}
@@ -142,7 +145,7 @@ function Informatie({ info }) {
 
 /* ─── Les 1 t/m 3: oefening met externe tool + AI-feedback ─────── */
 
-function OefeningLes({ les, instructieblok, placeholder, onAfgerond }) {
+function OefeningLes({ les, nummer, instructieblok, placeholder, onAfgerond }) {
   return (
     <section className="les">
       <h2 className="lesblok-titel">{les.titel}</h2>
@@ -157,6 +160,7 @@ function OefeningLes({ les, instructieblok, placeholder, onAfgerond }) {
       <OpdrachtFeedback
         lesId={les.id}
         opdracht={les.opdracht}
+        nummer={nummer}
         placeholder={placeholder}
         onAfgerond={onAfgerond}
       />
@@ -191,6 +195,7 @@ function EigenTaakLes({ les, onAfgerond }) {
     <section className="les">
       <h2 className="lesblok-titel">{les.titel}</h2>
       <div className="opdrachtblok">
+        <h3 className="opdrachtblok-kop">Opdracht 4</h3>
         {eigenTaakM1 ? (
           <p className="opdrachtblok-tekst">
             {taak.tekst_met_taak_voor} <span className="m4-eigen-taak-aanhaling">"{eigenTaakM1}"</span> {taak.tekst_met_taak_na}
