@@ -1,11 +1,18 @@
 {
   "meta": {
     "_docs": {
-      "versie": "1.0",
+      "versie": "1.1",
       "beschrijving": "Cursusinhoud voor 'Werken met AI', e-learning voor medewerkers en vrijwilligers in de sociale sector.",
       "velden": {
         "beoordelingsinstructie": "Nooit renderen in de UI. Alleen als systeeminstructie in de API-aanroep.",
-        "voorbeeld_antwoord": "Tonen als inklapbaar blok na AI-feedback, nooit automatisch."
+        "voorbeeld_antwoord": "Tonen als inklapbaar blok na AI-feedback, nooit automatisch.",
+        "type": "Optioneel. Markeert een bijzondere les met eigen weergave: 'flyer' (module 1 les 1) of 'klikbare-zinnen' (module 1 les 3). Ontbreekt het veld, dan is het een standaard les.",
+        "afsluittekst": "Module-niveau. Wordt getoond in het afsluitblok onderaan de module wanneer alle lessen zijn afgerond.",
+        "citaat": "Lead-tekst in Fraunces italic met groene linkerlijn (module 1 les 2 analogie).",
+        "eigenschappen / kolommen": "Twee kaarten of kolommen naast elkaar (goed/niet kunnen, nooit/veilig invoeren).",
+        "flyer_systeeminstructie": "System-prompt uitsluitend voor de HTML-flyergeneratie. Gaat naar de AI, nooit zichtbaar.",
+        "afsluitvraag": "Vrije reflectievraag na de feedback; antwoord wordt opgeslagen onder opslag_key in localStorage.",
+        "originele_situatie": "Voorbeeldtekst met persoonsgegevens die de deelnemer moet anonimiseren (module 2 les 3)."
       }
     },
     "taal": "nl",
@@ -30,15 +37,80 @@
       "beschrijving": "Je ontdekt hoe AI werkt, wat het wel en niet kan, en waar het vandaan komt. Na deze module snap je de basis en kun je er nuchter over praten.",
       "externe_tool_vereist": false,
       "voltooiing": false,
+      "afsluittekst": "Module 1 voltooid. Je begrijpt nu hoe AI werkt, waarom je het kritisch moet gebruiken, en hoe je het kunt uitleggen aan iemand anders. Module 1 wordt gemarkeerd als voltooid.",
       "lessen": [
         {
-          "id": "les-test-voorbeeld",
-          "titel": "Voorbeeldles (tijdelijke test van LesBlok)",
+          "id": "les-1-1",
+          "titel": "Het wow-moment",
           "externe_tool_vereist": false,
-          "theorie": {
-            "tekst": "Stel je voor dat iemand alle boeken, artikelen en websites ter wereld heeft gelezen. Als jij een zin begint, voorspelt diegene razendsnel wat er daarna het meest logisch staat.\n\nDat is **AI**. Het voorspelt het meest waarschijnlijke volgende woord, op basis van alles wat het heeft 'gelezen'. Het begrijpt niets. Het herkent patronen.",
-            "video_url": null,
-            "video_beschrijving": "Korte uitleg over hoe AI tekst voorspelt."
+          "type": "flyer",
+          "tijdsvergelijking": {
+            "zonder": {
+              "titel": "Zonder AI",
+              "tijd": "±45 minuten",
+              "stappen": [
+                "Open Word en bedenk hoe je begint",
+                "Schrijf een eerste versie van de uitnodigingstekst",
+                "Herlees, twijfel over de toon, pas aan",
+                "Hannesen met lay-out en opmaak om er iets moois van te maken",
+                "Vraag een collega om feedback",
+                "Verwerk de feedback en maak de definitieve versie"
+              ]
+            },
+            "met": {
+              "titel": "Met AI",
+              "tijd": "±10 seconden",
+              "placeholder": "Hier verschijnt jouw flyer."
+            }
+          },
+          "prompt_instructie": "Hieronder staat de vraag die we aan AI gaan stellen. Je mag hem aanpassen of zo laten. Verander bijvoorbeeld de datum, de locatie of de toon. Klik daarna op de knop.",
+          "standaard_prompt": "Maak een mooie HTML-uitnodigingsflyer voor een gratis inloopmiddag voor mensen met geldzorgen. De middag is op 15 april, van 13:00 tot 15:30, in het wijkcentrum. Aanwezig zijn een schuldhulpverlener en een medewerker van de gemeente. De sfeer moet warm en laagdrempelig zijn. Gebruik kleuren die rustig en uitnodigend zijn. Voeg toe: een duidelijke koptitel, de datum en het tijdstip, een korte uitnodigende tekst van twee zinnen, en onderaan de locatienaam. Het resultaat moet er als een echte flyer uitzien met opmaak, kleur en typografie, niet als platte tekst.",
+          "flyer_systeeminstructie": "Je bent een expert in HTML en webdesign. Je maakt uitsluitend volledige, zelfstandige HTML-bestanden die er professioneel uitzien als grafische flyers. Gebruik inline CSS voor alle opmaak. Gebruik rustige, warme kleuren. Gebruik een duidelijke typografische hiërarchie met een grote koptitel, datum, tekst en locatie. Voeg geen uitleg toe, geen codeblokken, geen markdown. Geef alleen de volledige HTML-code, beginnend met <!DOCTYPE html>.",
+          "genereer_knop": "Maak mijn flyer →",
+          "laadtekst": "AI is je flyer aan het maken...",
+          "reflectie": {
+            "vraag": "Wat valt je op? Wat zou jij zelf nog aanpassen aan de flyer of aan de vraag die je stelde?",
+            "opslag_key": "module1_les1_reflectie",
+            "knop": "Doorgaan"
+          },
+          "herkenning": {
+            "instructie": "Klik aan welke van deze taken jij zelf doet. Er is geen goed of fout, en je keuze telt niet mee voor je voortgang.",
+            "kaartjes": [
+              "Uitnodigingen en aankondigingen schrijven voor activiteiten",
+              "E-mails lezen en de actiepunten eruit halen",
+              "Draaiboeken en planningen maken voor evenementen",
+              "Verslagen schrijven na vergaderingen of bijeenkomsten",
+              "Subsidieaanvragen en beleidsteksten formuleren",
+              "Flyers en communicatieteksten maken zonder grafisch ontwerper"
+            ],
+            "na_tekst": "Goed om te weten. In de volgende modules oefenen we precies met dit soort taken.",
+            "knop": "Naar les 2"
+          }
+        },
+        {
+          "id": "les-1-2",
+          "titel": "Hoe werkt AI?",
+          "externe_tool_vereist": false,
+          "citaat": "Stel je voor dat iemand alle boeken, artikelen en websites ter wereld heeft gelezen. Als jij een zin begint, voorspelt diegene razendsnel wat er daarna het meest logisch staat. Niet omdat hij het begrijpt, maar omdat hij ontelbare keren heeft gezien hoe tekst loopt.\n\nDat is AI. Het voorspelt het meest waarschijnlijke volgende woord, op basis van alles wat het heeft 'gelezen'. Het begrijpt niets. Het herkent patronen.",
+          "eigenschappen": {
+            "goed": {
+              "titel": "Wat AI goed kan",
+              "punten": [
+                "Snel: dezelfde taak in seconden, niet in uren",
+                "Consistent: altijd even geduldige en zorgvuldige output",
+                "Onvermoeibaar: geen chagrijn bij de tiende herhaling",
+                "Nooit beschaamd door een 'domme' vraag"
+              ]
+            },
+            "niet": {
+              "titel": "Wat AI niet kan",
+              "punten": [
+                "Begrijpen wat het schrijft",
+                "Oordelen of iets klopt of juist is",
+                "Zelf controleren of informatie correct is",
+                "Eigen ervaringen of gevoelens hebben"
+              ]
+            }
           },
           "kennischeck": {
             "vraag": "Wat doet AI als jij een vraag stelt?",
@@ -50,11 +122,71 @@
             ],
             "correct": 2,
             "uitleg_correct": "AI heeft enorm veel tekst verwerkt en kan op basis daarvan voorspellen wat een logisch antwoord is op jouw vraag. Het begrijpt je vraag niet, maar herkent patronen die op jouw situatie lijken."
+          }
+        },
+        {
+          "id": "les-1-3",
+          "titel": "AI liegt geloofwaardig",
+          "externe_tool_vereist": false,
+          "type": "klikbare-zinnen",
+          "inleiding": "AI-teksten zien er vaak foutloos uit. Lees de volgende tekst aandachtig.",
+          "document": {
+            "titel": "Bijzondere bijstand: wat u moet weten",
+            "alineas": [
+              [
+                { "tekst": "Bijzondere bijstand is een aanvulling op de reguliere bijstandsuitkering voor mensen met noodzakelijke kosten die zij niet uit eigen middelen kunnen betalen.", "fout": false },
+                { "tekst": "Op grond van artikel 35 lid 2 van de Participatiewet heeft iedere inwoner recht op een individuele toets van zijn situatie.", "fout": true, "uitleg": "Dit wetsartikel bestaat, maar de strekking zoals hier beschreven is niet correct. Controleer altijd wetgeving via wetten.nl." }
+              ],
+              [
+                { "tekst": "De gemeente hanteert een inkomensgrens van 120 procent van de bijstandsnorm.", "fout": true, "uitleg": "Dit percentage varieert per gemeente. AI presenteert één getal alsof het universeel geldt." },
+                { "tekst": "Kosten die voor vergoeding in aanmerking komen zijn onder meer medische hulpmiddelen, schoolkosten voor kinderen en woonkosten bij calamiteiten.", "fout": false },
+                { "tekst": "Een aanvraag wordt binnen acht weken behandeld en de uitkering wordt in één keer uitbetaald.", "fout": false }
+              ],
+              [
+                { "tekst": "Schulden bij woningcorporaties worden in principe niet vergoed, tenzij het gaat om een dreigende huisuitzetting waarbij het gezinsbelang in het geding is.", "fout": false },
+                { "tekst": "In dat geval kan de gemeente op basis van artikel 36a een noodfonds activeren tot een maximum van 2.500 euro.", "fout": true, "uitleg": "Dit wetsartikel bestaat niet in de Participatiewet. AI heeft dit geconstrueerd op basis van het patroon van de omringende tekst." }
+              ]
+            ]
           },
+          "instructie": "Klik op de zinnen die jij zonder extra controle zou gebruiken in je eigen werk.",
+          "onthul_knop": "Bekijk welke zinnen niet kloppen.",
+          "na_onthulling": "AI klinkt altijd zeker. Dat is precies het gevaar.",
+          "bewaarkaartje": {
+            "titel": "Controleer altijd bij:",
+            "punten": [
+              "Wetten en officiële regels",
+              "Namen, functies en organisaties",
+              "Datums, bedragen en percentages",
+              "Juridische informatie",
+              "Medische informatie"
+            ],
+            "download_knop": "Download dit kaartje (PDF)"
+          },
+          "kennischeck": {
+            "vraag": "AI vertelt jou welk wetsartikel van toepassing is op een aanvraag bijzondere bijstand. Wat doe je?",
+            "opties": [
+              "Dat overnemen in de brief, want AI heeft heel veel wetgeving gelezen",
+              "Het artikel opzoeken op wetten.nl of bij een betrouwbare bron voordat je het gebruikt",
+              "Vragen aan een collega of het klopt",
+              "Het artikel weglaten uit de brief om zeker te zijn"
+            ],
+            "correct": 1,
+            "uitleg_correct": "AI kan wetsartikelen noemen die niet bestaan, verouderd zijn, of een verkeerde strekking hebben. De enige betrouwbare bron voor wetgeving is wetten.nl of een officiële instantie."
+          }
+        },
+        {
+          "id": "les-1-4",
+          "titel": "Jouw eerste opdracht",
+          "externe_tool_vereist": false,
           "opdracht": {
-            "tekst": "Beschrijf in je eigen woorden aan iemand zonder AI-kennis wat AI is. Gebruik een eigen vergelijking, niet de belezen-collega-analogie die je net hebt gelezen, maar iets wat bij jouw eigen werk of leven past. Schrijf minimaal drie zinnen.",
+            "tekst": "Beschrijf in je eigen woorden aan iemand zonder AI-kennis wat AI is. Gebruik een eigen vergelijking. Niet de belezen-collega-analogie die je net hebt gelezen, maar iets wat bij jouw eigen werk of leven past. Schrijf minimaal drie zinnen.",
             "beoordelingsinstructie": "Je beoordeelt de uitleg die een deelnemer heeft geschreven. Controleer drie dingen: (1) is de uitleg begrijpelijk voor iemand zonder AI-kennis, (2) zit het idee van voorspellen in plaats van begrijpen er impliciet of expliciet in, (3) is er een eigen analogie gebruikt die logisch klopt. Geef een oprecht compliment voor wat goed is. Benoem één concreet verbeterpunt als dat er is. Sluit aanmoedigend af. Maximaal 100 woorden. Schrijf in het Nederlands.",
             "voorbeeld_antwoord": "AI is een beetje als een heel ervaren tekstschrijver die duizenden brieven heeft gelezen. Als jij begint met 'Geachte mevrouw, ik schrijf u in verband met...', dan weet die schrijver op basis van alle eerdere brieven ongeveer hoe zo'n zin verder gaat. Niet omdat hij jouw situatie begrijpt, maar omdat hij het patroon herkent. Dat is handig voor standaardteksten, maar je moet altijd zelf controleren of de inhoud ook echt klopt voor jouw specifieke situatie."
+          },
+          "afsluitvraag": {
+            "vraag": "Welke taak uit jouw eigen werk zou jij als eerste met AI willen uitproberen?",
+            "opslag_key": "module1_eigen_taak",
+            "knop": "Bewaar mijn antwoord en sluit module 1 af"
           }
         }
       ]
@@ -67,7 +199,82 @@
       "beschrijving": "Je leert welke informatie je wel en niet deelt met AI, en hoe je verantwoord omgaat met de uitkomsten. Veiligheid en privacy staan centraal.",
       "externe_tool_vereist": false,
       "voltooiing": false,
-      "lessen": []
+      "afsluittekst": "Module 2 voltooid. Je weet nu hoe je AI veilig inzet voor de mensen die jij helpt.",
+      "lessen": [
+        {
+          "id": "les-2-1",
+          "titel": "Het dilemma",
+          "externe_tool_vereist": false,
+          "situatie": "Fatima is vrijwilliger bij een welzijnsorganisatie. Ze wil een brief schrijven voor een cliënt, mevrouw Bakker, die drie maanden huurachterstand heeft van 1.240 euro. Fatima heeft tijdgebrek. Ze denkt: \"Ik typ de situatie snel in bij AI, dan heb ik in een minuut een goede brief.\" Ze opent het chatvenster en begint te typen: \"Schrijf een brief voor mevrouw Bakker, Westerstraat 4, die 1.240 euro huurschuld heeft...\"",
+          "situatie_vraag": "Wat is het risico van wat Fatima doet?",
+          "kennischeck": {
+            "vraag": "Wat is het risico als Fatima de naam en het schuldbedrag van mevrouw Bakker invoert in AI?",
+            "opties": [
+              "AI kan de brief niet schrijven als er persoonsnamen in staan",
+              "De gegevens van mevrouw Bakker kunnen worden opgeslagen door de AI-aanbieder en zijn dan buiten de controle van de organisatie",
+              "De brief wordt dan niet persoonlijk genoeg",
+              "Er is geen risico, AI is een veilig gesloten systeem"
+            ],
+            "correct": 1,
+            "uitleg_correct": "AI-diensten verwerken de tekst die je instuurt op hun servers. Afhankelijk van de instellingen kunnen die gegevens worden gebruikt om het model te verbeteren. Persoonsgegevens van cliënten horen niet buiten de organisatie te gaan, ook niet via een AI-chatvenster."
+          },
+          "overbrugging": "Het goede nieuws: Fatima kan AI nog steeds gebruiken voor deze brief. Ze hoeft er alleen één stap aan toe te voegen. Dat leer je in de volgende les."
+        },
+        {
+          "id": "les-2-2",
+          "titel": "De gouden regel",
+          "externe_tool_vereist": false,
+          "gouden_regel": "Wat je niet op een reclamebord wilt zien, geef je niet aan AI.",
+          "uitleg": [
+            "Als je niet wilt dat een tekst publiekelijk zichtbaar is, zijn de gegevens daarin ook niet bedoeld voor externe verwerking. AI is een externe dienst. Behandel het invoerveld als een brief die je opstuurt naar een onbekende partij.",
+            "De oplossing is simpel: anonimiseer eerst. Beschrijf de situatie zonder namen, adressen, bedragen of andere herleidbare gegevens. Het resultaat is net zo bruikbaar."
+          ],
+          "kolommen": {
+            "nooit": {
+              "titel": "Nooit invoeren in AI",
+              "punten": [
+                "Namen van cliënten of deelnemers",
+                "Adressen en contactgegevens",
+                "Financiële situaties van gezinnen of personen",
+                "Medische of psychologische informatie",
+                "BSN-nummers of andere identificerende gegevens"
+              ]
+            },
+            "veilig": {
+              "titel": "Veilig gebruiken met AI",
+              "punten": [
+                "Anonieme situatiebeschrijvingen (\"een cliënt met huurachterstand\")",
+                "Subsidieteksten zonder namen",
+                "Communicatietemplates en uitnodigingsteksten",
+                "Draaiboeken en planningen voor activiteiten",
+                "Verslagen zonder persoonsgegevens"
+              ]
+            }
+          },
+          "kennischeck": {
+            "vraag": "Je wilt AI helpen een brief te schrijven voor een cliënt met schulden. Wat geef je in?",
+            "opties": [
+              "De volledige naam, het adres en het exacte schuldbedrag, zodat de brief zo persoonlijk mogelijk is",
+              "Alleen de naam, niet het adres",
+              "Een anonieme beschrijving: \"een cliënt met huurachterstand van enkele honderden euro's\"",
+              "Niets: voor brieven over schulden gebruik je AI beter niet"
+            ],
+            "correct": 2,
+            "uitleg_correct": "AI heeft de persoonsgegevens niet nodig om een goede brief te schrijven. Een anonieme situatiebeschrijving geeft genoeg context voor een bruikbaar resultaat. Jij vult daarna de juiste naam en het bedrag zelf in."
+          }
+        },
+        {
+          "id": "les-2-3",
+          "titel": "Oefen zelf",
+          "externe_tool_vereist": false,
+          "opdracht": {
+            "tekst": "Hieronder staat een situatie met persoonsgegevens, zoals Fatima die ook had kunnen intypen. Herschrijf hem zo dat je hem veilig aan AI kunt geven. Verwijder alle herleidbare informatie, maar zorg dat de situatie nog bruikbaar is voor het schrijven van een brief.\n\nSchrijf jouw anonieme versie in het veld hieronder.",
+            "beoordelingsinstructie": "Je beoordeelt een anonieme herschrijving. Controleer drie dingen: (1) zijn alle persoonsgegevens verwijderd (naam, adres, exacte bedragen die herleidbaar zijn), (2) is de essentie van de situatie nog bruikbaar voor het schrijven van een brief, (3) is de herschrijving duidelijk genoeg. Geef een concreet compliment als iets goed is gedaan. Wijs op wat eventueel nog te specifiek is. Maximaal 80 woorden. Schrijf in het Nederlands.",
+            "voorbeeld_antwoord": "Schrijf een brief voor een cliënte die al enkele maanden haar huur niet betaalt en een aanzienlijke achterstand heeft opgebouwd. Ze heeft een gezin met kinderen en ontvangt een uitkering. De brief moet vriendelijk maar duidelijk zijn over de ernst van de situatie en de mogelijke vervolgstappen."
+          },
+          "originele_situatie": "Schrijf een brief aan mevrouw De Vries, Hoofdstraat 12 in Almere, die al vier maanden haar huur niet betaalt en een achterstand heeft opgebouwd van 1.240 euro. Ze heeft drie kinderen en ontvangt een bijstandsuitkering."
+        }
+      ]
     },
     {
       "id": "module-3",

@@ -1,5 +1,7 @@
 import React from 'react'
 import Module0 from '../modules/module-0/Module0.jsx'
+import Module1 from '../modules/module-1/Module1.jsx'
+import Module2 from '../modules/module-2/Module2.jsx'
 import LesBlok from './LesBlok.jsx'
 
 const FONT_SIZE = 48
@@ -20,6 +22,9 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
   // Standaard moduleweergave met kleurwissel-kop
   const index = modules.findIndex(m => m.id === module.id)
   const heeftVolgende = index < modules.length - 1
+
+  // Modules met een eigen lesweergave (bijzondere interacties)
+  const eigenWeergave = module.id === 'module-1' || module.id === 'module-2'
 
   return (
     <div className="module-weergave">
@@ -60,15 +65,25 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
       <div className="module-body">
         <p className="module-beschrijving">{module.beschrijving}</p>
 
-        {module.lessen && module.lessen.length > 0 ? (
-          module.lessen.map((les) => <LesBlok key={les.id} les={les} />)
-        ) : (
-          <div className="module-placeholder">
-            <p>Inhoud volgt binnenkort.</p>
-          </div>
+        {module.id === 'module-1' && (
+          <Module1 module={module} onVolgende={onVolgende} />
         )}
 
-        {heeftVolgende && (
+        {module.id === 'module-2' && (
+          <Module2 module={module} onVolgende={onVolgende} />
+        )}
+
+        {!eigenWeergave && (
+          module.lessen && module.lessen.length > 0 ? (
+            module.lessen.map((les) => <LesBlok key={les.id} les={les} />)
+          ) : (
+            <div className="module-placeholder">
+              <p>Inhoud volgt binnenkort.</p>
+            </div>
+          )
+        )}
+
+        {!eigenWeergave && heeftVolgende && (
           <button className="primary" onClick={onVolgende}>
             Volgende module
           </button>

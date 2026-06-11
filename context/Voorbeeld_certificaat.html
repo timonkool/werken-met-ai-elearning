@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificaat — Werken met AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage-deep: #6b8068;
+    --sage-ink: #3a4a38;
+    --sage: #8ba287;
+    --sage-soft: #c8d4c4;
+    --sage-mist: #eef2ec;
+    --cream: #faf8f4;
+    --text: #2d352c;
+    --muted: #888780;
+    --green-accent: #3b6d11;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #e8eae6;
+    font-family: 'Quicksand', 'Trebuchet MS', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  /* A4 landscape ratio (1.414:1) */
+  .certificaat {
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 1.414;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  /* ===== Donkere zijbalk ===== */
+  .band {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 22%;
+    background: var(--sage-ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.4% 0;
+    z-index: 2;
+  }
+  .band-top { display: flex; flex-direction: column; align-items: center; gap: 1.1vw; }
+  .band-icon-wrap {
+    width: 4.6vw; height: 4.6vw;
+    max-width: 42px; max-height: 42px;
+    min-width: 34px; min-height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,212,196,0.4);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--sage-soft);
+    font-size: 2.4vw;
+  }
+  .band-icon-wrap svg { width: 22px; height: 22px; }
+  .band-divider { width: 24px; height: 1px; background: rgba(250,248,244,0.15); }
+  .band-logo-text {
+    writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+    font-size: 1vw; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(250,248,244,0.45);
+  }
+  .band-mid { display: flex; flex-direction: column; align-items: center; gap: 0.7vw; }
+  .band-mid-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(200,212,196,0.3); }
+  .band-mid-line { width: 1px; height: 3vw; background: rgba(200,212,196,0.15); }
+  .band-bottom { display: flex; flex-direction: column; align-items: center; gap: 0.7vw; }
+  .band-timon {
+    writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+    font-size: 1vw; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(250,248,244,0.3);
+  }
+  .band-year { font-size: 1vw; color: rgba(250,248,244,0.28); letter-spacing: 0.08em; }
+
+  /* ===== Diagonaal hoekaccent ===== */
+  .corner-tri {
+    position: absolute; top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 9vw 9vw 0;
+    border-color: transparent var(--sage-ink) transparent transparent;
+    z-index: 3;
+  }
+  .corner-icon {
+    position: absolute; top: 0.9vw; right: 0.7vw;
+    color: var(--cream); z-index: 4;
+  }
+  .corner-icon svg { width: 22px; height: 22px; }
+
+  /* ===== Binnenframe + hoekjes ===== */
+  .frame-inner {
+    position: absolute;
+    left: 25%; right: 10px; top: 10px; bottom: 10px;
+    border: 0.5px solid var(--sage-soft);
+    border-radius: 2px;
+    pointer-events: none; z-index: 1;
+  }
+  .co { position: absolute; width: 16px; height: 16px; z-index: 2; }
+  .co-tr { top: 15px; right: 15px; border-top: 1.5px solid var(--sage-deep); border-right: 1.5px solid var(--sage-deep); }
+  .co-br { bottom: 15px; right: 15px; border-bottom: 1.5px solid var(--sage-deep); border-right: 1.5px solid var(--sage-deep); }
+
+  /* ===== Hoofdinhoud ===== */
+  .main-body {
+    position: absolute;
+    left: 24%; right: 0; top: 0; bottom: 0;
+    display: flex; flex-direction: column;
+    padding: 3% 3.8% 2.8% 3%;
+    z-index: 2;
+  }
+
+  .top-section {
+    display: flex; flex-direction: column; gap: 0.4vw;
+    padding-bottom: 1.8%;
+    border-bottom: 1px solid #dde3da;
+  }
+  .cert-eyebrow {
+    font-size: 1.1vw; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage-deep); font-weight: 500;
+  }
+  .cert-main-title {
+    font-size: 1.8vw; font-weight: 500; color: var(--sage-ink); line-height: 1.25;
+  }
+
+  .mid-section {
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 1.3vw; padding: 2% 0;
+  }
+  .confirms-line {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 1.35vw; color: #6b7268;
+  }
+  .recipient-name {
+    font-size: 4.2vw; font-weight: 500; color: var(--sage-ink); line-height: 1;
+  }
+  .name-underline { width: 11vw; max-width: 100px; height: 2.5px; background: var(--sage-deep); margin-top: 0.6vw; }
+  .achievement-text {
+    font-size: 1.35vw; color: #5a6a58; line-height: 1.7; margin-top: 0.2vw;
+  }
+  .modules-row { display: flex; gap: 0.8vw; flex-wrap: wrap; margin-top: 0.4vw; }
+  .module-pill {
+    font-size: 1.1vw; padding: 0.45vw 1.3vw; border-radius: 99px;
+    background: var(--sage-mist); color: var(--green-accent);
+    border: 0.5px solid var(--sage-soft); letter-spacing: 0.02em;
+  }
+
+  .bottom-section {
+    padding-top: 1.8%;
+    border-top: 1px solid #dde3da;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .sig-block { display: flex; flex-direction: column; gap: 0.4vw; }
+  .sig-line-above { width: 9vw; max-width: 90px; height: 0.5px; background: var(--sage-soft); margin-bottom: 0.4vw; }
+  .sig-name { font-size: 1.5vw; font-weight: 500; color: var(--sage-ink); }
+  .sig-role { font-size: 1.1vw; color: var(--muted); }
+
+  .seal-area { display: flex; flex-direction: column; align-items: center; gap: 0.5vw; }
+  .seal-circle {
+    width: 6vw; height: 6vw; max-width: 54px; max-height: 54px; min-width: 44px; min-height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sage-deep); background: var(--sage-mist);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--green-accent);
+  }
+  .seal-circle svg { width: 24px; height: 24px; }
+  .seal-text { font-size: 1vw; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+  .date-block { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4vw; }
+  .date-label { font-size: 1.1vw; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .date-value { font-size: 1.5vw; color: var(--sage-ink); font-weight: 500; }
+
+  /* Print: forceer landscape A4 en exacte kleuren */
+  @media print {
+    @page { size: A4 landscape; margin: 0; }
+    body { background: #fff; padding: 0; }
+    .certificaat { max-width: none; width: 100%; height: 100%; box-shadow: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+  <div class="certificaat">
+
+    <!-- Donkere zijbalk -->
+    <div class="band">
+      <div class="band-top">
+        <div class="band-icon-wrap">
+          <!-- award icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <div class="band-divider"></div>
+        <span class="band-logo-text">werken met AI</span>
+      </div>
+      <div class="band-mid">
+        <div class="band-mid-dot"></div>
+        <div class="band-mid-line"></div>
+        <div class="band-mid-dot"></div>
+        <div class="band-mid-line"></div>
+        <div class="band-mid-dot"></div>
+      </div>
+      <div class="band-bottom">
+        <span class="band-timon">timonkool.nl</span>
+        <div class="band-divider"></div>
+        <span class="band-year">2026</span>
+      </div>
+    </div>
+
+    <!-- Diagonaal hoekaccent -->
+    <div class="corner-tri"></div>
+    <div class="corner-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+
+    <!-- Binnenframe + hoekjes -->
+    <div class="frame-inner"></div>
+    <div class="co co-tr"></div>
+    <div class="co co-br"></div>
+
+    <!-- Hoofdinhoud -->
+    <div class="main-body">
+
+      <div class="top-section">
+        <span class="cert-eyebrow">certificaat van voltooiing</span>
+        <span class="cert-main-title">E-learning: Werken met AI voor de sociale sector</span>
+      </div>
+
+      <div class="mid-section">
+        <span class="confirms-line">Dit is om te bevestigen dat</span>
+        <div>
+          <div class="recipient-name" id="naam">Jan Klaassen</div>
+          <div class="name-underline"></div>
+        </div>
+        <p class="achievement-text">de e-learning Werken met AI volledig heeft doorlopen en alle opdrachten heeft voltooid. De deelnemer heeft aangetoond AI praktisch en verantwoord te kunnen inzetten in het dagelijkse werk.</p>
+        <div class="modules-row">
+          <span class="module-pill">Wat is AI?</span>
+          <span class="module-pill">Veilig gebruik</span>
+          <span class="module-pill">Prompts schrijven</span>
+          <span class="module-pill">Drie oefeningen</span>
+        </div>
+      </div>
+
+      <div class="bottom-section">
+        <div class="sig-block">
+          <div class="sig-line-above"></div>
+          <span class="sig-name">Timon Kool</span>
+          <span class="sig-role">timonkool.nl</span>
+        </div>
+        <div class="seal-area">
+          <div class="seal-circle">
+            <!-- rosette -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <span class="seal-text">voltooid</span>
+        </div>
+        <div class="date-block">
+          <span class="date-label">datum</span>
+          <span class="date-value" id="datum">10 juni 2026</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

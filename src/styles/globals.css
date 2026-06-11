@@ -1339,3 +1339,639 @@ textarea:focus {
     min-height: 140px;
   }
 }
+
+/* ─── Gedeelde les-sectie (module 1 & 2) ──────────────────────── */
+
+.les {
+  margin-bottom: 56px;
+}
+
+/* Lead-citaat (module 1, les 2 analogie) */
+.les-citaat {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+  border-left: 3px solid var(--sage-deep);
+  padding-left: 16px;
+  margin-bottom: 28px;
+}
+
+.les-citaat p {
+  margin-bottom: 12px;
+}
+
+.les-citaat p:last-child {
+  margin-bottom: 0;
+}
+
+/* Twee kaarten / kolommen naast elkaar */
+.kaarten-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.kaart {
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+}
+
+.kaart--goed {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+.kaart--niet {
+  background: var(--klei-mist);
+  border-left: 3px solid var(--klei-rand);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+.kaart-titel {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.kaart--goed .kaart-titel { color: var(--sage-ink); }
+.kaart--niet .kaart-titel { color: var(--klei-ink); }
+
+.kaart-lijst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.kaart-lijst li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.kaart-lijst li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+.kaart--niet .kaart-lijst li::before {
+  background: var(--klei-rand);
+}
+
+/* ─── Module 1, les 1: het wow-moment (flyer) ─────────────────── */
+
+.flyer-vergelijking {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.flyer-kolom {
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+}
+
+.flyer-kolom--zonder {
+  background: var(--cream);
+  border: 1px solid var(--sage-soft);
+}
+
+.flyer-kolom--met {
+  background: var(--sage-mist);
+  border: 1px solid var(--sage-soft);
+}
+
+.flyer-kolom-tijd {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.flyer-kolom-tijd--rood { color: var(--klei-ink); }
+.flyer-kolom-tijd--groen { color: var(--sage-deep); }
+
+.flyer-kolom-titel {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 16px;
+}
+
+.flyer-stappen {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.flyer-resultaat {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flyer-resultaat-leeg {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 160px;
+  background: var(--paper);
+  border-radius: var(--radius-md);
+}
+
+.flyer-laden {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-style: italic;
+  min-height: 160px;
+}
+
+.flyer-balk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.flyer-stopwatch {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sage-ink);
+}
+
+.flyer-kopieer {
+  height: 38px;
+  min-height: 38px;
+  font-size: 12px;
+  padding: 0 16px;
+}
+
+.flyer-iframe {
+  width: 100%;
+  height: 460px;
+  border: 1px solid var(--sage-soft);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+.flyer-prompt-instructie {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.flyer-prompt-veld {
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--sage-soft);
+  padding: 14px 16px;
+  background: var(--paper);
+  color: var(--text);
+  width: 100%;
+  min-height: 150px;
+  line-height: 1.6;
+  resize: vertical;
+  margin-bottom: 16px;
+}
+
+.flyer-prompt-veld:focus {
+  outline: none;
+  border-color: var(--sage-deep);
+}
+
+.flyer-genereer {
+  font-size: 15px;
+  height: 52px;
+  min-height: 52px;
+  padding: 0 32px;
+}
+
+/* Reflectievraag */
+.flyer-reflectie {
+  margin-top: 36px;
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-soft);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 24px 28px;
+}
+
+.flyer-reflectie-vraag {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 14px;
+}
+
+.flyer-reflectie .opdrachtblok-veld {
+  margin-bottom: 16px;
+}
+
+/* Herkenningskaartjes */
+.flyer-herkenning {
+  margin-top: 32px;
+}
+
+.flyer-herkenning-instructie {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 16px;
+}
+
+.herkenning-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.herkenning-kaart {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  background: var(--paper);
+  border: 1.5px solid var(--sage-soft);
+  border-radius: var(--radius-md);
+  min-height: auto;
+  padding: 16px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.herkenning-kaart:hover {
+  border-color: var(--sage);
+  opacity: 1;
+}
+
+.herkenning-kaart--gekozen {
+  background: var(--sage-mist);
+  border-color: var(--sage-deep);
+  color: var(--sage-ink);
+}
+
+.herkenning-kaart-vink {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--cream);
+  margin-top: 1px;
+}
+
+.herkenning-kaart--gekozen .herkenning-kaart-vink {
+  background: var(--sage-deep);
+  border-color: var(--sage-deep);
+}
+
+.flyer-herkenning-na {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+}
+
+/* ─── Module 1, les 3: klikbare zinnen ────────────────────────── */
+
+.klik-inleiding {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.klik-instructie {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 18px;
+}
+
+.klik-document {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  padding: 28px 30px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  margin-bottom: 24px;
+}
+
+.klik-document-titel {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 19px;
+  color: var(--sage-ink);
+  margin-bottom: 16px;
+}
+
+.klik-alinea {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.klik-alinea:last-child {
+  margin-bottom: 0;
+}
+
+.klik-zin {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 1px 2px;
+  transition: background 0.12s ease;
+}
+
+.klik-zin:hover {
+  background: var(--sage-mist);
+}
+
+.klik-zin--gekozen {
+  background: var(--sage-soft);
+}
+
+/* Na onthullen: foutieve zinnen gedempt oranje, correct-geselecteerd groen */
+.klik-zin--fout,
+.klik-zin--fout-gekozen {
+  background: var(--klei-mist);
+  box-shadow: inset 0 -2px 0 var(--klei-rand);
+  cursor: default;
+}
+
+.klik-zin--fout-gekozen {
+  box-shadow: inset 0 -2px 0 var(--klei-ink);
+  font-weight: 600;
+  color: var(--klei-ink);
+}
+
+.klik-zin--goed {
+  background: var(--sage-mist);
+  box-shadow: inset 0 -2px 0 var(--sage-deep);
+  cursor: default;
+}
+
+.klik-uitleg-lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.klik-uitleg {
+  background: var(--klei-mist);
+  border-left: 3px solid var(--klei-rand);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--klei-ink);
+}
+
+.klik-uitleg-citaat {
+  font-style: italic;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.klik-onthul {
+  margin-bottom: 32px;
+}
+
+/* Bewaarkaartje */
+.bewaarkaartje {
+  background: var(--sage-mist);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  margin-bottom: 32px;
+}
+
+.bewaarkaartje-titel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 14px;
+}
+
+.bewaarkaartje-lijst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.bewaarkaartje-lijst li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.bewaarkaartje-lijst li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--sage-deep);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ─── Module 1, les 4: afsluitvraag ───────────────────────────── */
+
+.afsluitvraag {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--sage-soft);
+}
+
+.afsluitvraag-vraag {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 14px;
+}
+
+.afsluitvraag .opdrachtblok-veld {
+  margin-bottom: 0;
+}
+
+/* ─── Module 2: situatie, gouden regel, originele situatie ────── */
+
+.situatie {
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage-deep);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.situatie-vraag {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sage-ink);
+  margin-bottom: 24px;
+}
+
+.overbrugging {
+  margin-top: 24px;
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.gouden-regel {
+  background: var(--sage-deep);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.gouden-regel-tekst {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--cream);
+}
+
+.gouden-regel-uitleg {
+  margin-bottom: 28px;
+}
+
+.gouden-regel-uitleg p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.gouden-regel-uitleg p:last-child {
+  margin-bottom: 0;
+}
+
+.originele-situatie {
+  background: var(--klei-mist);
+  border-left: 3px solid var(--klei-rand);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.originele-situatie-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--klei-ink);
+  margin-bottom: 8px;
+}
+
+/* ─── Module-afsluiting ───────────────────────────────────────── */
+
+.module-afsluiting {
+  background: var(--sage-mist);
+  border-left: 4px solid var(--sage-ink);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.module-afsluiting-vink {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--sage-ink);
+  color: var(--cream);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.module-afsluiting-tekst {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--sage-ink);
+  font-weight: 500;
+}
+
+/* ─── Mobiel ──────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .flyer-vergelijking,
+  .kaarten-duo,
+  .herkenning-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .flyer-iframe {
+    height: 380px;
+  }
+
+  .klik-document {
+    padding: 20px 18px;
+  }
+
+  .gouden-regel-tekst {
+    font-size: 19px;
+  }
+}
