@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { useAnthropicApi } from '../../hooks/useAnthropicApi.js'
+import ColorSwitchKop from '../../components/ColorSwitchKop.jsx'
 
 const SYSTEEM_INSTRUCTIE =
   'Je bent een enthousiaste en warme leercoach voor een cursus over AI. ' +
@@ -31,16 +32,15 @@ export default function ApiSucces({ onVolgende, onOpnieuwKoppelen }) {
   return (
     <div className="api-succes">
 
-      <div className="api-kop">
-        <p className="api-kop-label">Module 0 &middot; Stap 3 van 3</p>
-        <h1 className="api-kop-titel">Je bent er klaar voor</h1>
-      </div>
+      <ColorSwitchKop eyebrow="Module 0 · Stap 3 van 3" size="clamp(30px, 6vw, 46px)">
+        Je bent er klaar voor
+      </ColorSwitchKop>
 
       <div className="api-body">
 
         {/* Succesbevestiging */}
         <div className="api-succes-banner">
-          <span className="api-succes-vinkje">✓</span>
+          <span className="api-succes-vinkje"><i className="ph-bold ph-check" aria-hidden="true" /></span>
           <p className="api-succes-tekst">Gelukt! Je hebt AI aan je cursus toegevoegd.</p>
         </div>
 

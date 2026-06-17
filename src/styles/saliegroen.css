@@ -1,0 +1,397 @@
+/* ============================================================
+   Saliegroen — Design System (gevendord in dit project)
+   Bron: .claude/skills/Saliegroen Design Systeem/
+   Bevat: tokens (colors, typography, spacing, effects) + base.
+   Fonts worden geladen via index.html.
+   ============================================================ */
+
+/* ============================================================
+   COLORS — Saliegroen
+   One sage-green family as the anchor, plus a small set of MUTED,
+   desaturated semantic colors (clay / amber / dusty-blue) that sit
+   in the same warm, low-chroma world. Use semantics ONLY where they
+   add clarity (warnings, errors, code) — sage stays dominant.
+   ============================================================ */
+
+:root {
+  /* ---- Sage family (the anchor) ---- */
+  --sage-deep: #6b8068;   /* primary. fills, buttons, headings on cream */
+  --sage-ink:  #3a4a38;   /* darkest green. headings, dark surfaces */
+  --sage:      #8ba287;   /* lighter accent, lines, decoration */
+  --sage-soft: #c8d4c4;   /* soft backgrounds, badges, borders */
+  --sage-mist: #eef2ec;   /* card backgrounds, very subtle fills */
+
+  /* ---- Neutrals ---- */
+  --cream:  #faf8f4;      /* warm white — the default page background */
+  --paper:  #ffffff;      /* pure white, only where cream is too warm */
+  --text:   #2d352c;      /* body text */
+  --muted:  #6b7268;      /* secondary text, captions */
+
+  /* ---- Clay — danger / error (warm terracotta) ---- */
+  --clay-deep:    #a8584a;
+  --clay:         #c0826f;
+  --clay-surface: #f5e7e2;
+  --clay-border:  #e6cdc4;
+  --clay-ink:     #6e3127;
+
+  /* ---- Amber — warning / caution (soft ochre) ---- */
+  --amber-deep:    #ab7e34;
+  --amber:         #c8a866;
+  --amber-surface: #f6eed8;
+  --amber-border:  #e7d8ac;
+  --amber-ink:     #5d4615;
+
+  /* ---- Dusty blue — info / code (calm slate-blue) ---- */
+  --blue-deep:    #5a7a8c;
+  --blue:         #84a0ae;
+  --blue-surface: #e7eef2;
+  --blue-border:  #ccdae1;
+  --blue-ink:     #2e4753;
+
+  /* ---- Code surface (light dusty-blue, consistent with the info callout) ---- */
+  --code-bg:      var(--blue-surface);  /* #e7eef2 */
+  --code-bg-soft: #dbe6ec;              /* header bar, a touch deeper than the surface */
+  --code-text:    var(--blue-ink);      /* #2e4753 */
+  --code-muted:   var(--blue-deep);     /* #5a7a8c */
+  --code-accent:  var(--blue-deep);     /* left accent, mirrors callouts */
+
+  /* =========================================================
+     SEMANTIC ALIASES — prefer these in components & layouts
+     ========================================================= */
+
+  /* text */
+  --text-heading:  var(--sage-ink);
+  --text-body:     var(--text);
+  --text-muted:    var(--muted);
+  --text-accent:   var(--sage-deep);
+  --text-on-green: var(--cream);   /* ALWAYS cream/paper on green — never black */
+
+  /* surfaces */
+  --surface-page:   var(--cream);
+  --surface-card:   var(--sage-mist);
+  --surface-paper:  var(--paper);
+  --surface-green:  var(--sage-deep);
+  --surface-green-ink: var(--sage-ink);
+
+  /* lines & borders */
+  --border-subtle: var(--sage-mist);
+  --border-soft:   var(--sage-soft);
+  --border-accent: var(--sage-deep);
+
+  /* interactive */
+  --accent:        var(--sage-deep);
+  --accent-hover:  #5d7059;   /* sage-deep, slightly darker */
+  --accent-press:  #51624e;
+  --link:          var(--sage-deep);
+  --link-hover:    var(--sage-ink);
+  --focus-ring:    #8ba287;   /* sage, 2px outline + offset */
+
+  /* status families: deep (icon/strong) · surface (bg) · border · ink (text on surface) */
+  --danger-deep:    var(--clay-deep);
+  --danger-surface: var(--clay-surface);
+  --danger-border:  var(--clay-border);
+  --danger-ink:     var(--clay-ink);
+
+  --warning-deep:    var(--amber-deep);
+  --warning-surface: var(--amber-surface);
+  --warning-border:  var(--amber-border);
+  --warning-ink:     var(--amber-ink);
+
+  --info-deep:    var(--blue-deep);
+  --info-surface: var(--blue-surface);
+  --info-border:  var(--blue-border);
+  --info-ink:     var(--blue-ink);
+
+  --success-deep:    var(--sage-deep);
+  --success-surface: var(--sage-mist);
+  --success-border:  var(--sage-soft);
+  --success-ink:     var(--sage-ink);
+}
+
+/* ============================================================
+   TYPOGRAPHY — Saliegroen
+   Fraunces (display + leads) · Hanken Grotesk (body/UI) · JetBrains Mono (code)
+   ============================================================ */
+
+:root {
+  /* ---- Families ---- */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;        /* big titles, hero, color-switch head */
+  --font-serif:   'Fraunces', Georgia, 'Times New Roman', serif;        /* leads & pull-quotes (use italic) */
+  --font-sans:    'Hanken Grotesk', 'Trebuchet MS', Verdana, system-ui, sans-serif; /* body, UI, headings, labels */
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Mail-safe fallback stack (Gmail strips webfonts) */
+  --font-mail: 'Trebuchet MS', Verdana, Arial, sans-serif;
+
+  /* ---- Weights ---- */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ---- Type scale (fluid-friendly fixed values) ----
+     Display uses Fraunces; H1–H4, body, labels use the sans. */
+  --fs-display:  clamp(44px, 6vw, 72px);  /* @kind font */ /* hero / color-switch head */
+  --fs-h1:       clamp(30px, 4vw, 40px);  /* @kind font */
+  --fs-h2:       26px;  /* @kind font */
+  --fs-h3:       18px;  /* @kind font */
+  --fs-h4:       15px;  /* @kind font */
+  --fs-lead:     19px;  /* @kind font */ /* Fraunces italic */
+  --fs-body-lg:  17px;  /* @kind font */
+  --fs-body:     15px;  /* @kind font */
+  --fs-body-sm:  13px;  /* @kind font */
+  --fs-label:    11px;  /* @kind font */ /* uppercase + tracking */
+  --fs-caption:  12px;  /* @kind font */
+  --fs-code:     13px;  /* @kind font */
+
+  /* ---- Line heights ---- */
+  --lh-display: 1.02;  /* @kind font */
+  --lh-tight:   1.12;  /* @kind font */
+  --lh-heading: 1.25;  /* @kind font */
+  --lh-body:    1.65;  /* @kind font */
+  --lh-relaxed: 1.75;  /* @kind font */
+
+  /* ---- Letter spacing ---- */
+  --ls-display: -0.02em;  /* @kind font */ /* tighter for visual weight */
+  --ls-heading: -0.01em;  /* @kind font */
+  --ls-body:    0;  /* @kind font */
+  --ls-label:   0.18em;  /* @kind font */ /* airy uppercase labels/tags */
+}
+
+/* ============================================================
+   SPACING — Saliegroen
+   A calm 4px-based scale. Generous whitespace is part of the brand.
+   ============================================================ */
+
+:root {
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;   /* element spacing (between related items) */
+  --space-4:  16px;
+  --space-5:  24px;   /* block spacing (between sections) */
+  --space-6:  32px;   /* edge padding (container rim) */
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---- Semantic spacing ---- */
+  --pad-edge:     32px;   /* outer padding of containers */
+  --pad-card:     24px;   /* inner padding of cards */
+  --pad-card-sm:  18px;
+  --gap-block:    24px;   /* between sections */
+  --gap-element:  12px;   /* between related elements */
+
+  /* ---- Layout widths ---- */
+  --measure:       66ch;   /* ideal reading line length for body */
+  --width-prose:   720px;  /* article / doc column */
+  --width-content: 960px;  /* general content */
+  --width-page:    1120px; /* full page max */
+  --width-mail:    600px;  /* email tables */
+}
+
+/* ============================================================
+   EFFECTS — Saliegroen
+   Radius, shadow, borders, motion. Soft and subtle only:
+   no hard drop-shadows, no glow, no neumorphism.
+   Shadows are tinted with sage-ink (never pure black) for warmth.
+   ============================================================ */
+
+:root {
+  /* ---- Border radius ---- */
+  --radius-sm:   6px;    /* small elements, badges, code chips */
+  --radius-md:   10px;   /* cards, inputs */
+  --radius-lg:   12px;   /* containers, main blocks */
+  --radius-xl:   18px;   /* large feature panels */
+  --radius-pill: 999px;  /* buttons, capsules */
+
+  /* ---- Shadows (subtle, sage-tinted) ---- */
+  --shadow-xs:   0 1px 2px rgba(58, 74, 56, 0.05);
+  --shadow-sm:   0 2px 8px rgba(58, 74, 56, 0.05);
+  --shadow-soft: 0 4px 24px rgba(58, 74, 56, 0.06);   /* the brand default */
+  --shadow-md:   0 8px 30px rgba(58, 74, 56, 0.08);
+  --shadow-lg:   0 16px 48px rgba(58, 74, 56, 0.10);
+
+  /* ---- Borders ---- */
+  --border-width: 1px;  /* @kind spacing */
+  --hairline: 1px solid var(--sage-mist);  /* @kind other */
+  --hairline-soft: 1px solid var(--sage-soft);  /* @kind other */
+
+  /* ---- Focus ---- */
+  --focus-width: 2px;  /* @kind spacing */
+  --focus-offset: 2px;  /* @kind spacing */
+
+  /* ---- Motion (gentle, no bounce) ---- */
+  --ease-soft: cubic-bezier(0.33, 0, 0.2, 1);  /* @kind other */
+  --dur-fast: 120ms;  /* @kind other */
+  --dur-base: 200ms;  /* @kind other */
+  --dur-slow: 320ms;  /* @kind other */
+  --transition: all var(--dur-base) var(--ease-soft);  /* @kind other */
+}
+
+/* ============================================================
+   BASE — Saliegroen
+   Element defaults + a few brand utilities. Imported by styles.css.
+   Consumers get sensible, on-brand defaults just by linking styles.css.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---- Headings: sans, semibold, sage-ink ---- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--text-heading);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  margin: 0 0 var(--space-3);
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-h1); line-height: var(--lh-tight); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+
+/* ---- The display face is the serif. Opt-in via .display ---- */
+.display {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  color: var(--text-heading);
+}
+
+p { margin: 0 0 var(--space-3); text-wrap: pretty; }
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+a:hover { color: var(--link-hover); }
+
+strong, b { font-weight: var(--weight-semibold); }
+
+small { font-size: var(--fs-caption); }
+
+hr {
+  border: none;
+  border-top: var(--hairline);
+  margin: var(--space-6) 0;
+}
+
+::selection { background: var(--sage-soft); color: var(--sage-ink); }
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Lead / pull-quote: Fraunces italic with a green left rule ---- */
+.lead {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-light);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: var(--sage-ink);
+  border-left: 3px solid var(--sage-deep);
+  padding-left: 14px;
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+/* ---- Label / eyebrow: uppercase, tracked ---- */
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ---- Inline code ---- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--sage-mist);
+  color: var(--sage-ink);
+  padding: 0.12em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   SIGNATURE: color-switch heading — pure-CSS utility
+   For React, prefer the <ColorSwitchHeading> component. This
+   utility is the no-framework fallback. Drive everything from
+   one variable: --cs-size. All proportions derive from it, so
+   it CANNOT drift out of alignment.
+
+   Markup:
+     <div class="cs" style="--cs-size:56px">
+       <div class="cs-band"><span class="label cs-eyebrow">Editie april</span></div>
+       <div class="cs-zone">
+         <span class="cs-text cs-white">Dit is rust</span>
+         <span class="cs-text cs-green">Dit is rust</span>
+       </div>
+     </div>
+   The container behind .cs MUST be cream (#faf8f4), not white.
+   ============================================================ */
+.cs {
+  --cs-size: 56px;
+  --cs-band-h: calc(var(--cs-size) * 1.5);
+  background: transparent;
+}
+.cs-band {
+  background: var(--sage-deep);
+  height: var(--cs-band-h);
+  padding: 14px 20px 0;
+  display: flex;
+  align-items: flex-start;
+}
+.cs-eyebrow { color: var(--sage-soft); }
+.cs-zone {
+  position: relative;
+  height: var(--cs-size);
+  /* Fraunces-tuned: pull up so the green/cream background boundary lands at
+     3/7 of the x-height above the baseline (66.7% of the em box). */
+  margin: calc(var(--cs-size) * -0.667) 20px 0;
+}
+.cs-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--cs-size);
+  line-height: 1;            /* CRITICAL: keeps glyphs centred so clips land right */
+  letter-spacing: var(--ls-display);
+  white-space: nowrap;
+}
+/* Colour switch at 4.5/7 x-height above baseline (57.0% of em box). The 9.7%
+   gap to the 66.7% background boundary is the green-on-green invisible strip (1.5/7 x-height). */
+.cs-white { color: var(--cream); clip-path: inset(0 0 43.0% 0); }   /* shows top 57.0% */
+.cs-green { color: var(--sage-deep); clip-path: inset(57.0% 0 0 0); } /* shows bottom 43.0% incl. descenders */
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}

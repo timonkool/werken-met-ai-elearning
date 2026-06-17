@@ -153,7 +153,7 @@ export default function OpdrachtFeedback({
               Pas mijn antwoord aan en probeer opnieuw
             </button>
             {afgerond ? (
-              <span className="lesblok-afgerond">✓ Afgerond</span>
+              <span className="lesblok-afgerond"><i className="ph-bold ph-check" aria-hidden="true" /> Afgerond</span>
             ) : (
               <button className="primary" onClick={markeerAfgerond}>
                 {afrondLabel}

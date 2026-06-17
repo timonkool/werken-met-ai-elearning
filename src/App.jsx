@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import cursusData from './data/cursus.json'
 import Navigatie from './components/Navigatie.jsx'
 import ModuleWeergave from './components/ModuleWeergave.jsx'
+import ColorSwitchKop from './components/ColorSwitchKop.jsx'
 import { useVoortgang } from './hooks/useVoortgang.js'
 
 const OPSLAG_KEY = 'actieve_module'
@@ -62,49 +63,35 @@ function Startpagina({ onStart }) {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'var(--sage-ink)',
+      background: 'var(--cream)',
       display: 'flex',
-      alignItems: 'center',
+      flexDirection: 'column',
       justifyContent: 'center',
     }}>
-      <div style={{ textAlign: 'center', padding: '48px 24px' }}>
-        <p style={{
-          fontSize: '11px',
-          fontWeight: 500,
-          letterSpacing: '3px',
-          textTransform: 'uppercase',
-          color: 'var(--sage-soft)',
-          marginBottom: '32px',
-        }}>
-          E-LEARNING
-        </p>
+      <ColorSwitchKop
+        eyebrow="E-learning"
+        size="clamp(40px, 9vw, 76px)"
+        align="center"
+        style={{ width: '100%' }}
+      >
+        Werken met AI
+      </ColorSwitchKop>
 
-        <h1 style={{
-          fontFamily: "'Quicksand', sans-serif",
-          fontSize: '64px',
-          fontWeight: 700,
-          lineHeight: 1,
-          letterSpacing: '-0.5px',
-          color: 'var(--cream)',
-          marginBottom: '24px',
-        }}>
-          Werken met AI
-        </h1>
-
+      <div style={{ textAlign: 'center', padding: '8px 24px 0' }}>
         <p style={{
-          fontFamily: "'Fraunces', serif",
+          fontFamily: 'var(--font-serif)',
           fontStyle: 'italic',
           fontWeight: 300,
-          fontSize: '18px',
+          fontSize: 'var(--fs-lead)',
           lineHeight: 1.6,
-          color: 'var(--sage-soft)',
+          color: 'var(--sage-ink)',
           maxWidth: '480px',
-          margin: '0 auto 48px',
+          margin: '0 auto 36px',
         }}>
           Praktische e-learning voor medewerkers en vrijwilligers
         </p>
 
-        <button className="primary" style={{ fontSize: '15px', padding: '0 36px' }} onClick={onStart}>
+        <button className="primary" style={{ fontSize: '15px', padding: '0 36px', height: '52px' }} onClick={onStart}>
           Begin de cursus
         </button>
       </div>

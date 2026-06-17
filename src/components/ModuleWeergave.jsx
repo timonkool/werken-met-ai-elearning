@@ -5,6 +5,7 @@ import Module2 from '../modules/module-2/Module2.jsx'
 import Module3 from '../modules/module-3/Module3.jsx'
 import Module4 from '../modules/module-4/Module4.jsx'
 import LesBlok from './LesBlok.jsx'
+import ColorSwitchKop from './ColorSwitchKop.jsx'
 
 export default function ModuleWeergave({ module, modules, onVolgende }) {
   if (!module) return null
@@ -31,14 +32,14 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
   return (
     <div className="module-weergave">
 
-      {/* Donkergroene kop in dezelfde stijl als module 0 */}
-      <div className="module-kop">
-        <div className="module-kop-meta">
-          <span className="module-kop-label">Module {index}</span>
-          <span className="module-kop-duur">{module.duur} min</span>
-        </div>
-        <h1 className="module-titel">{module.titel}</h1>
-      </div>
+      {/* Signature kleurwissel-kop met modulenummer en duur */}
+      <ColorSwitchKop
+        eyebrow={`Module ${index}`}
+        meta={`${module.duur} min`}
+        size="clamp(28px, 5.6vw, 44px)"
+      >
+        {module.titel}
+      </ColorSwitchKop>
 
       {/* Beschrijving en inhoud */}
       <div className="module-body">

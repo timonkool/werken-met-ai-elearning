@@ -1,36 +1,27 @@
-/* CSS-variabelen: Saliegroene rust */
+/* ============================================================
+   Werken met AI — e-learning
+   Volgt het Saliegroen-designsysteem. De tokens en base-regels
+   komen uit het gevendorde systeem; hieronder staan de app-eigen
+   componentstijlen die op die tokens leunen.
+   ============================================================ */
+
+@import './saliegroen.css';
+
+/* Legacy-aliassen: oude klassenamen verwezen naar zelf-gedefinieerde
+   "klei" en "lucht" variabelen. Die wijzen nu naar de gedempte
+   semantische families van het designsysteem (clay = waarschuwing/fout,
+   dusty-blue = info), zodat bestaande markup automatisch meeschaalt. */
 :root {
-  /* Primaire kleuren */
-  --sage-deep:  #6b8068;
-  --sage-ink:   #3a4a38;
-  --cream:      #faf8f4;
+  /* clay = waarschuwing/fout. -rand wijst naar de mid-toon zodat
+     3px linker-randen en optieranden zichtbaar maar gedempt blijven. */
+  --klei-mist:  var(--clay-surface);
+  --klei-rand:  var(--clay);
+  --klei-ink:   var(--clay-ink);
 
-  /* Secundaire kleuren */
-  --sage:       #8ba287;
-  --sage-soft:  #c8d4c4;
-  --sage-mist:  #eef2ec;
-  --paper:      #ffffff;
-
-  /* Tekst */
-  --text:       #2d352c;
-  --muted:      #6b7268;
-
-  /* Gedempt warm, uitsluitend voor de kennischeck-correctie (fout antwoord) */
-  --klei-mist:  #f1e6dc;
-  --klei-rand:  #b98a63;
-  --klei-ink:   #8a5a38;
-
-  /* Gedempt lucht-blauw, uitsluitend voor het externe-tool-instructieblok
-     in module 4 (CLAUDE.md §12). Bewust zacht en rustig, geen fel blauw. */
-  --lucht-mist: #e7eef2;
-  --lucht-rand: #7c97a8;
-  --lucht-ink:  #3f5667;
-
-  /* Rondingen */
-  --radius-sm:   6px;
-  --radius-md:   10px;
-  --radius-lg:   12px;
-  --radius-pill: 999px;
+  /* dusty-blue = info (o.a. het module 4-instructieblok) */
+  --lucht-mist: var(--blue-surface);
+  --lucht-rand: var(--blue);
+  --lucht-ink:  var(--blue-ink);
 }
 
 *, *::before, *::after {
@@ -41,12 +32,13 @@
 
 html, body {
   height: 100%;
-  font-family: 'Quicksand', 'Trebuchet MS', Verdana, Arial, sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text);
   background: var(--cream);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 #root {
@@ -56,10 +48,11 @@ html, body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Quicksand', 'Trebuchet MS', Verdana, Arial, sans-serif;
+  font-family: var(--font-sans);
   color: var(--sage-ink);
-  line-height: 1.2;
-  font-weight: 600;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  font-weight: var(--weight-semibold);
 }
 
 p {
@@ -67,31 +60,51 @@ p {
   overflow-wrap: anywhere;
 }
 
+/* Phosphor-icoongrootte volgt de tekst, tenzij lokaal overschreven */
+i[class^="ph-"], i[class*=" ph-"] {
+  font-size: 1.15em;
+  line-height: 1;
+  vertical-align: -0.12em;
+}
+
 button {
   cursor: pointer;
-  font-family: inherit;
+  font-family: var(--font-sans);
   border: none;
   border-radius: var(--radius-pill);
   min-height: 48px;
-  padding: 0 24px;
+  padding: 0 26px;
   font-size: 14px;
-  font-weight: 600;
-  transition: opacity 0.15s ease;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.01em;
+  transition: background var(--dur-fast) var(--ease-soft),
+              color var(--dur-fast) var(--ease-soft),
+              transform var(--dur-fast) var(--ease-soft),
+              box-shadow var(--dur-fast) var(--ease-soft);
 }
 
-button:hover {
-  opacity: 0.88;
+button:active {
+  transform: scale(0.97);
 }
 
 button.primary {
   background: var(--sage-deep);
   color: var(--cream);
+  box-shadow: var(--shadow-xs);
+}
+
+button.primary:hover {
+  background: var(--accent-hover);
 }
 
 button.secondary {
   background: var(--cream);
   color: var(--sage-deep);
   border: 1.5px solid var(--sage);
+}
+
+button.secondary:hover {
+  background: var(--sage-mist);
 }
 
 textarea {
@@ -281,7 +294,7 @@ textarea:focus {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-md);
 }
 
 .hamburger-streep {
@@ -310,7 +323,7 @@ textarea:focus {
   height: 100%;
   z-index: 120;
   background: var(--sage-mist);
-  box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+  box-shadow: 4px 0 24px rgba(58,74,56,0.14);
 }
 
 .navigatie-overlay .navigatie {
@@ -342,41 +355,23 @@ textarea:focus {
   min-height: 100vh;
 }
 
-/* Hero */
-.welkom-hero {
-  background: var(--sage-ink);
-  padding: 64px 48px 72px;
-  text-align: center;
-}
-
-.welkom-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--sage-soft);
-  margin-bottom: 24px;
-}
-
-.welkom-titel {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 52px;
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.5px;
-  color: var(--cream);
-  margin-bottom: 24px;
+/* Hero — de kleurwissel-kop (ColorSwitchKop) draagt de titel; de lead
+   staat eronder op cream. */
+.welkom-hero-onder {
+  padding: 8px 48px 4px;
 }
 
 .welkom-lead {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 1.65;
-  color: var(--sage-soft);
-  max-width: 520px;
-  margin: 0 auto;
+  font-weight: var(--weight-light);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: var(--sage-ink);
+  border-left: 3px solid var(--sage-deep);
+  padding-left: 16px;
+  max-width: 560px;
+  margin: 0;
 }
 
 /* Drie alinea's */
@@ -433,7 +428,7 @@ textarea:focus {
   background: var(--paper);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
 }
@@ -551,40 +546,24 @@ textarea:focus {
   min-height: 100vh;
 }
 
-.api-kop {
-  background: var(--sage-ink);
-  padding: 48px 48px 56px;
-}
-
-.api-kop-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--sage-soft);
-  opacity: 0.8;
-  margin-bottom: 16px;
-}
-
-.api-kop-titel {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--cream);
-  line-height: 1.1;
-  margin-bottom: 14px;
-}
-
+/* De titel wordt gedragen door de kleurwissel-kop (ColorSwitchKop).
+   De introtekst staat als lead bovenaan de body op cream. */
 .api-kop-tekst {
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--sage-soft);
-  max-width: 540px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-light);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: var(--sage-ink);
+  border-left: 3px solid var(--sage-deep);
+  padding-left: 16px;
+  max-width: 560px;
+  margin-bottom: 8px;
 }
 
 .api-body {
-  padding: 48px 48px 64px;
-  max-width: 640px;
+  padding: 28px 48px 64px;
+  max-width: 680px;
 }
 
 /* Stappen */
@@ -667,7 +646,7 @@ textarea:focus {
 /* Invoerveld */
 .api-invoer {
   width: 100%;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
   border-radius: var(--radius-md);
   border: 1.5px solid var(--sage-soft);
@@ -740,7 +719,7 @@ textarea:focus {
 .api-gekoppeld-subtekst {
   font-size: 13px;
   color: var(--muted);
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .api-gekoppeld-knoppen {
@@ -859,7 +838,7 @@ textarea:focus {
   background: var(--paper);
   border-radius: var(--radius-lg);
   padding: 28px 28px 24px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-soft);
   margin-bottom: 32px;
 }
 
@@ -873,7 +852,7 @@ textarea:focus {
 }
 
 .api-succes-welkom-tekst {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 17px;
@@ -891,59 +870,22 @@ textarea:focus {
   background: var(--cream);
 }
 
-/* Donkergroene kop, gelijke kleur en stijl voor alle modules (zoals module 0) */
-.module-kop {
-  background: var(--sage-ink);
-  padding: 26px 48px 30px;
-}
-
-.module-kop-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.module-kop-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--sage-soft);
-}
-
-.module-kop-duur {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--sage-soft);
-  opacity: 0.8;
-}
-
-.module-titel {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.5px;
-  color: var(--cream);
-  margin: 0;
-}
+/* De modulekop is nu de signature kleurwissel-kop (ColorSwitchKop),
+   met het modulenummer als eyebrow en de duur als meta-label rechts. */
 
 /* Beschrijving en inhoud */
 .module-body {
-  padding: 48px 48px 64px;
+  padding: 32px 48px 64px;
   max-width: 720px;
 }
 
 .module-beschrijving {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 300;
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--text);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: var(--sage-ink);
   border-left: 3px solid var(--sage-deep);
   padding-left: 16px;
   margin-bottom: 40px;
@@ -981,16 +923,16 @@ textarea:focus {
     padding-top: 72px;
   }
 
-  .module-kop {
-    padding: 22px 20px 26px;
-  }
-
-  .module-titel {
-    font-size: 28px;
-  }
-
   .module-body {
-    padding: 36px 20px 48px;
+    padding: 28px 20px 48px;
+  }
+
+  .welkom-hero-onder {
+    padding: 8px 20px 4px;
+  }
+
+  .api-body {
+    padding: 24px 20px 48px;
   }
 }
 
@@ -1161,7 +1103,7 @@ textarea:focus {
 }
 
 .opdrachtblok-kop {
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-sans);
   font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.2px;
@@ -1288,7 +1230,7 @@ textarea:focus {
   font-size: 14px;
   line-height: 1.7;
   color: var(--text);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .voorbeeld-tekst p {
@@ -1340,7 +1282,7 @@ textarea:focus {
 
 /* Lead-citaat (module 1, les 2 analogie) */
 .les-citaat {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 17px;
@@ -1483,7 +1425,7 @@ textarea:focus {
 }
 
 .flyer-resultaat-leeg {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   color: var(--muted);
   font-size: 15px;
@@ -1686,12 +1628,12 @@ textarea:focus {
   background: var(--paper);
   border-radius: var(--radius-lg);
   padding: 28px 30px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-soft);
   margin-bottom: 24px;
 }
 
 .klik-document-titel {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 19px;
@@ -1870,7 +1812,7 @@ textarea:focus {
 }
 
 .gouden-regel-tekst {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 22px;
@@ -1952,7 +1894,7 @@ textarea:focus {
   background: var(--paper);
   border-radius: var(--radius-lg);
   padding: 24px 26px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-soft);
   margin-bottom: 32px;
 }
 
@@ -2102,7 +2044,7 @@ textarea:focus {
 }
 
 .element-kaart-voorbeeld {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 15px;
@@ -2115,7 +2057,7 @@ textarea:focus {
 
 .element-kaart-voorbeeld-label {
   display: block;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-size: 10px;
   font-weight: 500;
@@ -2207,7 +2149,7 @@ textarea:focus {
 }
 
 .m4-intro-taak {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 18px;
@@ -2311,11 +2253,11 @@ textarea:focus {
   background: var(--paper);
   border-radius: var(--radius-lg);
   padding: 22px 26px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-soft);
 }
 
 .m4-info-titel {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 18px;
@@ -2361,7 +2303,7 @@ textarea:focus {
   background: var(--paper);
   border-radius: var(--radius-lg);
   padding: 22px 26px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-soft);
 }
 
 .m4-mail-kop {
@@ -2397,7 +2339,7 @@ textarea:focus {
 
 /* Les 4: jouw eigen taak */
 .m4-eigen-taak-aanhaling {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   color: var(--sage-ink);
 }

@@ -34,7 +34,7 @@ export default function Kennischeck({ check, onBeantwoord }) {
               >
                 <span className="kennischeck-optie-tekst">{optie}</span>
                 {beantwoord && i === check.correct && (
-                  <span className="kennischeck-vink">✓</span>
+                  <span className="kennischeck-vink"><i className="ph-bold ph-check" aria-hidden="true" /></span>
                 )}
               </button>
             </li>

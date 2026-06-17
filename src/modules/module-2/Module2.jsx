@@ -124,7 +124,7 @@ function OefenZelfLes({ les, onAfgerond }) {
 function ModuleAfsluiting({ tekst, onVolgende }) {
   return (
     <div className="module-afsluiting">
-      <span className="module-afsluiting-vink">✓</span>
+      <span className="module-afsluiting-vink"><i className="ph-bold ph-check" aria-hidden="true" /></span>
       <p className="module-afsluiting-tekst">{tekst}</p>
       <button className="primary" onClick={onVolgende}>Volgende module</button>
     </div>

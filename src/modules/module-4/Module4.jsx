@@ -215,11 +215,11 @@ function EigenTaakLes({ les, onAfgerond }) {
           {!bewaard ? (
             <button className="secondary" onClick={bewaar}>{taak.knop}</button>
           ) : (
-            <span className="lesblok-afgerond">✓ Bewaard voor jezelf</span>
+            <span className="lesblok-afgerond"><i className="ph-bold ph-check" aria-hidden="true" /> Bewaard voor jezelf</span>
           )}
 
           {afgerond ? (
-            <span className="lesblok-afgerond">✓ Afgerond</span>
+            <span className="lesblok-afgerond"><i className="ph-bold ph-check" aria-hidden="true" /> Afgerond</span>
           ) : (
             <button className="primary" onClick={afronden}>{taak.afrond_knop}</button>
           )}
@@ -234,7 +234,7 @@ function EigenTaakLes({ les, onAfgerond }) {
 function ModuleAfsluiting({ tekst, onVolgende }) {
   return (
     <div className="module-afsluiting">
-      <span className="module-afsluiting-vink">✓</span>
+      <span className="module-afsluiting-vink"><i className="ph-bold ph-check" aria-hidden="true" /></span>
       <p className="module-afsluiting-tekst">{tekst}</p>
       <button className="primary" onClick={onVolgende}>Volgende module</button>
     </div>

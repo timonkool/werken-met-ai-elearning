@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ColorSwitchKop from '../../components/ColorSwitchKop.jsx'
 
 const OPSLAG_KEY = 'anthropic_api_key'
 
@@ -29,18 +30,18 @@ export default function ApiKoppeling({ onVerbonden }) {
   if (sleutel && !wijzigenActief) {
     return (
       <div className="api-koppeling">
-        <div className="api-kop">
-          <p className="api-kop-label">Module 0</p>
-          <h1 className="api-kop-titel">Je AI is al gekoppeld</h1>
+        <ColorSwitchKop eyebrow="Module 0" size="clamp(30px, 6vw, 46px)">
+          Je AI is al gekoppeld
+        </ColorSwitchKop>
+
+        <div className="api-body">
           <p className="api-kop-tekst">
             Er is al een API-sleutel opgeslagen in je browser.
             Je kunt gewoon doorgaan met de cursus.
           </p>
-        </div>
 
-        <div className="api-body">
           <div className="api-gekoppeld-blok">
-            <span className="api-vinkje">✓</span>
+            <span className="api-vinkje"><i className="ph-bold ph-check" aria-hidden="true" /></span>
             <div>
               <p className="api-gekoppeld-titel">Je AI is gekoppeld</p>
               <p className="api-gekoppeld-subtekst">
@@ -75,16 +76,16 @@ export default function ApiKoppeling({ onVerbonden }) {
   return (
     <div className="api-koppeling">
 
-      <div className="api-kop">
-        <p className="api-kop-label">Module 0 &middot; Stap 2 van 3</p>
-        <h1 className="api-kop-titel">Koppel je AI-sleutel</h1>
+      <ColorSwitchKop eyebrow="Module 0 · Stap 2 van 3" size="clamp(30px, 6vw, 46px)">
+        Koppel je AI-sleutel
+      </ColorSwitchKop>
+
+      <div className="api-body">
         <p className="api-kop-tekst">
           Om persoonlijke feedback te ontvangen heb je een gratis API-sleutel nodig.
           Volg de stappen hieronder. Het duurt ongeveer twee minuten.
         </p>
-      </div>
 
-      <div className="api-body">
         <ol className="api-stappen">
 
           <li className="api-stap">
@@ -99,7 +100,7 @@ export default function ApiKoppeling({ onVerbonden }) {
                 rel="noopener noreferrer"
                 className="api-extern-knop"
               >
-                Naar console.anthropic.com ↗
+                Naar console.anthropic.com <i className="ph-bold ph-arrow-up-right" aria-hidden="true" />
               </a>
             </div>
           </li>

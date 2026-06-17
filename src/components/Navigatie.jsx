@@ -41,7 +41,7 @@ export default function Navigatie({ modules, actieveModuleId, onSelecteer, isMod
                 <div className="navigatie-item-rij">
                   <span className="navigatie-nummer">
                     {voltooid
-                      ? <span className="navigatie-vinkje">✓</span>
+                      ? <i className="ph-bold ph-check navigatie-vinkje" aria-hidden="true" />
                       : index
                     }
                   </span>
@@ -93,7 +93,7 @@ export default function Navigatie({ modules, actieveModuleId, onSelecteer, isMod
               onClick={sluitMenu}
               aria-label="Menu sluiten"
             >
-              ✕
+              <i className="ph-bold ph-x" aria-hidden="true" />
             </button>
             {navInhoud}
           </div>

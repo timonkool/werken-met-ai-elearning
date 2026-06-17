@@ -1,13 +1,15 @@
 import React from 'react'
+import ColorSwitchKop from '../../components/ColorSwitchKop.jsx'
 
 export default function Welkom({ modules, onStart }) {
   return (
     <div className="welkom">
 
-      {/* Hero */}
-      <div className="welkom-hero">
-        <p className="welkom-label">E-learning</p>
-        <h1 className="welkom-titel">Welkom bij<br />Werken met AI</h1>
+      {/* Hero — signature kleurwissel-kop op cream */}
+      <ColorSwitchKop eyebrow="E-learning · Welkom" size="clamp(38px, 8vw, 64px)">
+        Werken met AI
+      </ColorSwitchKop>
+      <div className="welkom-hero-onder">
         <p className="welkom-lead">
           Je staat op het punt om te ontdekken hoe AI jouw werk makkelijker kan maken,
           zonder dat je technische kennis nodig hebt.
