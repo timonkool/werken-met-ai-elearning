@@ -30,7 +30,7 @@ export default function OpdrachtFeedback({
   renderNaFeedback,
 }) {
   const { getLesVoortgang, setLesVoortgang } = useVoortgang()
-  const { stuurVerzoek, laden, fout, kostenWaarschuwing, setKostenWaarschuwing } = useAnthropicApi()
+  const { stuurVerzoek, laden, fout } = useAnthropicApi()
 
   const [antwoord, setAntwoord] = useState(() => getLesVoortgang(lesId).antwoord || '')
   const [afgerond, setAfgerond] = useState(() => getLesVoortgang(lesId).afgerond || false)
@@ -72,16 +72,6 @@ export default function OpdrachtFeedback({
   return (
     <section className="opdrachtblok">
       <h3 className="opdrachtblok-kop">Opdracht{nummer ? ` ${nummer}` : ''}</h3>
-
-      {/* Eenmalige kostenmelding, blokkeert niets */}
-      {kostenWaarschuwing && (
-        <div className="lesblok-kosten">
-          <p>{kostenWaarschuwing}</p>
-          <button className="secondary" onClick={() => setKostenWaarschuwing(null)}>
-            Sluiten
-          </button>
-        </div>
-      )}
 
       <p className="opdrachtblok-tekst">{opdracht.tekst}</p>
 

@@ -8,7 +8,7 @@ const SYSTEEM_INSTRUCTIE =
   'Houd je reactie kort: maximaal vier zinnen.'
 
 const WELKOMST_BERICHT =
-  'Ik heb zojuist mijn AI-sleutel gekoppeld aan de cursus Werken met AI. ' +
+  'Ik heb zojuist mijn toegangscode ingevoerd en ben verbonden met de cursus Werken met AI. ' +
   'Dit is mijn eerste stap. Reageer met een oprecht en persoonlijk welkomstbericht ' +
   'en een compliment over wat ik zojuist heb bereikt.'
 
@@ -63,7 +63,7 @@ export default function ApiSucces({ onVolgende, onOpnieuwKoppelen }) {
               </button>
               {onOpnieuwKoppelen && (
                 <button className="secondary" onClick={onOpnieuwKoppelen}>
-                  Sleutel opnieuw koppelen
+                  Code opnieuw invoeren
                 </button>
               )}
             </div>

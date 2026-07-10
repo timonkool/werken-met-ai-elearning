@@ -1,51 +1,76 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ColorSwitchKop from '../../components/ColorSwitchKop.jsx'
+import { controleerToegangscode, TOEGANGSCODE_KEY } from '../../hooks/useAnthropicApi.js'
 
-const OPSLAG_KEY = 'anthropic_api_key'
-
+// De deelnemer koppelt geen eigen Anthropic-sleutel meer; alle AI-verkeer
+// loopt via de beveiligde proxy van de cursus. De deelnemer voert alleen de
+// toegangscode in die hij van de cursusbeheerder heeft gekregen. De code
+// wordt direct bij de proxy gecontroleerd voordat hij wordt opgeslagen.
 export default function ApiKoppeling({ onVerbonden }) {
-  const [sleutel, setSleutel] = useState(() => localStorage.getItem(OPSLAG_KEY))
+  const [code, setCode] = useState(() => localStorage.getItem(TOEGANGSCODE_KEY))
   const [invoer, setInvoer] = useState('')
   const [fout, setFout] = useState('')
+  const [bezig, setBezig] = useState(false)
   const [wijzigenActief, setWijzigenActief] = useState(false)
 
-  function verbind() {
-    if (!invoer.trim()) {
-      setFout('Vul eerst je sleutel in bij stap 5.')
+  // Opruimen van het oude sleutel-model: een eventueel achtergebleven
+  // Anthropic-sleutel hoort niet meer in de browser te staan.
+  useEffect(() => {
+    localStorage.removeItem('anthropic_api_key')
+  }, [])
+
+  async function verbind() {
+    const schoneInvoer = invoer.trim()
+    if (!schoneInvoer) {
+      setFout('Vul eerst je toegangscode in.')
       return
     }
-    localStorage.setItem(OPSLAG_KEY, invoer.trim())
-    onVerbonden()
+
+    setBezig(true)
+    setFout('')
+    const resultaat = await controleerToegangscode(schoneInvoer)
+    setBezig(false)
+
+    if (resultaat === 'geldig') {
+      localStorage.setItem(TOEGANGSCODE_KEY, schoneInvoer)
+      onVerbonden()
+      return
+    }
+    if (resultaat === 'ongeldig') {
+      setFout('Deze toegangscode klopt niet. Controleer of je hem precies zo hebt overgenomen als je hem hebt gekregen.')
+      return
+    }
+    setFout('De cursus kan de code nu niet controleren. Controleer je internet en probeer het opnieuw.')
   }
 
   function verwijder() {
-    localStorage.removeItem(OPSLAG_KEY)
-    setSleutel(null)
+    localStorage.removeItem(TOEGANGSCODE_KEY)
+    setCode(null)
     setInvoer('')
     setFout('')
     setWijzigenActief(false)
   }
 
-  // Toon gekoppeld-scherm als er al een sleutel is en niet in wijzig-modus
-  if (sleutel && !wijzigenActief) {
+  // Toon gekoppeld-scherm als er al een code is en niet in wijzig-modus
+  if (code && !wijzigenActief) {
     return (
       <div className="api-koppeling">
         <ColorSwitchKop eyebrow="Module 0" size="clamp(30px, 6vw, 46px)">
-          Je AI is al gekoppeld
+          Je bent al verbonden
         </ColorSwitchKop>
 
         <div className="api-body">
           <p className="api-kop-tekst">
-            Er is al een API-sleutel opgeslagen in je browser.
+            Er is al een toegangscode opgeslagen in je browser.
             Je kunt gewoon doorgaan met de cursus.
           </p>
 
           <div className="api-gekoppeld-blok">
             <span className="api-vinkje"><i className="ph-bold ph-check" aria-hidden="true" /></span>
             <div>
-              <p className="api-gekoppeld-titel">Je AI is gekoppeld</p>
+              <p className="api-gekoppeld-titel">Je bent verbonden</p>
               <p className="api-gekoppeld-subtekst">
-                Sleutel eindigt op ···{sleutel.slice(-4)}
+                Toegangscode eindigt op ···{code.slice(-4)}
               </p>
             </div>
           </div>
@@ -55,13 +80,13 @@ export default function ApiKoppeling({ onVerbonden }) {
               className="secondary"
               onClick={() => setWijzigenActief(true)}
             >
-              Sleutel wijzigen
+              Code wijzigen
             </button>
             <button
               className="secondary api-verwijder-knop"
               onClick={verwijder}
             >
-              Sleutel verwijderen
+              Code verwijderen
             </button>
           </div>
 
@@ -77,13 +102,14 @@ export default function ApiKoppeling({ onVerbonden }) {
     <div className="api-koppeling">
 
       <ColorSwitchKop eyebrow="Module 0 · Stap 2 van 3" size="clamp(30px, 6vw, 46px)">
-        Koppel je AI-sleutel
+        Vul je toegangscode in
       </ColorSwitchKop>
 
       <div className="api-body">
         <p className="api-kop-tekst">
-          Om persoonlijke feedback te ontvangen heb je een gratis API-sleutel nodig.
-          Volg de stappen hieronder. Het duurt ongeveer twee minuten.
+          De AI-feedback zit ingebouwd in deze cursus. Je hoeft zelf niets aan
+          te maken of te installeren. Het enige dat je nodig hebt is de
+          toegangscode die je bij deze cursus hebt gekregen.
         </p>
 
         <ol className="api-stappen">
@@ -92,16 +118,9 @@ export default function ApiKoppeling({ onVerbonden }) {
             <span className="api-stap-nummer">1</span>
             <div className="api-stap-inhoud">
               <p className="api-stap-tekst">
-                Ga naar de Anthropic Console om een account aan te maken.
+                Pak de toegangscode erbij. Je hebt hem gekregen van de persoon
+                of organisatie die jou deze cursus heeft aangeboden.
               </p>
-              <a
-                href="https://console.anthropic.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="api-extern-knop"
-              >
-                Naar console.anthropic.com <i className="ph-bold ph-arrow-up-right" aria-hidden="true" />
-              </a>
             </div>
           </li>
 
@@ -109,49 +128,18 @@ export default function ApiKoppeling({ onVerbonden }) {
             <span className="api-stap-nummer">2</span>
             <div className="api-stap-inhoud">
               <p className="api-stap-tekst">
-                Maak een gratis account aan met je e-mailadres.
-                Je hebt geen creditcard nodig voor het gratis account.
-              </p>
-            </div>
-          </li>
-
-          <li className="api-stap">
-            <span className="api-stap-nummer">3</span>
-            <div className="api-stap-inhoud">
-              <p className="api-stap-tekst">
-                Ga na het inloggen naar het kopje <strong>API Keys</strong> in het linkermenu.
-              </p>
-            </div>
-          </li>
-
-          <li className="api-stap">
-            <span className="api-stap-nummer">4</span>
-            <div className="api-stap-inhoud">
-              <p className="api-stap-tekst">
-                Klik op <strong>Create Key</strong>, geef de sleutel een naam en kopieer hem.
-              </p>
-              <p className="api-stap-waarschuwing">
-                Let op: je ziet de sleutel maar één keer. Kopieer hem direct.
-              </p>
-            </div>
-          </li>
-
-          <li className="api-stap">
-            <span className="api-stap-nummer">5</span>
-            <div className="api-stap-inhoud">
-              <p className="api-stap-tekst">
-                Plak je sleutel in het veld hieronder en klik op "Verbind AI".
+                Typ of plak de code in het veld hieronder en klik op "Verbind met de cursus".
               </p>
               <input
                 type="password"
                 className="api-invoer"
-                placeholder="sk-ant-..."
+                placeholder="Jouw toegangscode"
                 value={invoer}
                 onChange={e => {
                   setInvoer(e.target.value)
                   if (fout) setFout('')
                 }}
-                onKeyDown={e => e.key === 'Enter' && verbind()}
+                onKeyDown={e => e.key === 'Enter' && !bezig && verbind()}
                 autoComplete="off"
                 spellCheck={false}
               />
@@ -164,14 +152,16 @@ export default function ApiKoppeling({ onVerbonden }) {
         </ol>
 
         <div className="api-acties">
-          <button className="primary" onClick={verbind}>
-            Verbind AI
+          <button className="primary" onClick={verbind} disabled={bezig}>
+            {bezig ? 'Code controleren...' : 'Verbind met de cursus'}
           </button>
         </div>
 
         <p className="api-geruststelling">
-          Je sleutel wordt alleen opgeslagen in jouw eigen browser en nergens anders heen gestuurd.
-          Hij wordt uitsluitend gebruikt om jou feedback te geven tijdens deze cursus.
+          Je code wordt alleen opgeslagen in jouw eigen browser. De cursus
+          gebruikt hem uitsluitend om jou tijdens de lessen feedback te geven.
+          Kwijt of werkt hij niet? Vraag dan een nieuwe code aan bij degene
+          van wie je de cursus hebt gekregen.
         </p>
       </div>
 

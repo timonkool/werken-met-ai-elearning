@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useVoortgang } from '../../hooks/useVoortgang.js'
+import { TOEGANGSCODE_KEY } from '../../hooks/useAnthropicApi.js'
 import { genereerCertificaatPdf } from './certificaatPdf.js'
 
 // Module 5 sluit de cursus af: terugblik, persoonlijk actieplan, certificaat
@@ -249,7 +250,11 @@ function Eindscherm({ eindscherm, terugblik, certificaatData }) {
   }
 
   function beginOpnieuw() {
+    // De toegangscode is geen voortgang; die blijft staan zodat de deelnemer
+    // hem niet opnieuw hoeft op te vragen bij de cursusbeheerder.
+    const toegangscode = localStorage.getItem(TOEGANGSCODE_KEY)
     localStorage.clear()
+    if (toegangscode) localStorage.setItem(TOEGANGSCODE_KEY, toegangscode)
     window.location.reload()
   }
 

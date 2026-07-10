@@ -22,7 +22,7 @@ export default function Welkom({ modules, onStart }) {
           Start de cursus
         </button>
         <p className="welkom-cta-toelichting">
-          Je koppelt eerst je API-sleutel. Dat duurt twee minuten.
+          Je vult eerst je toegangscode in. Dat duurt nog geen minuut.
         </p>
       </div>
 
@@ -49,9 +49,9 @@ export default function Welkom({ modules, onStart }) {
         <div className="welkom-blok">
           <h2 className="welkom-blok-titel">Wat heb je nodig?</h2>
           <p>
-            Alleen een computer, tablet of telefoon met internet. Je koppelt straks
-            een gratis API-sleutel van Anthropic, zodat de cursus je persoonlijke
-            feedback kan geven. Dat duurt ongeveer twee minuten.
+            Alleen een computer, tablet of telefoon met internet, en de
+            toegangscode die je bij deze cursus hebt gekregen. De AI-feedback
+            zit ingebouwd; je hoeft zelf niets te installeren of aan te maken.
           </p>
         </div>
       </div>

@@ -1,17 +1,28 @@
 # PROJECT_STATUS — Werken met AI (e-learning)
 
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
-> Laatste update: 2026-07-10 (sessie: module 5 gebouwd, hele cursus 0–5 nu compleet en gepusht)
+> Laatste update: 2026-07-10, latere sessie dezelfde avond (cursus omgebouwd van eigen API-sleutel naar de Cloudflare-proxy met toegangscode)
 
 ---
 
 ## Waar staan we
 
-**Alle modules (0 t/m 5) zijn nu volledig gebouwd.** Module 5 (`Jouw eerste echte stap`) is deze sessie toegevoegd: terugblik, persoonlijk actieplan, certificaat met PDF-download en een eindscherm met "opnieuw beginnen". Zie "Wat is gebouwd deze sessie" hieronder.
+**Alle modules (0 t/m 5) zijn volledig gebouwd én de cursus is omgebouwd naar het proxy-model.** De deelnemer koppelt geen eigen Anthropic-sleutel meer; hij voert een toegangscode in (uitgedeeld door de eigenaar) en al het AI-verkeer loopt via de Cloudflare Worker in `proxy/`. De browser bevat nooit meer een Anthropic-sleutel.
 
-**Belangrijk:** de eigenaar kon deze sessie niet zelf testen en heeft gevraagd om alles toch te bouwen en direct te pushen. Er is dus **geen test met een eigen API-sleutel** gedaan op de AI-feedbackonderdelen (module 1 les 4, module 2 les 3, module 3 les 3–4, module 4 les 1–3) — dat was ook bij eerdere sessies al zo en de code daarvoor is niet gewijzigd. Alles wat zonder API-sleutel te testen was (alle vier de nieuwe module 5-schermen, inclusief PDF-download) is wél getest in de preview, zie "Lokaal getest deze sessie".
+**Het enige dat nog ontbreekt om de cursus volledig werkend te krijgen:** de `ANTHROPIC_API_KEY`-secret op de Worker. De eigenaar heeft betalingsproblemen bij Anthropic en kijkt daar morgen (11 juli) opnieuw naar. Zodra die secret staat, werkt alles end-to-end; er hoeft dan niets meer gebouwd te worden. Zie "Nog te doen".
 
-Losstaand van de cursusinhoud: de map `proxy/` bevat een Cloudflare Worker die straks tussen de cursus en de Anthropic API komt te staan zodat de deelnemersbrowser nooit meer een Anthropic-sleutel bevat. Dat is nog niet klaar (zie "Nog te doen"); de cursus-code (`src/`) praat nog rechtstreeks met de Anthropic API.
+De ombouw van deze sessie (zie "Ombouw naar de proxy" hieronder) raakt: `useAnthropicApi.js` (volledig herschreven), `ApiKoppeling.jsx` (nu een toegangscode-scherm), teksten in `Welkom.jsx`/`ApiSucces.jsx`/`cursus.json`, de reset in `Module5.jsx`, en de secties 1, 2, 5, 6, 10, 12 en 13 van `CLAUDE.md` (die beschreven het oude sleutel-model en zijn bijgewerkt zodat volgende sessies correct bouwen).
+
+### Ombouw naar de proxy (deze sessie)
+
+- **`src/hooks/useAnthropicApi.js`** — volledig herschreven. `stuurVerzoek(bericht, beoordelingsinstructie, maxTokens)` heeft dezelfde signatuur maar POST nu naar de proxy (`.../chat`) met `{toegangscode, bericht, systeeminstructie, max_tokens}`. Model en temperature zijn uit de cursus-code verdwenen (de proxy bepaalt die). De `SYSTEM_BASE`-samenvoeging bleef in de cursus. Exporteert `TOEGANGSCODE_KEY` (`"toegangscode"`) en `controleerToegangscode(code)`.
+- **Toegangscode-validatie zonder AI-kosten:** `controleerToegangscode` stuurt bewust een leeg `bericht`; de proxy checkt de code vóór de bericht-validatie en vóór de daglimiet, dus 401 = code fout, 400 = code goed, zonder Anthropic-aanroep en zonder limiet-tik.
+- **Foutafhandeling:** proxy-fouten hebben een Nederlands `fout`-veld, dat gebruikt de hook om te onderscheiden: 401 over de toegangscode → code wordt gewist + "Je toegangscode klopt niet. Vul hem opnieuw in via module 0."; 429 over de dagelijkse limiet → "De cursus heeft vandaag zijn maximum aan AI-vragen bereikt..."; 429 overig → wacht-even-melding; netwerk → geen-verbinding; al het andere (ook doorgegeven Anthropic-fouten, zoals een ontbrekende/ongeldige sleutel op de Worker) → generieke melding.
+- **Kostenwaarschuwing verwijderd** (`api_aanroepen_totaal`, `kostenwaarschuwing_getoond`, het melding-blok in `OpdrachtFeedback`): de tekst ging over het eigen startkrediet van de deelnemer en dat model bestaat niet meer. De proxy-daglimiet (60/dag per code) vervangt dit functioneel.
+- **`ApiKoppeling.jsx`** — het 5-stappen Anthropic-Console-scherm is vervangen door een eenvoudig 2-stappen toegangscode-scherm. Valideert live bij de proxy vóór opslag; toont "Code controleren..." tijdens de check. Ruimt een eventueel achtergebleven `anthropic_api_key` uit het oude model actief op. Het "al verbonden"-scherm (code eindigt op ···xxxx, wijzigen/verwijderen/doorgaan) bleef qua opzet gelijk.
+- **Teksten** in `Welkom.jsx` (CTA + "Wat heb je nodig?"), `ApiSucces.jsx` (welkomstprompt + "Code opnieuw invoeren") en de module 0-beschrijving in `cursus.json` spreken nu over de toegangscode.
+- **`Module5.jsx`** — "Begin opnieuw" bewaart de toegangscode over de reset heen (de code is geen voortgang; zo hoeft de deelnemer hem niet opnieuw op te vragen).
+- **`CLAUDE.md`** — secties 1 (tech stack), 2 (mappenstructuur incl. `proxy/`), 5 (veiligheidsregels), 6 (volledig herschreven: proxy-contract, foutafhandelingstabel, daglimiet i.p.v. kostenwaarschuwing, `controleerToegangscode`), 10 (localStorage-tabel), 12 (module 0) en 13 (veelgemaakte fouten) bijgewerkt naar het proxy-model.
 
 ### Status van de proxy
 
@@ -104,15 +115,20 @@ Losstaand van de cursusinhoud: de map `proxy/` bevat een Cloudflare Worker die s
 
 ## Nog te doen (volgende stappen)
 
-1. **Eigenaar test de AI-feedback zelf** met zijn eigen API-sleutel: module 1 les 4, module 2 les 3, module 3 les 3–4, module 4 les 1–3, en het welkomstbericht in module 0. Dit kon deze sessie niet getest worden (geen sleutel beschikbaar) en is de enige onderdelen van de live cursus die nog niet in de praktijk zijn bevestigd.
-2. **`ANTHROPIC_API_KEY`-secret zetten op de proxy** (eigenaar, zodra saldo verwerkt is) — zie stappen hierboven bij "Status van de proxy". Daarna de volledige doorschakeling testen via `proxy/test.html`.
-3. **`stuurVerzoek` ombouwen naar de proxy** — `src/hooks/useAnthropicApi.js` moet niet meer rechtstreeks naar `https://api.anthropic.com/v1/messages` gaan maar naar `https://werken-met-ai-proxy.timonmariuskool.workers.dev/chat` (zie `proxy/README.md` voor de exacte request-body). Dit is een wijziging in de API-aanroeplogica (CLAUDE.md §4) en moet dus eerst voorgelegd worden. Aandachtspunten: de toegangscode moet ergens ingevoerd/opgeslagen worden in de cursus (nieuw scherm of hergebruik van het bestaande sleutel-invoerscherm uit module 0, met een andere `localStorage`-key dan `anthropic_api_key`); de `SYSTEM_BASE`-samenvoeging blijft in de cursus-code staan, de proxy verwacht de kant-en-klare `systeeminstructie`.
-4. **`.claude/skills/` en `context/Claude code skills/` staan nog untracked** (Saliegroen-designsysteem-skill, dubbel op twee plekken). Dit is Claude Code-tooling, geen cursusinhoud, en is deze sessie bewust **niet** meegecommit. Opruimen of alsnog toevoegen is aan de eigenaar.
+1. **`ANTHROPIC_API_KEY`-secret zetten op de proxy** (eigenaar, zodra de betaling bij Anthropic is opgelost — hij kijkt er 11 juli opnieuw naar):
+   ```
+   cd proxy
+   CLOUDFLARE_API_TOKEN=<zijn-cloudflare-token> npx wrangler secret put ANTHROPIC_API_KEY
+   ```
+   Dit is de **enige** ontbrekende schakel; er hoeft verder niets gebouwd te worden.
+2. **End-to-end testen zodra de secret staat** (eigenaar, met zijn eigen toegangscode): module 0 doorlopen (code invoeren → welkomstbericht), de flyer in module 1 les 1, en minstens één feedback-opdracht (bv. module 1 les 4). Wat er zonder secret gebeurt: de code-validatie en alle schermen werken gewoon, maar een echte AI-aanroep geeft de generieke foutmelding (Anthropic-401 door de ontbrekende sleutel op de Worker).
+3. **Toegangscode uitdelen aan deelnemers** zodra alles getest is. De code staat als `TOEGANGSCODE`-secret op de Worker en is alleen bij de eigenaar bekend. Let op: de daglimiet (60 aanroepen/dag) geldt per code, dus gedeeld over iedereen die dezelfde code gebruikt. Bij grotere groepen is dat een aandachtspunt (limiet verhogen in `proxy/src/index.js` of meerdere codes ondersteunen; dat laatste vergt een Worker-aanpassing).
+4. **`.claude/skills/` en `context/Claude code skills/` staan nog untracked** (Saliegroen-designsysteem-skill, dubbel op twee plekken). Dit is Claude Code-tooling, geen cursusinhoud, en is bewust **niet** meegecommit. Opruimen of alsnog toevoegen is aan de eigenaar.
 
 ## Belangrijke aandachtspunten (algemeen)
 
 - `beoordelingsinstructie` uit `cursus.json` **nooit** in de UI tonen; alleen als systeeminstructie in de API (gaat via `OpdrachtFeedback` → `stuurVerzoek`).
-- Geen API-sleutels/persoonsgegevens in code. Sleutel alleen in `localStorage` (`anthropic_api_key`).
+- Geen sleutels/codes/persoonsgegevens in code. De Anthropic-sleutel staat alleen als secret op de Worker; de toegangscode van de deelnemer alleen in `localStorage` (`toegangscode`).
 - Stijl: saliegroen, geen em-dash (—), aanspreken met "je". Zie `stijlgids zacht groen.md` en `schrijfstijl_instructie.md`.
 - `node_modules`/`dist` staan in `.gitignore` — bij verse checkout eerst `npm install`.
 - Build verifiëren met `npm run build` vóór elke push.

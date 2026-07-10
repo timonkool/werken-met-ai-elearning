@@ -8,7 +8,7 @@ Dit document is de werkinstructie voor Claude Code bij het bouwen en onderhouden
 
 **Eigenaar:** Timon Kool
 **Doel:** Een volledig werkende e-learning over AI-gebruik voor medewerkers en vrijwilligers van stichtingen in de sociale sector. Zes modules, opdrachten met AI-feedback, PDF-certificaat bij voltooiing.
-**Tech stack:** React via Vite. Geen backend. Geen externe UI-libraries behalve react-markdown (voor het renderen van markdown in theorie-blokken) en jsPDF (voor het certificaat).
+**Tech stack:** React via Vite. Geen eigen backend voor de cursus zelf; al het AI-verkeer loopt via een aparte Cloudflare Worker-proxy (map `proxy/`) die de Anthropic-sleutel als secret bevat. Geen externe UI-libraries behalve react-markdown (voor het renderen van markdown in theorie-blokken) en jsPDF (voor het certificaat).
 **Hosting:** GitHub Pages, verbonden aan timonkool.nl via de bestaande repository-setup.
 **Branch:** Alles wordt direct naar `main` gepusht. Geen feature branches.
 **Doelgroep van de e-learning:** Niet-technische volwassenen, vrijwilligers en medewerkers van stichtingen. Geen programmeerkennis, geen AI-voorkennis.
@@ -46,12 +46,17 @@ Houd je strikt aan deze structuur. Maak geen nieuwe mappen aan zonder expliciete
 │   │   ├── LesBlok.jsx             # Herbruikbaar les-component
 │   │   └── [overige componenten]
 │   └── modules/
-│       ├── module-0/               # Welkom en API-koppeling
+│       ├── module-0/               # Welkom en toegangscode-koppeling
 │       ├── module-1/               # Wat is AI eigenlijk?
 │       ├── module-2/               # Veilig gebruik
 │       ├── module-3/               # Goede prompts schrijven
 │       ├── module-4/               # Drie doorlopende oefeningen
 │       └── module-5/               # Afsluiting en certificaat
+└── proxy/                          # Cloudflare Worker: beveiligde tussenlaag naar Anthropic
+    ├── src/index.js                # Worker-code (model, limieten, CORS, foutafhandeling)
+    ├── wrangler.toml
+    ├── test.html                   # Los testbestand voor de proxy
+    └── README.md                   # Request-/response-contract van de proxy
 ```
 
 ### Naamgevingsconventie
@@ -93,61 +98,69 @@ Bij twijfel: voorleggen, niet zelf beslissen.
 
 Dit zijn harde regels zonder uitzonderingen:
 
-- **Nooit** een API-sleutel, wachtwoord of token in de code plaatsen, ook niet als placeholder of voorbeeld
-- De Anthropic API-sleutel komt altijd van de gebruiker zelf via een invoerveld. Hij wordt opgeslagen in `localStorage` onder de key `"anthropic_api_key"` en nergens anders
+- **Nooit** een API-sleutel, wachtwoord, toegangscode of token in de code plaatsen, ook niet als placeholder of voorbeeld
+- De Anthropic API-sleutel staat **uitsluitend** als secret (`ANTHROPIC_API_KEY`) op de Cloudflare Worker en komt nooit in de cursus-code, de repo of de browser van de deelnemer terecht
+- De deelnemer identificeert zich met een **toegangscode** (uitgedeeld door de eigenaar), ingevoerd via het scherm in module 0. De code wordt opgeslagen in `localStorage` onder de key `"toegangscode"` en nergens anders. De geldige waarde staat alleen als secret (`TOEGANGSCODE`) op de Worker
 - **Nooit** persoonsgegevens van cursusdeelnemers opslaan. De naam voor het certificaat wordt alleen lokaal verwerkt in de browser en niet verstuurd
 - De beoordelingsinstructies in cursus.json (het veld `beoordelingsinstructie` per opdracht) zijn bedoeld voor de API en mogen **nooit** zichtbaar worden gerenderd voor de deelnemer. Ze worden alleen gebruikt als systeeminstructie in de API-aanroep.
 
 ---
 
-## 6. De Anthropic API
+## 6. De AI-aanroep (via de Cloudflare-proxy)
+
+De cursus praat **nooit rechtstreeks** met de Anthropic API. Alle AI-verkeer loopt via de eigen Cloudflare Worker-proxy. Het volledige request-/response-contract staat in `proxy/README.md`; dat document is leidend bij twijfel.
 
 ### Vaste instellingen
 
-Alle instellingen staan als constanten bovenaan `src/hooks/useAnthropicApi.js`:
+In `src/hooks/useAnthropicApi.js` staan alleen nog:
 
 ```javascript
-const MODEL = "claude-sonnet-4-6";      // Pas hier aan bij modelwijziging
+const ENDPOINT = "https://werken-met-ai-proxy.timonmariuskool.workers.dev/chat";
 const MAX_TOKENS = 800;                  // Standaard voor feedbacktaken
-const TEMPERATURE = 0.4;
-const ENDPOINT = "https://api.anthropic.com/v1/messages";
+export const TOEGANGSCODE_KEY = "toegangscode";
 ```
 
-`stuurVerzoek(bericht, beoordelingsinstructie, maxTokens)` accepteert een optionele derde parameter `maxTokens`. Standaard is dat `MAX_TOKENS` (800) voor feedbacktaken. Voor afwijkende taken (zoals de HTML-flyer in module 1) geef je een hogere waarde mee, bijvoorbeeld 4000.
+Het model (`claude-sonnet-4-6`) en de temperature (0.4) worden door de **proxy** bepaald, als constanten bovenaan `proxy/src/index.js`. Modelwijzigingen gebeuren dus op de Worker, niet in de cursus-code.
 
-### Verplichte headers
+`stuurVerzoek(bericht, beoordelingsinstructie, maxTokens)` accepteert een optionele derde parameter `maxTokens`. Standaard is dat `MAX_TOKENS` (800) voor feedbacktaken. Voor afwijkende taken (zoals de HTML-flyer in module 1) geef je een hogere waarde mee, bijvoorbeeld 4000. De cursus voegt zelf `SYSTEM_BASE` en de beoordelingsinstructie samen en stuurt die als kant-en-klare `systeeminstructie` mee; de proxy plakt daar niets meer voor of achter.
+
+### Request-vorm richting de proxy
 
 ```javascript
-"Content-Type": "application/json"
-"x-api-key": [sleutel uit localStorage]
-"anthropic-version": "2023-06-01"
-"anthropic-dangerous-direct-browser-access": "true"
+POST {ENDPOINT}
+Content-Type: application/json
+
+{
+  "toegangscode": [code uit localStorage],
+  "bericht": "...",
+  "systeeminstructie": "...",
+  "max_tokens": 800
+}
 ```
 
-De vierde header is verplicht voor browser-aanroepen. Zonder hem blokkeert CORS elke aanroep.
+Er gaan geen Anthropic-headers meer vanuit de browser; die zet de Worker zelf.
+
+### Toegangscode controleren zonder AI-aanroep
+
+`controleerToegangscode(code)` (geëxporteerd uit `useAnthropicApi.js`) valideert een code bij de proxy zonder de daglimiet te belasten: een verzoek met bewust leeg `bericht` levert `401` op bij een foute code en `400` bij een correcte code, nog vóór de proxy Anthropic aanroept. Module 0 gebruikt dit bij het koppelen.
 
 ### Foutafhandeling
 
-Toon altijd een zichtbare foutmelding in de UI, nooit alleen in de console:
+Toon altijd een zichtbare foutmelding in de UI, nooit alleen in de console. Proxy-eigen fouten hebben een Nederlands `fout`-veld in de response-body; gebruik dat om ze te onderscheiden van doorgegeven Anthropic-fouten (die de deelnemer nooit zelf kan oplossen):
 
-| Foutcode | Bericht voor de gebruiker |
+| Situatie | Bericht voor de gebruiker |
 |----------|--------------------------|
-| 401 | "Je API-sleutel klopt niet. Controleer hem via de instellingen." |
-| 429 | "Je hebt het limiet bereikt. Wacht even en probeer opnieuw." |
+| 401 met `fout` over de toegangscode | "Je toegangscode klopt niet. Vul hem opnieuw in via module 0." (en wis de opgeslagen code) |
+| 429 met `fout` over de dagelijkse limiet | "De cursus heeft vandaag zijn maximum aan AI-vragen bereikt. Probeer het morgen opnieuw; je voortgang blijft bewaard." |
+| 429 overig (rate limit van Anthropic) | "Je hebt het limiet bereikt. Wacht even en probeer opnieuw." |
 | Netwerkfout | "Geen verbinding. Controleer je internet en probeer opnieuw." |
-| Overig | "Er ging iets mis. Probeer het opnieuw of ververs de pagina." |
+| Overig (ook Anthropic-fouten zoals een ongeldige sleutel op de Worker) | "Er ging iets mis. Probeer het opnieuw of ververs de pagina." |
 
 Foutmeldingen verschijnen in een oranje blok in de UI. Nooit als browser `alert()`.
 
-### Kostenwaarschuwing (geen daglimiet)
+### Daglimiet (vervangt de oude kostenwaarschuwing)
 
-Er is **geen** dagelijkse limiet op het aantal API-aanroepen. Niets blokkeert de deelnemer.
-
-Houd in `localStorage` het totale aantal API-aanroepen bij (key: `"api_aanroepen_totaal"`). Zodra de teller de grens van 50 bereikt, toon je **eenmalig** de volgende geruststellende melding bovenaan het scherm in een neutraal kader:
-
-> "Je hebt inmiddels 50 vragen aan AI gesteld in deze cursus. Tot nu toe heb je naar schatting 0,08 euro aan API-krediet gebruikt. Dat valt ruimschoots binnen het startkrediet van je account. Je kunt gewoon doorgaan."
-
-De melding verschijnt maar één keer (bewaakt via de key `"kostenwaarschuwing_getoond"`) en blokkeert niets. De teller loopt daarna gewoon door. De teller en de melding zijn per browser/apparaat en geen absolute beveiliging.
+De proxy hanteert een daglimiet van 60 aanroepen per toegangscode per dag (UTC), bijgehouden in Cloudflare KV. De cursus zelf telt niets meer en toont geen kostenmelding; het oude mechanisme (`api_aanroepen_totaal`, `kostenwaarschuwing_getoond`) is verwijderd. Bij het bereiken van de limiet toont de cursus de 429-daglimiet-melding uit de tabel hierboven.
 
 ### Leegte-validatie
 
@@ -389,14 +402,17 @@ in het Nederlands. Houd je aan de beoordelingsinstructie.
 
 | Key | Inhoud |
 |-----|--------|
-| `anthropic_api_key` | API-sleutel van de gebruiker |
+| `toegangscode` | Toegangscode van de deelnemer voor de proxy |
 | `voortgang_[les-id]` | `{ afgerond: true/false, antwoord: "..." }` |
 | `module_[module-id]_voltooid` | `true` als alle lessen afgerond zijn |
-| `api_aanroepen_totaal` | Totaal aantal API-aanroepen (voor de kostenwaarschuwing) |
-| `kostenwaarschuwing_getoond` | `true` als de eenmalige kostenmelding al is getoond |
 | `actieplan` | JSON-object met het persoonlijke actieplan van de deelnemer |
+| `certificaat_naam` | Naam zoals ingevuld voor het certificaat (alleen lokaal) |
 
-Voortgang wordt nooit naar een server gestuurd. Als iemand localStorage wist, verliest hij zijn voortgang. Dat is bewust geaccepteerd voor versie 1.
+Daarnaast gebruiken losse lessen eigen keys die in `cursus.json` als `opslag_key` gedocumenteerd staan (zoals `module1_eigen_taak` en `module4_eigen_prompt`), plus `actieve_module` voor de navigatie.
+
+Voortgang wordt nooit naar een server gestuurd. Als iemand localStorage wist, verliest hij zijn voortgang. Dat is bewust geaccepteerd voor versie 1. De "Begin opnieuw"-knop in module 5 wist alles **behalve** de toegangscode.
+
+De oude keys `anthropic_api_key`, `api_aanroepen_totaal` en `kostenwaarschuwing_getoond` bestaan niet meer; het koppelscherm van module 0 ruimt een eventueel achtergebleven `anthropic_api_key` actief op.
 
 ---
 
@@ -416,8 +432,9 @@ Voortgang wordt nooit naar een server gestuurd. Als iemand localStorage wist, ve
 ## 12. Module-specifieke bijzonderheden
 
 ### Module 0
-- Heeft drie sub-schermen: Welkom, ApiKoppeling, ApiSucces
-- ApiSucces maakt direct een API-aanroep voor een welkomstbericht
+- Heeft drie sub-schermen: Welkom, ApiKoppeling (toegangscode-invoer), ApiSucces
+- ApiKoppeling valideert de toegangscode live bij de proxy via `controleerToegangscode` en slaat hem pas op als hij geldig is
+- ApiSucces maakt direct een API-aanroep (via de proxy) voor een welkomstbericht
 - Voltooiing wordt opgeslagen zodra ApiSucces is getoond
 
 ### Module 3
@@ -440,9 +457,10 @@ Voortgang wordt nooit naar een server gestuurd. Als iemand localStorage wist, ve
 - De `beoordelingsinstructie` mag nooit worden gerenderd in de UI. Alleen als systeeminstructie in de API-aanroep.
 - Nooit `localStorage`, `sessionStorage` of andere browser storage APIs gebruiken voor iets anders dan wat in sectie 10 staat.
 - Nooit een API-aanroep doen bij een lege textarea (valideer altijd eerst via `trim()`).
-- De `Content-Type` header is verplicht bij elke POST naar de Anthropic API. Vergeet hem niet.
-- De `anthropic-dangerous-direct-browser-access: true` header is verplicht voor browser-aanroepen. Zonder hem werkt niets.
-- Het model staat als constante `MODEL` bovenaan `useAnthropicApi.js`. Nooit elders hardcoden.
+- Nooit vanuit de browser rechtstreeks naar `api.anthropic.com` gaan; alles loopt via de proxy. De Anthropic-headers (`x-api-key`, `anthropic-version`, `anthropic-dangerous-direct-browser-access`) horen uitsluitend in `proxy/src/index.js` thuis.
+- De `Content-Type: application/json` header is verplicht bij elke POST naar de proxy.
+- Het model staat als constante bovenaan `proxy/src/index.js` (met een whitelist `TOEGESTANE_MODELLEN`). Nooit in de cursus-code hardcoden.
+- De CORS-whitelist van de proxy (`TOEGESTANE_ORIGINS`) moet het domein bevatten waarvandaan de cursus draait; vergeet bij een domeinwijziging niet de Worker opnieuw te deployen.
 
 ---
 
