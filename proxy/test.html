@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Test — werken-met-ai-proxy</title>
+<style>
+  body { font-family: 'Trebuchet MS', Verdana, Arial, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; background: #faf8f4; color: #2d352c; }
+  h1 { color: #3a4a38; font-size: 22px; }
+  label { display: block; margin-top: 16px; font-weight: 600; font-size: 14px; }
+  input, textarea { width: 100%; box-sizing: border-box; padding: 10px; margin-top: 6px; border: 1px solid #c8d4c4; border-radius: 8px; font-size: 14px; font-family: inherit; }
+  textarea { min-height: 100px; }
+  button { margin-top: 20px; padding: 12px 24px; background: #6b8068; color: #faf8f4; border: none; border-radius: 999px; font-size: 15px; cursor: pointer; }
+  button:disabled { opacity: 0.6; cursor: default; }
+  pre { white-space: pre-wrap; word-wrap: break-word; background: #eef2ec; border-radius: 10px; padding: 16px; margin-top: 20px; font-size: 13px; }
+  .fout { color: #a5432f; }
+</style>
+</head>
+<body>
+
+<h1>Test: werken-met-ai-proxy</h1>
+<p>Lokaal testbestand. Niet publiceren. Vult de proxy-URL, toegangscode en een testbericht in en toont het ruwe antwoord.</p>
+
+<label for="url">Proxy-URL</label>
+<input id="url" type="text" value="https://werken-met-ai-proxy.timonmariuskool.workers.dev/chat">
+
+<label for="code">Toegangscode</label>
+<input id="code" type="text" placeholder="de TOEGANGSCODE die je met wrangler secret put hebt ingesteld">
+
+<label for="systeem">Systeeminstructie (optioneel)</label>
+<textarea id="systeem">Je bent een behulpzame en warme leercoach. Antwoord in maximaal twee zinnen.</textarea>
+
+<label for="bericht">Testbericht</label>
+<textarea id="bericht">Dit is een testbericht via de proxy. Werkt de verbinding?</textarea>
+
+<label for="tokens">Max tokens (optioneel)</label>
+<input id="tokens" type="number" value="800">
+
+<button id="verstuur">Verstuur naar proxy</button>
+
+<pre id="resultaat">Nog geen resultaat.</pre>
+
+<script>
+document.getElementById('verstuur').addEventListener('click', async () => {
+  const knop = document.getElementById('verstuur')
+  const resultaat = document.getElementById('resultaat')
+  const url = document.getElementById('url').value.trim()
+  const toegangscode = document.getElementById('code').value
+  const systeeminstructie = document.getElementById('systeem').value
+  const bericht = document.getElementById('bericht').value
+  const maxTokens = parseInt(document.getElementById('tokens').value, 10) || 800
+
+  if (!url || !toegangscode || !bericht.trim()) {
+    resultaat.textContent = 'Vul in ieder geval de proxy-URL, toegangscode en een testbericht in.'
+    resultaat.className = 'fout'
+    return
+  }
+
+  knop.disabled = true
+  resultaat.className = ''
+  resultaat.textContent = 'Bezig met versturen...'
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ toegangscode, bericht, systeeminstructie, max_tokens: maxTokens }),
+    })
+    const data = await response.json()
+    resultaat.textContent = `Status: ${response.status}\n\n${JSON.stringify(data, null, 2)}`
+    resultaat.className = response.ok ? '' : 'fout'
+  } catch (err) {
+    resultaat.textContent = 'Netwerkfout: ' + err.message
+    resultaat.className = 'fout'
+  } finally {
+    knop.disabled = false
+  }
+})
+</script>
+
+</body>
+</html>

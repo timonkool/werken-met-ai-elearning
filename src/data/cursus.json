@@ -529,6 +529,55 @@
       "beschrijving": "Je rondt de cursus af met een persoonlijk actieplan voor de komende week. Als afsluiting ontvang je een certificaat van deelname.",
       "externe_tool_vereist": false,
       "voltooiing": false,
+      "terugblik": {
+        "titel": "Terugblik",
+        "kernzinnen": [
+          { "module": "Module 1", "zin": "Je begrijpt hoe AI werkt en hoe je het kritisch gebruikt." },
+          { "module": "Module 2", "zin": "Je weet hoe je AI veilig inzet voor de mensen die jij helpt." },
+          { "module": "Module 3", "zin": "Je schrijft prompts met ROL, TAAK en CONTEXT." },
+          { "module": "Module 4", "zin": "Je hebt drie werkende AI-processen gemaakt." }
+        ],
+        "afsluittekst": "Je hebt de hele cursus doorlopen. Voordat je het certificaat ontvangt, vragen we je om één concrete stap te kiezen.",
+        "knop": "Naar het actieplan"
+      },
+      "actieplan": {
+        "titel": "Jouw actieplan",
+        "intro": "Eén concrete stap is genoeg. Kort en eerlijk invullen mag.",
+        "vragen": [
+          { "id": "taak", "vraag": "Welke taak doe ik komende week anders met AI?" },
+          { "id": "wanneer", "vraag": "Wanneer ga ik dat proberen?" },
+          { "id": "verwachting", "vraag": "Wat verwacht ik dat anders gaat?" }
+        ],
+        "knop": "Bewaar mijn actieplan",
+        "na_opslaan": "Je actieplan is opgeslagen in je browser. Je kunt het altijd terugvinden via de navigatie.",
+        "vervolg_knop": "Ontvang mijn certificaat",
+        "opslag_key": "actieplan"
+      },
+      "certificaat": {
+        "titel": "Jouw certificaat",
+        "naam_label": "Hoe moet jouw naam op het certificaat staan?",
+        "naam_placeholder": "Bijvoorbeeld: Jan Klaassen",
+        "voorvertoning_label": "Voorvertoning",
+        "eyebrow": "Certificaat van voltooiing",
+        "hoofdtitel": "E-learning: Werken met AI voor de sociale sector",
+        "bevestigt_regel": "Dit is om te bevestigen dat",
+        "prestatie_tekst": "de e-learning Werken met AI volledig heeft doorlopen en alle opdrachten heeft voltooid. De deelnemer heeft aangetoond AI praktisch en verantwoord te kunnen inzetten in het dagelijkse werk.",
+        "modules_labels": ["Wat is AI?", "Veilig gebruik", "Prompts schrijven", "Drie oefeningen"],
+        "handtekening_naam": "Timon Kool",
+        "handtekening_rol": "timonkool.nl",
+        "download_knop": "Download certificaat (PDF)",
+        "leeg_veld_fout": "Vul eerst je naam in.",
+        "opslag_key": "certificaat_naam"
+      },
+      "eindscherm": {
+        "titel": "Je hebt de cursus afgerond.",
+        "tekst": "Je hebt alle modules doorlopen, geoefend met echte AI-tools en een eigen actieplan gemaakt. Wat je nu weet, kun je morgen al gebruiken.",
+        "download_opnieuw_knop": "Download mijn certificaat opnieuw",
+        "begin_opnieuw_knop": "Begin opnieuw",
+        "bevestiging_tekst": "Weet je zeker dat je opnieuw wilt beginnen? Al je voortgang, antwoorden en je actieplan worden gewist. Dit kan niet ongedaan gemaakt worden.",
+        "bevestiging_ja": "Ja, alles wissen",
+        "bevestiging_annuleer": "Annuleren"
+      },
       "lessen": []
     }
   ]

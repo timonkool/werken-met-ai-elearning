@@ -1,0 +1,8 @@
+name = "werken-met-ai-proxy"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# KV-namespace voor de daglimiet-telling per toegangscode.
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "11bb2f5f3c7d406d959e6a8193c56602"

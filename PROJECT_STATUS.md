@@ -1,13 +1,33 @@
 # PROJECT_STATUS — Werken met AI (e-learning)
 
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
-> Laatste update: 2026-06-11 (sessie: module 4 gebouwd)
+> Laatste update: 2026-07-10 (sessie: module 5 gebouwd, hele cursus 0–5 nu compleet en gepusht)
 
 ---
 
 ## Waar staan we
 
-Module 0, 1, 2, 3 en 4 zijn volledig gebouwd. Module 5 bestaat nog als lege hull in `cursus.json` (titel, duur, kleur, beschrijving, lege `lessen: []`). De volgende stap is **module 5 + afwerking**.
+**Alle modules (0 t/m 5) zijn nu volledig gebouwd.** Module 5 (`Jouw eerste echte stap`) is deze sessie toegevoegd: terugblik, persoonlijk actieplan, certificaat met PDF-download en een eindscherm met "opnieuw beginnen". Zie "Wat is gebouwd deze sessie" hieronder.
+
+**Belangrijk:** de eigenaar kon deze sessie niet zelf testen en heeft gevraagd om alles toch te bouwen en direct te pushen. Er is dus **geen test met een eigen API-sleutel** gedaan op de AI-feedbackonderdelen (module 1 les 4, module 2 les 3, module 3 les 3–4, module 4 les 1–3) — dat was ook bij eerdere sessies al zo en de code daarvoor is niet gewijzigd. Alles wat zonder API-sleutel te testen was (alle vier de nieuwe module 5-schermen, inclusief PDF-download) is wél getest in de preview, zie "Lokaal getest deze sessie".
+
+Losstaand van de cursusinhoud: de map `proxy/` bevat een Cloudflare Worker die straks tussen de cursus en de Anthropic API komt te staan zodat de deelnemersbrowser nooit meer een Anthropic-sleutel bevat. Dat is nog niet klaar (zie "Nog te doen"); de cursus-code (`src/`) praat nog rechtstreeks met de Anthropic API.
+
+### Status van de proxy
+
+- **Live:** `https://werken-met-ai-proxy.timonmariuskool.workers.dev` (endpoint: `POST /chat`).
+- **Wat werkt en is getest (met curl, zonder Anthropic-sleutel):** toegangscode-check (401 bij mismatch), leeg-berichtvalidatie (400), onbekend pad (404), verkeerde methode (405), CORS (alleen `https://timonkool.nl`, `https://timonkool.github.io`, `http://localhost:5173` en `null` krijgen `Access-Control-Allow-Origin` terug).
+- **Wat nog niet getest is:** de daadwerkelijke doorschakeling naar Anthropic. Dit vereist de `ANTHROPIC_API_KEY`-secret, die de eigenaar nog niet kon zetten (saldo moest nog verwerkt worden).
+- **Secrets:**
+  - `TOEGANGSCODE` — **ingesteld** (willekeurig gegenereerde waarde, alleen bekend bij de eigenaar; niet in de repo of in dit document).
+  - `ANTHROPIC_API_KEY` — **nog niet ingesteld**. Zodra de eigenaar zijn Anthropic-sleutel heeft, zet hij die zelf met:
+    ```
+    cd proxy
+    CLOUDFLARE_API_TOKEN=<zijn-cloudflare-token> npx wrangler secret put ANTHROPIC_API_KEY
+    ```
+    (plakt de Anthropic-sleutel als er om gevraagd wordt). Daarna pas kan de volledige doorschakeling naar Anthropic getest worden, bijvoorbeeld via `proxy/test.html`.
+- **KV-namespace:** `RATE_LIMIT_KV` (id `11bb2f5f3c7d406d959e6a8193c56602`), gebruikt voor de daglimiet van 60 aanroepen per toegangscode per dag (UTC-datum in de sleutel, TTL 2 dagen).
+- **Documentatie:** zie `proxy/README.md` voor de exacte request-/response-vorm, inclusief voorbeelden voor de flyer-aanroep (4000 tokens) en een gewone feedback-aanroep (800 tokens). Dat document is het uitgangspunt voor de volgende stap.
 
 ## Live & deployment
 
@@ -16,7 +36,7 @@ Module 0, 1, 2, 3 en 4 zijn volledig gebouwd. Module 5 bestaat nog als lege hull
 - **Hoe:** elke push naar `master` triggert `.github/workflows/deploy.yml`. Die bouwt de Vite-app en kopieert `dist/` naar de submap `elearning-ai-voor-beginners/` in de website-repo `timonkool.github.io` (branch `main`).
 - De kopieer-stap gebruikt het secret `WEBSITE_DEPLOY_TOKEN` (al ingesteld in de repo).
 - `vite.config.js` heeft `base: '/elearning-ai-voor-beginners/'` — niet wijzigen zonder reden.
-- Afspraak met eigenaar: alle wijzigingen meteen live zetten, **maar pas na zijn goedkeuring**. Module 1 + 2 + 3 + 4 staan nog **niet** gepusht; wachten op goedkeuring.
+- Afspraak met eigenaar: alle wijzigingen meteen live zetten, **maar pas na zijn goedkeuring**. Deze sessie is die goedkeuring expliciet gegeven ("bouw module 5 en push alles"); module 1 t/m 5 zijn dus in deze sessie voor het eerst naar `master` gepusht.
 
 ## Wat is gebouwd (klaar)
 
@@ -49,18 +69,27 @@ Module 0, 1, 2, 3 en 4 zijn volledig gebouwd. Module 5 bestaat nog als lege hull
   - Les 1–3 — `OefeningLes`: informatie + instructieblok + standaard `OpdrachtFeedback` (AI-feedback op de aanpak). Les 1 opdrachttekst bevat expliciet de lengte-instructie "maximaal twee pagina's A4"; de system-prompt controleert of de deelnemer een lengte heeft opgegeven.
   - Les 4 — `EigenTaakLes`: **geen AI-aanroep**. Toont `tekst_met_taak_*` (met `module1_eigen_taak`) of `tekst_zonder`. Knop "Sla op voor mezelf" slaat op in `localStorage` onder `module4_eigen_prompt`. Daarna verschijnt "Sluit module 4 af" → markeert module-4 voltooid.
 - **Module-afsluiting** — modules 1, 2, 3 en 4 tonen onderaan (zodra voltooid) een afsluitblok met `module.afsluittekst` + knop "Volgende module".
-- **CSS** — alle nieuwe klassen toegevoegd onderaan `globals.css`, strikt binnen de saliegroen/cream + klei-palette (plus het nieuwe gedempte `--lucht-*` blauw, uitsluitend voor het module 4-instructieblok). Mobiel: flyer/kaarten/herkenning stapelen onder 768px; prompt-demo, element-kaarten en bonus krijgen smallere padding; m4-intro en casuskaders krijgen smallere padding.
+- **Module 5** (`modules/module-5/Module5.jsx`, geen AI-aanroep in deze module):
+  - **5.1 Terugblik** (`Terugblik`): kernzin per module (1–4) uit `module.terugblik.kernzinnen`, afsluittekst, knop naar het actieplan.
+  - **5.2 Actieplan** (`Actieplan`): drie vrije tekstvelden (`module.actieplan.vragen`), knop "Bewaar mijn actieplan" slaat op als JSON-object onder `localStorage["actieplan"]`. Na opslaan verschijnt bevestiging + knop naar het certificaat.
+  - **5.3 Certificaat** (`Certificaat` + `CertificaatVoorvertoning`): naaminvoer (leegte-validatie: "Vul eerst je naam in.", zelfde patroon als elders in de cursus) met live voorvertoning die het referentieontwerp (`context/Voorbeeld_certificaat.html`) volgt — saliegroene zijbalk, kader, naam, prestatietekst, modulepillen, handtekening, zegel en datum. De voorvertoning schaalt via CSS **container query units** (`cqw` op een element met `container-type: inline-size`) zodat de verhoudingen exact kloppen op elke breedte, van 720px desktop tot mobiel.
+  - **5.4 Eindscherm** (`Eindscherm`): overzicht van de kernzinnen, "Download mijn certificaat opnieuw" en "Begin opnieuw". "Begin opnieuw" toont eerst een **inline bevestigingsblok** (geen browser-`confirm()`, consistent met de rest van de cursus) en wist bij bevestiging **alle** `localStorage` (`localStorage.clear()`) gevolgd door een reload, wat de deelnemer terugbrengt naar de allereerste startpagina.
+  - **`certificaatPdf.js`** — losse jsPDF-helper (`genereerCertificaatPdf(naam, certificaatData)`) die het certificaat als A4-liggend PDF genereert met vector-tekenprimitieven (rect/circle/triangle/text), visueel gebaseerd op dezelfde referentie. Wordt aangeroepen vanuit zowel het certificaatscherm als "Download opnieuw" in het eindscherm.
+  - Module 5 onthoudt bij binnenkomst waar de deelnemer gebleven was: voltooid → eindscherm, actieplan al opgeslagen maar nog geen certificaat → certificaatscherm, anders → terugblik.
+- **CSS** — alle nieuwe klassen toegevoegd onderaan `globals.css`, strikt binnen de saliegroen/cream + klei-palette (plus het nieuwe gedempte `--lucht-*` blauw, uitsluitend voor het module 4-instructieblok). Mobiel: flyer/kaarten/herkenning stapelen onder 768px; prompt-demo, element-kaarten en bonus krijgen smallere padding; m4-intro en casuskaders krijgen smallere padding; module 5 heeft geen aparte mobiele overrides nodig voor het certificaat omdat de `cqw`-schaling dat automatisch afhandelt.
 
 ## Lokaal getest deze sessie (preview)
 
-- Build is schoon (`npm run build`), geen console-errors. 452 modules, geen nieuwe waarschuwingen.
-- Module 4 rendert correct (geverifieerd via DOM-inspectie in de preview): introkader met het module 1-antwoord, de rode draad (5 stappen + na-tekst), het ruwe plan (8 punten), beide mails (Marieke + Joost), **3** instructieblokken (alleen les 1–3), **4** opdrachtblokken, en de eigen-taak met aanhaling + twee knoppen.
-- **Introkader-conditie** getest: met `module1_eigen_taak` gevuld verschijnt het kader; leeg/afwezig → niet getoond.
-- **Instructieblok-kleur** (`--lucht-mist` = rgb(231,238,242), rand rgb(124,151,168)) bevestigd: gedempt lucht-blauw, niet fel.
-- **Eigen-taak-opslag** getest: "Sla op voor mezelf" schrijft naar `localStorage["module4_eigen_prompt"]`. ✓ (testwaarde daarna weer verwijderd)
-- Mobiel (375px): geen horizontale overflow in `.module-body` (scrollWidth = 375). De casuskaders, instructieblokken en lijsten stapelen netjes.
-- **Nog niet live getest: de AI-feedback in les 1–3.** Dit vereist de persoonlijke API-sleutel van de eigenaar (CLAUDE.md §5, alleen in de browser). Eigenaar test dit zelf in de draaiende dev-app. Het introkader, de rode draad, de casusweergave en de eigen-taak-opslag werken zonder sleutel.
-- **Testdata in de dev-browser:** voor de controle staan `module1_eigen_taak` (gevraagd testantwoord) en de voltooid-vlaggen van module 0–3 nog in `localStorage`. Wis ze desgewenst handmatig of via "Begin opnieuw" (komt in module 5).
+- Build is schoon (`npm run build`), geen console-errors. 455 modules, geen nieuwe waarschuwingen.
+- Alle vier module 5-schermen doorlopen in de draaiende preview (`npm run dev`), zonder API-sleutel nodig:
+  - Terugblik toont de vier kernzinnen correct.
+  - Actieplan: drie velden ingevuld, "Bewaar mijn actieplan" schrijft het juiste JSON-object naar `localStorage["actieplan"]`, bevestigingstekst en vervolgknop verschijnen.
+  - Certificaat: leegte-validatie getest (foutmelding "Vul eerst je naam in." bij leeg veld, verdwijnt zodra je typt); voorvertoning update live met de ingevulde naam; container-query-schaling geverifieerd via computed styles (naam-fontsize schaalt correct mee met de breedte van de voorvertoning, geen horizontale overflow).
+  - Download certificaat (PDF) getest: geen JavaScript-fouten in de console, `module_module-5_voltooid` en `certificaat_naam` worden correct gezet, app springt automatisch door naar het eindscherm.
+  - Eindscherm: "Download mijn certificaat opnieuw" opnieuw getest zonder fouten; "Begin opnieuw" → bevestigingsblok → "Ja, alles wissen" wist `localStorage` volledig en brengt de deelnemer terug naar de startpagina.
+  - Hervat-logica getest: met alleen een opgeslagen actieplan (geen certificaat) opent module 5 direct op het certificaatscherm.
+- Mobiel (375px): geen horizontale overflow (`document.body.scrollWidth === window.innerWidth`).
+- **Niet getest (kon niet, geen API-sleutel beschikbaar deze sessie):** de AI-feedback in module 1 les 4, module 2 les 3, module 3 les 3–4, module 4 les 1–3. Die code is dit keer niet gewijzigd. De eigenaar test dit zelf zodra hij tijd heeft; als er iets misgaat, ligt dat aan bestaande code, niet aan het werk van deze sessie.
 
 ## Belangrijke beslissingen / aandachtspunten deze sessie
 
@@ -75,8 +104,10 @@ Module 0, 1, 2, 3 en 4 zijn volledig gebouwd. Module 5 bestaat nog als lege hull
 
 ## Nog te doen (volgende stappen)
 
-1. **Module 5** — vier schermen (zie inhoudsbrief §Module 5): terugblik (kernzin per module), actieplan (3 vrije velden, opslag `actieplan`), certificaat (naam-invoer + jsPDF, referentie `context/Voorbeeld_certificaat.html`), eindscherm met "Download opnieuw" + "Begin opnieuw" (wist alle voortgang na bevestiging). Markeer module-5 voltooid na certificaatdownload.
-2. **Afwerking vóór push** — eigenaar test de AI-feedback van module 4 (les 1–3) met eigen sleutel; daarna goedkeuring → push module 1+2+3+4(+5) naar `master`.
+1. **Eigenaar test de AI-feedback zelf** met zijn eigen API-sleutel: module 1 les 4, module 2 les 3, module 3 les 3–4, module 4 les 1–3, en het welkomstbericht in module 0. Dit kon deze sessie niet getest worden (geen sleutel beschikbaar) en is de enige onderdelen van de live cursus die nog niet in de praktijk zijn bevestigd.
+2. **`ANTHROPIC_API_KEY`-secret zetten op de proxy** (eigenaar, zodra saldo verwerkt is) — zie stappen hierboven bij "Status van de proxy". Daarna de volledige doorschakeling testen via `proxy/test.html`.
+3. **`stuurVerzoek` ombouwen naar de proxy** — `src/hooks/useAnthropicApi.js` moet niet meer rechtstreeks naar `https://api.anthropic.com/v1/messages` gaan maar naar `https://werken-met-ai-proxy.timonmariuskool.workers.dev/chat` (zie `proxy/README.md` voor de exacte request-body). Dit is een wijziging in de API-aanroeplogica (CLAUDE.md §4) en moet dus eerst voorgelegd worden. Aandachtspunten: de toegangscode moet ergens ingevoerd/opgeslagen worden in de cursus (nieuw scherm of hergebruik van het bestaande sleutel-invoerscherm uit module 0, met een andere `localStorage`-key dan `anthropic_api_key`); de `SYSTEM_BASE`-samenvoeging blijft in de cursus-code staan, de proxy verwacht de kant-en-klare `systeeminstructie`.
+4. **`.claude/skills/` en `context/Claude code skills/` staan nog untracked** (Saliegroen-designsysteem-skill, dubbel op twee plekken). Dit is Claude Code-tooling, geen cursusinhoud, en is deze sessie bewust **niet** meegecommit. Opruimen of alsnog toevoegen is aan de eigenaar.
 
 ## Belangrijke aandachtspunten (algemeen)
 

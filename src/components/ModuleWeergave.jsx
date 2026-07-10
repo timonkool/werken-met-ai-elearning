@@ -4,6 +4,7 @@ import Module1 from '../modules/module-1/Module1.jsx'
 import Module2 from '../modules/module-2/Module2.jsx'
 import Module3 from '../modules/module-3/Module3.jsx'
 import Module4 from '../modules/module-4/Module4.jsx'
+import Module5 from '../modules/module-5/Module5.jsx'
 import LesBlok from './LesBlok.jsx'
 import ColorSwitchKop from './ColorSwitchKop.jsx'
 
@@ -27,7 +28,8 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
   // Modules met een eigen lesweergave (bijzondere interacties)
   const eigenWeergave =
     module.id === 'module-1' || module.id === 'module-2' ||
-    module.id === 'module-3' || module.id === 'module-4'
+    module.id === 'module-3' || module.id === 'module-4' ||
+    module.id === 'module-5'
 
   return (
     <div className="module-weergave">
@@ -59,6 +61,10 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
 
         {module.id === 'module-4' && (
           <Module4 module={module} onVolgende={onVolgende} />
+        )}
+
+        {module.id === 'module-5' && (
+          <Module5 module={module} />
         )}
 
         {!eigenWeergave && (
