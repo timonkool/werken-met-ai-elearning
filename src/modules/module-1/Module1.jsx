@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
-import jsPDF from 'jspdf'
 import Kennischeck from '../../components/Kennischeck.jsx'
 import OpdrachtFeedback from '../../components/OpdrachtFeedback.jsx'
+import ModuleAfsluiting from '../../components/ModuleAfsluiting.jsx'
 import { useAnthropicApi } from '../../hooks/useAnthropicApi.js'
 import { useVoortgang } from '../../hooks/useVoortgang.js'
 
@@ -283,7 +283,9 @@ function KlikbareZinnenLes({ les, onAfgerond }) {
     onAfgerond()
   }
 
-  function downloadKaartje() {
+  async function downloadKaartje() {
+    // jsPDF is fors en alleen nodig bij deze download; laad hem pas nu
+    const { default: jsPDF } = await import('jspdf')
     const doc = new jsPDF({ unit: 'mm', format: 'a4' })
     doc.setFillColor(238, 242, 236)
     doc.rect(20, 20, 170, 90, 'F')
@@ -403,17 +405,5 @@ function EersteOpdrachtLes({ les, onAfgerond }) {
         renderNaFeedback={afsluitvraagBlok}
       />
     </section>
-  )
-}
-
-/* ─── Module-afsluiting ────────────────────────────────────────── */
-
-function ModuleAfsluiting({ tekst, onVolgende }) {
-  return (
-    <div className="module-afsluiting">
-      <span className="module-afsluiting-vink"><i className="ph-bold ph-check" aria-hidden="true" /></span>
-      <p className="module-afsluiting-tekst">{tekst}</p>
-      <button className="primary" onClick={onVolgende}>Volgende module</button>
-    </div>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useVoortgang } from '../../hooks/useVoortgang.js'
 import { TOEGANGSCODE_KEY } from '../../hooks/useAnthropicApi.js'
-import { genereerCertificaatPdf } from './certificaatPdf.js'
+import { downloadCertificaat } from './certificaatPdf.js'
 
 // Module 5 sluit de cursus af: terugblik, persoonlijk actieplan, certificaat
 // en een eindscherm. Er is geen AI-aanroep in deze module. De vier schermen
@@ -152,15 +152,14 @@ function Certificaat({ data, openModules, onAfgerond }) {
     if (waarde.trim()) setFout(false)
   }
 
-  function download() {
+  async function download() {
     const schoneNaam = naam.trim()
     if (!schoneNaam) {
       setFout(true)
       return
     }
     localStorage.setItem(data.opslag_key, schoneNaam)
-    const doc = genereerCertificaatPdf(schoneNaam, data)
-    doc.save(`certificaat-werken-met-ai-${schoneNaam.replace(/\s+/g, '-').toLowerCase()}.pdf`)
+    await downloadCertificaat(schoneNaam, data)
     onAfgerond()
   }
 
@@ -267,8 +266,7 @@ function Eindscherm({ eindscherm, terugblik, certificaatData }) {
   function downloadOpnieuw() {
     const naam = (localStorage.getItem(certificaatData.opslag_key) || '').trim()
     if (!naam) return
-    const doc = genereerCertificaatPdf(naam, certificaatData)
-    doc.save(`certificaat-werken-met-ai-${naam.replace(/\s+/g, '-').toLowerCase()}.pdf`)
+    downloadCertificaat(naam, certificaatData)
   }
 
   function beginOpnieuw() {

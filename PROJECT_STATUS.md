@@ -3,6 +3,15 @@
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
 > Laatste update: 2026-07-11 (didactische review verwerkt; daarvoor: ombouw naar Cloudflare-proxy met toegangscode)
 
+## Technische review (verwerkt op 2026-07-11)
+
+Volledige repo nagelopen als software engineer; gedrag en inhoud ongewijzigd. Verwerkt:
+
+- **Hoofdbundle gehalveerd: 741,6 kB → 347,1 kB** (gzip 237 → 107 kB). jsPDF (390 kB) werd statisch geïmporteerd in `Module1.jsx` en `certificaatPdf.js` maar is alleen nodig bij twee downloadacties; beide gebruiken nu een dynamische `import('jspdf')` zodat Vite er een aparte lazy chunk van maakt die pas bij de eerste PDF-download laadt. `genereerCertificaatPdf` is daardoor async geworden. De chunk-size-waarschuwing van Vite is weg. In de preview bevestigd dat de jspdf-chunk pas ná de download-klik wordt opgehaald en beide downloads foutloos draaien.
+- **`ModuleAfsluiting` ontdubbeld**: het identieke afsluitblok stond vier keer gekopieerd in Module1 t/m Module4; nu één gedeeld component `components/ModuleAfsluiting.jsx`.
+- **Dubbele downloadlogica in Module5 ontdubbeld**: bestandsnaam-opbouw + save stond zowel in het certificaatscherm als bij "Download opnieuw"; nu één helper `downloadCertificaat(naam, data)` in `certificaatPdf.js`.
+- **`useVoortgang.getLesVoortgang` gehardend**: een corrupt `voortgang_*`-item in localStorage gooide voorheen een onafgevangen `JSON.parse`-fout die de hele app wit trok; nu try/catch met schone fallback.
+
 ## Designreview (verwerkt op 2026-07-11)
 
 Na de didactische review is de cursus nagelopen als webdesigner (met het Saliegroen-designsysteem als toetssteen), gemeten in de gerenderde DOM op 375px en 1280px. De basis bleek sterk: geen overflow meer op mobiel (de eerder gedocumenteerde kleurwissel-kop-overflow bij "Goede prompts schrijven" is door het herontwerp van commit fce5122 al opgelost), contrast overal binnen de merkwaarden, consistente lestitels/ritme (56px), correcte schaduwen en radii, nette navigatie-overlay met backdrop. Twee defecten gevonden en verwerkt:

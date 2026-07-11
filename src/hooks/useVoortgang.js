@@ -24,8 +24,14 @@ export function useVoortgang() {
   }, [])
 
   const getLesVoortgang = useCallback((lesId) => {
-    const raw = localStorage.getItem(`voortgang_${lesId}`)
-    return raw ? JSON.parse(raw) : { afgerond: false, antwoord: '' }
+    // Een corrupt opgeslagen item mag nooit de hele app breken;
+    // val dan terug op een schone lege voortgang.
+    try {
+      const raw = localStorage.getItem(`voortgang_${lesId}`)
+      return raw ? JSON.parse(raw) : { afgerond: false, antwoord: '' }
+    } catch {
+      return { afgerond: false, antwoord: '' }
+    }
   }, [])
 
   const setLesVoortgang = useCallback((lesId, data) => {

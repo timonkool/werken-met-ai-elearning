@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Kennischeck from '../../components/Kennischeck.jsx'
 import OpdrachtFeedback from '../../components/OpdrachtFeedback.jsx'
+import ModuleAfsluiting from '../../components/ModuleAfsluiting.jsx'
 import { useVoortgang } from '../../hooks/useVoortgang.js'
 
 // Module 3 leert het schrijven van prompts met ROL, TAAK en CONTEXT.
@@ -174,17 +175,5 @@ function EigenPromptLes({ les, onAfgerond }) {
         onAfgerond={onAfgerond}
       />
     </section>
-  )
-}
-
-/* ─── Module-afsluiting ────────────────────────────────────────── */
-
-function ModuleAfsluiting({ tekst, onVolgende }) {
-  return (
-    <div className="module-afsluiting">
-      <span className="module-afsluiting-vink"><i className="ph-bold ph-check" aria-hidden="true" /></span>
-      <p className="module-afsluiting-tekst">{tekst}</p>
-      <button className="primary" onClick={onVolgende}>Volgende module</button>
-    </div>
   )
 }

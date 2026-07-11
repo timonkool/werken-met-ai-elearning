@@ -1,10 +1,11 @@
-import jsPDF from 'jspdf'
-
 // Genereert het certificaat als PDF (A4 liggend), visueel gebaseerd op
 // context/Voorbeeld_certificaat.html: een donkere saliegroene zijbalk,
 // een dun binnenkader en een hoofdvlak met naam, prestatietekst en datum.
 // Alleen de naam en de datum zijn dynamisch, de rest ligt vast.
-export function genereerCertificaatPdf(naam, certificaatData) {
+// jsPDF wordt pas geladen op het moment van downloaden, zodat de forse
+// bibliotheek niet in de initiële bundle van de cursus zit.
+export async function genereerCertificaatPdf(naam, certificaatData) {
+  const { default: jsPDF } = await import('jspdf')
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
   const pageW = 297
   const pageH = 210
@@ -188,4 +189,12 @@ export function genereerCertificaatPdf(naam, certificaatData) {
   doc.text(datumTekst, contentR, bottomY + 2, { align: 'right' })
 
   return doc
+}
+
+// Genereert het certificaat en start direct de download, met een
+// bestandsnaam op basis van de deelnemersnaam. Gedeeld door het
+// certificaatscherm en de "Download opnieuw"-knop op het eindscherm.
+export async function downloadCertificaat(naam, certificaatData) {
+  const doc = await genereerCertificaatPdf(naam, certificaatData)
+  doc.save(`certificaat-werken-met-ai-${naam.replace(/\s+/g, '-').toLowerCase()}.pdf`)
 }

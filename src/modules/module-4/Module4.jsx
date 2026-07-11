@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import OpdrachtFeedback from '../../components/OpdrachtFeedback.jsx'
+import ModuleAfsluiting from '../../components/ModuleAfsluiting.jsx'
 import { useVoortgang } from '../../hooks/useVoortgang.js'
 
 // Module 4 is het hart van de cursus: drie doorlopende oefeningen rond één casus
@@ -226,17 +227,5 @@ function EigenTaakLes({ les, onAfgerond }) {
         </div>
       </div>
     </section>
-  )
-}
-
-/* ─── Module-afsluiting ────────────────────────────────────────── */
-
-function ModuleAfsluiting({ tekst, onVolgende }) {
-  return (
-    <div className="module-afsluiting">
-      <span className="module-afsluiting-vink"><i className="ph-bold ph-check" aria-hidden="true" /></span>
-      <p className="module-afsluiting-tekst">{tekst}</p>
-      <button className="primary" onClick={onVolgende}>Volgende module</button>
-    </div>
   )
 }
