@@ -30,7 +30,7 @@
     {
       "id": "module-0",
       "titel": "Welkom en aan de slag",
-      "duur": 20,
+      "duur": 10,
       "kleur": "#3a4a38",
       "beschrijving": "Maak kennis met de cursus en ontdek wat je de komende modules gaat leren. Je vult je toegangscode in en maakt je eerste contact met de leercoach.",
       "externe_tool_vereist": false,
@@ -123,10 +123,10 @@
           "kennischeck": {
             "vraag": "Wat doet AI als jij een vraag stelt?",
             "opties": [
-              "Het denkt na en begrijpt je vraag",
-              "Het zoekt het antwoord op het internet",
+              "Het denkt na en begrijpt je vraag, net zoals een mens dat doet",
+              "Het zoekt jouw vraag live op en neemt het eerste zoekresultaat over",
               "Het voorspelt het meest waarschijnlijke antwoord op basis van patronen in tekst",
-              "Het herhaalt wat het eerder al heeft gezegd"
+              "Het herhaalt letterlijk wat het eerder al eens tegen iemand heeft gezegd"
             ],
             "correct": 2,
             "uitleg_correct": "AI heeft enorm veel tekst verwerkt en kan op basis daarvan voorspellen wat een logisch antwoord is op jouw vraag. Het begrijpt je vraag niet, maar herkent patronen die op jouw situatie lijken."
@@ -214,7 +214,7 @@
           "titel": "Het dilemma",
           "externe_tool_vereist": false,
           "situatie": "Fatima is vrijwilliger bij een welzijnsorganisatie. Ze wil een brief schrijven voor een cliënt, mevrouw Bakker, die drie maanden huurachterstand heeft van 1.240 euro. Fatima heeft tijdgebrek. Ze denkt: \"Ik typ de situatie snel in bij AI, dan heb ik in een minuut een goede brief.\" Ze opent het chatvenster en begint te typen: \"Schrijf een brief voor mevrouw Bakker, Westerstraat 4, die 1.240 euro huurschuld heeft...\"",
-          "situatie_vraag": "Wat is het risico van wat Fatima doet?",
+          "situatie_vraag": "Denk eerst zelf even na voordat je antwoordt: wat kan hier misgaan?",
           "kennischeck": {
             "vraag": "Wat is het risico als Fatima de naam en het schuldbedrag van mevrouw Bakker invoert in AI?",
             "opties": [
@@ -280,7 +280,7 @@
             "beoordelingsinstructie": "Je beoordeelt een anonieme herschrijving. Controleer drie dingen: (1) zijn alle persoonsgegevens verwijderd (naam, adres, exacte bedragen die herleidbaar zijn), (2) is de essentie van de situatie nog bruikbaar voor het schrijven van een brief, (3) is de herschrijving duidelijk genoeg. Geef een concreet compliment als iets goed is gedaan. Wijs op wat eventueel nog te specifiek is. Maximaal 80 woorden. Schrijf in het Nederlands.",
             "voorbeeld_antwoord": "Schrijf een brief voor een cliënte die al enkele maanden haar huur niet betaalt en een aanzienlijke achterstand heeft opgebouwd. Ze heeft een gezin met kinderen en ontvangt een uitkering. De brief moet vriendelijk maar duidelijk zijn over de ernst van de situatie en de mogelijke vervolgstappen."
           },
-          "originele_situatie": "Schrijf een brief aan mevrouw De Vries, Hoofdstraat 12 in Almere, die al vier maanden haar huur niet betaalt en een achterstand heeft opgebouwd van 1.240 euro. Ze heeft drie kinderen en ontvangt een bijstandsuitkering."
+          "originele_situatie": "Schrijf een brief aan mevrouw De Vries, Hoofdstraat 12 in Almere, die al vier maanden haar huur niet betaalt en een achterstand heeft opgebouwd van 1.480 euro. Ze heeft drie kinderen en ontvangt een bijstandsuitkering."
         }
       ]
     },
@@ -327,7 +327,8 @@
             "opties": [
               "Alleen ROL",
               "Alleen TAAK",
-              "Alle drie: ROL, TAAK én CONTEXT"
+              "Alle drie: ROL, TAAK én CONTEXT",
+              "Alleen CONTEXT"
             ],
             "correct": 2,
             "uitleg_correct": "In de slechte prompt ontbreekt de ROL (wie moet AI zijn), de TAAK (wat precies, voor wie, welk format) en de CONTEXT (doelgroep, toon, datum). De volgende les legt uit wat elk element betekent."
@@ -418,7 +419,7 @@
       "rode_draad": {
         "titel": "De rode draad",
         "alineas": [
-          "In de komende drie oefeningen organiseer jij een inloopmiddag voor mensen met geldzorgen. Je werkt daarvoor in de echte AI-tool die je na deze cursus ook in je dagelijkse werk zult gebruiken: claude.ai of chatgpt.com. Beide zijn gratis toegankelijk.",
+          "In de komende drie oefeningen organiseer jij een inloopmiddag voor mensen met geldzorgen. Je werkt daarvoor in de echte AI-tool die je na deze cursus ook in je dagelijkse werk zult gebruiken: claude.ai of chatgpt.com. Beide zijn gratis. Je hebt er wel een account voor nodig; heb je dat nog niet, maak het dan nu eerst aan met je e-mailadres. Dat duurt een paar minuten.",
           "De werkwijze in elke oefening is hetzelfde:"
         ],
         "stappen": [
@@ -428,7 +429,7 @@
           "Voer je prompt in, plus de bijgeleverde informatie",
           "Kopieer je prompt en de eerste vijf regels van het resultaat terug in het veld hieronder"
         ],
-        "na": "De cursus geeft je daarna feedback op je aanpak, niet op het AI-resultaat zelf. Want dat resultaat is ook afhankelijk van hoe goed jij de vraag hebt gesteld.",
+        "na": "De cursus geeft je daarna feedback op je aanpak, niet op het AI-resultaat zelf. Want dat resultaat is ook afhankelijk van hoe goed jij de vraag hebt gesteld. Nog één tip: houd het tabblad met je AI-gesprek open tijdens alle drie de oefeningen. In oefening 3 bouw je voort op wat je in oefening 1 en 2 hebt gemaakt.",
         "knop": "Begin met oefening 1"
       },
       "instructieblok": "Open claude.ai of chatgpt.com in een nieuw tabblad. Gebruik de informatie hierboven als onderdeel van je prompt. Voer de opdracht uit. Kopieer daarna je prompt en de eerste vijf regels van het resultaat terug in het veld hieronder.",
@@ -499,7 +500,7 @@
             ]
           },
           "opdracht": {
-            "tekst": "Combineer het draaiboek van oefening 1 en de actielijst van oefening 2 met de statusupdate van Joost. Vraag AI om twee dingen: (1) het draaiboek bij te werken met de nieuwe informatie en (2) een korte informele update-mail naar het team te schrijven over de voortgang. Beide in één prompt, één resultaat. Gebruik het instructieblok. Plak je prompt en de eerste vijf regels van het resultaat terug.",
+            "tekst": "Combineer het draaiboek van oefening 1 en de actielijst van oefening 2 met de statusupdate van Joost. Pak daarvoor het tabblad met je eerdere AI-gesprek er weer bij. Vraag AI om twee dingen: (1) het draaiboek bij te werken met de nieuwe informatie en (2) een korte informele update-mail naar het team te schrijven over de voortgang. Beide in één prompt, één resultaat. Gebruik het instructieblok. Plak je prompt en de eerste vijf regels van het resultaat terug.",
             "beoordelingsinstructie": "Je beoordeelt of de prompt de statusupdate van Joost heeft gecombineerd met het eerdere draaiboek en de actielijst. Controleer ook of de deelnemer AI heeft gevraagd om twee dingen te leveren: een bijgewerkt draaiboek én een update-mail. Sluit af met een oprecht compliment voor het doorlopen van alle drie de oefeningen. Maximaal 120 woorden. Schrijf in het Nederlands.",
             "voorbeeld_antwoord": "Je bent een coördinator bij een wijkorganisatie. Gebruik het volgende draaiboek [plak draaiboek], de actielijst [plak actielijst] en de statusupdate van een collega [plak update Joost].\n\nLever twee dingen op:\n1. Een bijgewerkt draaiboek dat de nieuwe informatie verwerkt: twee gemeentetafels, activiteiten voor kinderen (status: wachten op bevestiging), en de mogelijkheid voor schminkactiviteiten (nog te bevestigen).\n2. Een korte, informele update-mail aan het team (maximaal 100 woorden) over de voortgang en wat er nog open staat.\n\nHoud het draaiboek maximaal twee pagina's A4. Toon voor de mail: collegiaal en praktisch."
           }
@@ -567,6 +568,7 @@
         "handtekening_rol": "timonkool.nl",
         "download_knop": "Download certificaat (PDF)",
         "leeg_veld_fout": "Vul eerst je naam in.",
+        "vergrendeld_tekst": "Het certificaat bevestigt dat je alle opdrachten hebt voltooid. Rond daarom eerst deze modules af:",
         "opslag_key": "certificaat_naam"
       },
       "eindscherm": {

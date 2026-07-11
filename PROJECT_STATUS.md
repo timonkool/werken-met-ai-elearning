@@ -1,7 +1,19 @@
 # PROJECT_STATUS — Werken met AI (e-learning)
 
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
-> Laatste update: 2026-07-10, latere sessie dezelfde avond (cursus omgebouwd van eigen API-sleutel naar de Cloudflare-proxy met toegangscode)
+> Laatste update: 2026-07-11 (didactische review verwerkt; daarvoor: ombouw naar Cloudflare-proxy met toegangscode)
+
+## Didactische review (verwerkt op 2026-07-11)
+
+Na de proxy-ombouw is de volledige cursusinhoud nagelopen vanuit onderwijskundig oogpunt. Verwerkt:
+
+- **Certificaat vergrendeld** tot module 1 t/m 4 voltooid zijn: het certificaat claimt "alle opdrachten voltooid" en was voorheen zonder enige voortgang te downloaden. De downloadknop maakt nu plaats voor een rustige sage-melding (`.m5-cert-vergrendeld`) met de titels van de openstaande modules; `ModuleWeergave` geeft daarvoor `modules` door aan `Module5`, met tekst uit `certificaat.vergrendeld_tekst`. Getest in de preview: gedeeltelijk voltooid → melding met precies de juiste openstaande modules; alles voltooid → downloadknop terug.
+- **Kennischeck module 1 les 2**: het juiste antwoord was veel langer dan de afleiders (klassieke weggever); optielengtes gebalanceerd, juiste antwoord blijft index 2.
+- **Kennischeck module 3 les 1** had 3 opties waar de rest van de cursus er 4 heeft; "Alleen CONTEXT" toegevoegd als vierde afleider (correct blijft index 2).
+- **Module 2 les 1**: `situatie_vraag` was bijna identiek aan de kennischeck-vraag erna; nu een activerende denk-eerst-na-regel.
+- **Module 2 les 3**: de casus-mevrouw De Vries had hetzelfde bedrag (1.240 euro) als mevrouw Bakker uit les 1 (kopie-artefact dat suggereerde dat het dezelfde persoon was); nu 1.480 euro.
+- **Module 4 rode draad**: twee praktische drempels weggenomen: (1) expliciet benoemd dat claude.ai/chatgpt.com een gratis account vereisen en dat de deelnemer dat eerst moet aanmaken; (2) tip toegevoegd om het AI-tabblad open te houden omdat oefening 3 voortbouwt op oefening 1 en 2 (stond nergens en zou deelnemers klem zetten). Les 4-3 opdrachttekst verwijst er nu ook naar.
+- **Module 0 duur**: 20 → 10 minuten (de toegangscode-invoer verving de account-registratie bij Anthropic; 20 min klopte niet meer).
 
 ---
 

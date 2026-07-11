@@ -7,10 +7,17 @@ import { genereerCertificaatPdf } from './certificaatPdf.js'
 // en een eindscherm. Er is geen AI-aanroep in deze module. De vier schermen
 // staan na elkaar; welk scherm als eerste getoond wordt, hangt af van wat
 // er al is opgeslagen (zodat een terugkerende deelnemer niet opnieuw
-// hoeft te beginnen).
-export default function Module5({ module }) {
+// hoeft te beginnen). Het certificaat is pas te downloaden als module 1
+// t/m 4 voltooid zijn; het bevestigt immers dat alle opdrachten af zijn.
+export default function Module5({ module, modules }) {
   const { isModuleVoltooid, setModuleVoltooid } = useVoortgang()
   const voltooid = isModuleVoltooid('module-5')
+
+  const openModules = (modules || []).filter(
+    (m) =>
+      ['module-1', 'module-2', 'module-3', 'module-4'].includes(m.id) &&
+      !isModuleVoltooid(m.id)
+  )
 
   const [scherm, setScherm] = useState(() => {
     if (voltooid) return 'eindscherm'
@@ -34,7 +41,11 @@ export default function Module5({ module }) {
       )}
 
       {scherm === 'certificaat' && (
-        <Certificaat data={module.certificaat} onAfgerond={certificaatAfgerond} />
+        <Certificaat
+          data={module.certificaat}
+          openModules={openModules}
+          onAfgerond={certificaatAfgerond}
+        />
       )}
 
       {scherm === 'eindscherm' && (
@@ -128,7 +139,7 @@ function Actieplan({ data, onVerder }) {
 
 /* ─── 5.3 Certificaat ───────────────────────────────────────────── */
 
-function Certificaat({ data, onAfgerond }) {
+function Certificaat({ data, openModules, onAfgerond }) {
   const [naam, setNaam] = useState(() => localStorage.getItem(data.opslag_key) || '')
   const [fout, setFout] = useState(false)
 
@@ -173,9 +184,20 @@ function Certificaat({ data, onAfgerond }) {
       <p className="m5-voorvertoning-label">{data.voorvertoning_label}</p>
       <CertificaatVoorvertoning data={data} naam={naam} datumTekst={datumTekst} />
 
-      <button className="primary" style={{ marginTop: '24px' }} onClick={download}>
-        {data.download_knop}
-      </button>
+      {openModules.length > 0 ? (
+        <div className="m5-cert-vergrendeld">
+          <p>{data.vergrendeld_tekst}</p>
+          <ul>
+            {openModules.map((m) => (
+              <li key={m.id}>{m.titel}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <button className="primary" style={{ marginTop: '24px' }} onClick={download}>
+          {data.download_knop}
+        </button>
+      )}
     </section>
   )
 }

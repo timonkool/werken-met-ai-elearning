@@ -2735,6 +2735,47 @@ textarea:focus {
   font-weight: 600;
 }
 
+/* Vergrendeld certificaat: rustige melding met openstaande modules */
+.m5-cert-vergrendeld {
+  margin-top: 24px;
+  background: var(--sage-mist);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: 20px 24px;
+}
+
+.m5-cert-vergrendeld p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sage-ink);
+  margin-bottom: 12px;
+}
+
+.m5-cert-vergrendeld ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.m5-cert-vergrendeld li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.m5-cert-vergrendeld li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
 /* Eindscherm */
 .m5-eindscherm-titel {
   font-size: clamp(24px, 4vw, 32px);

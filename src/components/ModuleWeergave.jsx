@@ -64,7 +64,7 @@ export default function ModuleWeergave({ module, modules, onVolgende }) {
         )}
 
         {module.id === 'module-5' && (
-          <Module5 module={module} />
+          <Module5 module={module} modules={modules} />
         )}
 
         {!eigenWeergave && (
