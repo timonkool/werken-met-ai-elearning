@@ -646,6 +646,7 @@ textarea:focus {
 /* Invoerveld */
 .api-invoer {
   width: 100%;
+  min-height: 48px;
   font-family: var(--font-mono);
   font-size: 14px;
   border-radius: var(--radius-md);
@@ -2733,6 +2734,74 @@ textarea:focus {
   font-size: 1.8cqw;
   color: var(--sage-ink);
   font-weight: 600;
+}
+
+/* Op smalle schermen is de A4-miniatuur onleesbaar (tekst zakt onder 8px).
+   Daarom onder 560px een compacte weergave: zijbalk weg, natuurlijke
+   hoogte en vaste, leesbare fontgroottes. De PDF zelf blijft ongewijzigd. */
+@media (max-width: 560px) {
+  .m5-cert {
+    aspect-ratio: auto;
+  }
+
+  .m5-cert-band {
+    display: none;
+  }
+
+  .m5-cert-kader {
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    bottom: 8px;
+  }
+
+  .m5-cert-body {
+    position: static;
+    padding: 26px 24px;
+  }
+
+  .m5-cert-top {
+    padding-bottom: 14px;
+  }
+
+  .m5-cert-eyebrow { font-size: 10px; letter-spacing: 2px; }
+  .m5-cert-hoofdtitel { font-size: 15px; }
+
+  .m5-cert-mid {
+    gap: 10px;
+    padding: 16px 0;
+  }
+
+  .m5-cert-bevestigt { font-size: 13px; }
+  .m5-cert-naam { font-size: 24px; }
+  .m5-cert-naam-lijn { width: 60px; margin-top: 6px; }
+  .m5-cert-prestatie { font-size: 12px; }
+
+  .m5-cert-pillen { gap: 6px; margin-top: 4px; }
+  .m5-cert-pill { font-size: 10px; padding: 3px 10px; }
+
+  .m5-cert-onder {
+    padding-top: 14px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .m5-cert-sig { gap: 3px; }
+  .m5-cert-sig-lijn { width: 50px; margin-bottom: 3px; }
+  .m5-cert-sig-naam { font-size: 13px; }
+  .m5-cert-sig-rol { font-size: 10px; }
+
+  .m5-cert-zegel { gap: 4px; }
+  .m5-cert-zegel-cirkel {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  .m5-cert-zegel-tekst { font-size: 9px; }
+
+  .m5-cert-datum { gap: 3px; }
+  .m5-cert-datum-label { font-size: 10px; }
+  .m5-cert-datum-waarde { font-size: 13px; }
 }
 
 /* Vergrendeld certificaat: rustige melding met openstaande modules */

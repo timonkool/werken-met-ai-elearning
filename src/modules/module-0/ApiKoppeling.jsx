@@ -131,7 +131,7 @@ export default function ApiKoppeling({ onVerbonden }) {
                 Typ of plak de code in het veld hieronder en klik op "Verbind met de cursus".
               </p>
               <input
-                type="password"
+                type="text"
                 className="api-invoer"
                 placeholder="Jouw toegangscode"
                 value={invoer}

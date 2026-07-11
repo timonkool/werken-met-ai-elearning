@@ -3,6 +3,13 @@
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
 > Laatste update: 2026-07-11 (didactische review verwerkt; daarvoor: ombouw naar Cloudflare-proxy met toegangscode)
 
+## Designreview (verwerkt op 2026-07-11)
+
+Na de didactische review is de cursus nagelopen als webdesigner (met het Saliegroen-designsysteem als toetssteen), gemeten in de gerenderde DOM op 375px en 1280px. De basis bleek sterk: geen overflow meer op mobiel (de eerder gedocumenteerde kleurwissel-kop-overflow bij "Goede prompts schrijven" is door het herontwerp van commit fce5122 al opgelost), contrast overal binnen de merkwaarden, consistente lestitels/ritme (56px), correcte schaduwen en radii, nette navigatie-overlay met backdrop. Twee defecten gevonden en verwerkt:
+
+- **Certificaat-voorvertoning was onleesbaar op mobiel**: de `cqw`-schaling van de A4-miniatuur duwde alle tekst naar 4-7px op 375px. Onder 560px schakelt de voorvertoning nu om naar een compacte weergave: zijbalk verborgen, natuurlijke hoogte, vaste leesbare fontgroottes (9-24px). Desktop blijft de exacte A4-miniatuur (ratio 1.414); de PDF zelf is onaangetast.
+- **Toegangscode-veld**: was nog `type="password"` (erfenis van het sleutelscherm; maskering verbergt typefouten terwijl de code geen persoonlijk geheim is) en 43px hoog. Nu `type="text"` met `min-height: 48px`, conform de 48px-norm van de stijlgids.
+
 ## Didactische review (verwerkt op 2026-07-11)
 
 Na de proxy-ombouw is de volledige cursusinhoud nagelopen vanuit onderwijskundig oogpunt. Verwerkt:
