@@ -56,6 +56,15 @@ export default function Welkom({ modules, onStart }) {
         </div>
       </div>
 
+      {/* Korte privacy-uitleg: wat gebeurt er met ingevoerde tekst */}
+      <p className="welkom-privacy">
+        Goed om te weten: wat je bij opdrachten intypt, wordt via een beveiligde
+        verbinding verwerkt door Anthropic, het bedrijf achter de AI-leercoach,
+        om jou feedback te geven. Voer daarom nooit persoonsgegevens in; dat
+        leer je in deze cursus ook. Je voortgang en antwoorden blijven verder
+        gewoon in je eigen browser.
+      </p>
+
       {/* Moduleoverzicht */}
       <div className="welkom-modules">
         <h2 className="welkom-modules-titel">Wat ga je leren?</h2>

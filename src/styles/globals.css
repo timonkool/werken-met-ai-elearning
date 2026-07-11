@@ -404,6 +404,15 @@ textarea:focus {
   color: var(--text);
 }
 
+/* Korte privacy-uitleg onder de intro-blokken */
+.welkom-privacy {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  padding: 20px 48px 0;
+  max-width: 720px;
+}
+
 /* Moduleoverzicht */
 .welkom-modules {
   padding: 48px 48px 40px;
@@ -522,6 +531,10 @@ textarea:focus {
 
   .welkom-blok:last-child {
     border-bottom: none;
+  }
+
+  .welkom-privacy {
+    padding: 18px 24px 0;
   }
 
   .welkom-modules {

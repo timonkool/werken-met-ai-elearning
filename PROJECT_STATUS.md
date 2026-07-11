@@ -3,6 +3,14 @@
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
 > Laatste update: 2026-07-11 (didactische review verwerkt; daarvoor: ombouw naar Cloudflare-proxy met toegangscode)
 
+## Afrondingsronde (verwerkt op 2026-07-11, na de technische review)
+
+- **Daglimiet verhoogd naar 200** aanroepen per toegangscode per dag (`DAGLIMIET_PER_CODE` in `proxy/src/index.js`, docs bijgewerkt). **Let op: de Worker moet hiervoor nog opnieuw gedeployed worden door de eigenaar** (`cd proxy` en `CLOUDFLARE_API_TOKEN=<token> npx wrangler deploy`); tot die tijd draait de oude limiet van 60 live.
+- **Video geschrapt**: de training bevatte al geen video-velden of -weergave meer; de resterende beloftes in het CLAUDE.md-schema (`video_url`, `video_beschrijving`, "video-placeholder") zijn verwijderd.
+- **Privacyregel op het welkomstscherm** (`.welkom-privacy`, onder de drie intro-blokken): legt in één alinea uit dat opdrachtinvoer via een beveiligde verbinding door Anthropic wordt verwerkt voor feedback, dat je nooit persoonsgegevens invoert, en dat voortgang in de eigen browser blijft.
+- **`context/Claude code skills/` verwijderd** (dubbele kopie van de designsysteem-skill; de actieve staat in `.claude/skills/`).
+- **Kennischeck met herkansing** (was one-shot): bij een fout antwoord kleurt alleen de gekozen optie klei met de melding "Dat is hem niet. Lees de vraag nog eens en probeer opnieuw."; de overige opties blijven klikbaar. Het juiste antwoord en de uitleg verschijnen pas bij een goede keuze ("Goed gekozen(, bij de tweede poging).") of na een tweede fout ("Net niet, maar geen probleem."). `onBeantwoord` (lesafronding) vuurt nu pas bij die afronding, niet meer bij de eerste klik. Alle drie de paden getest in de preview, inclusief voortgangsopslag.
+
 ## Technische review (verwerkt op 2026-07-11)
 
 Volledige repo nagelopen als software engineer; gedrag en inhoud ongewijzigd. Verwerkt:
@@ -46,7 +54,7 @@ De ombouw van deze sessie (zie "Ombouw naar de proxy" hieronder) raakt: `useAnth
 - **`src/hooks/useAnthropicApi.js`** — volledig herschreven. `stuurVerzoek(bericht, beoordelingsinstructie, maxTokens)` heeft dezelfde signatuur maar POST nu naar de proxy (`.../chat`) met `{toegangscode, bericht, systeeminstructie, max_tokens}`. Model en temperature zijn uit de cursus-code verdwenen (de proxy bepaalt die). De `SYSTEM_BASE`-samenvoeging bleef in de cursus. Exporteert `TOEGANGSCODE_KEY` (`"toegangscode"`) en `controleerToegangscode(code)`.
 - **Toegangscode-validatie zonder AI-kosten:** `controleerToegangscode` stuurt bewust een leeg `bericht`; de proxy checkt de code vóór de bericht-validatie en vóór de daglimiet, dus 401 = code fout, 400 = code goed, zonder Anthropic-aanroep en zonder limiet-tik.
 - **Foutafhandeling:** proxy-fouten hebben een Nederlands `fout`-veld, dat gebruikt de hook om te onderscheiden: 401 over de toegangscode → code wordt gewist + "Je toegangscode klopt niet. Vul hem opnieuw in via module 0."; 429 over de dagelijkse limiet → "De cursus heeft vandaag zijn maximum aan AI-vragen bereikt..."; 429 overig → wacht-even-melding; netwerk → geen-verbinding; al het andere (ook doorgegeven Anthropic-fouten, zoals een ontbrekende/ongeldige sleutel op de Worker) → generieke melding.
-- **Kostenwaarschuwing verwijderd** (`api_aanroepen_totaal`, `kostenwaarschuwing_getoond`, het melding-blok in `OpdrachtFeedback`): de tekst ging over het eigen startkrediet van de deelnemer en dat model bestaat niet meer. De proxy-daglimiet (60/dag per code) vervangt dit functioneel.
+- **Kostenwaarschuwing verwijderd** (`api_aanroepen_totaal`, `kostenwaarschuwing_getoond`, het melding-blok in `OpdrachtFeedback`): de tekst ging over het eigen startkrediet van de deelnemer en dat model bestaat niet meer. De proxy-daglimiet (200/dag per code) vervangt dit functioneel.
 - **`ApiKoppeling.jsx`** — het 5-stappen Anthropic-Console-scherm is vervangen door een eenvoudig 2-stappen toegangscode-scherm. Valideert live bij de proxy vóór opslag; toont "Code controleren..." tijdens de check. Ruimt een eventueel achtergebleven `anthropic_api_key` uit het oude model actief op. Het "al verbonden"-scherm (code eindigt op ···xxxx, wijzigen/verwijderen/doorgaan) bleef qua opzet gelijk.
 - **Teksten** in `Welkom.jsx` (CTA + "Wat heb je nodig?"), `ApiSucces.jsx` (welkomstprompt + "Code opnieuw invoeren") en de module 0-beschrijving in `cursus.json` spreken nu over de toegangscode.
 - **`Module5.jsx`** — "Begin opnieuw" bewaart de toegangscode over de reset heen (de code is geen voortgang; zo hoeft de deelnemer hem niet opnieuw op te vragen).
@@ -65,7 +73,7 @@ De ombouw van deze sessie (zie "Ombouw naar de proxy" hieronder) raakt: `useAnth
     CLOUDFLARE_API_TOKEN=<zijn-cloudflare-token> npx wrangler secret put ANTHROPIC_API_KEY
     ```
     (plakt de Anthropic-sleutel als er om gevraagd wordt). Daarna pas kan de volledige doorschakeling naar Anthropic getest worden, bijvoorbeeld via `proxy/test.html`.
-- **KV-namespace:** `RATE_LIMIT_KV` (id `11bb2f5f3c7d406d959e6a8193c56602`), gebruikt voor de daglimiet van 60 aanroepen per toegangscode per dag (UTC-datum in de sleutel, TTL 2 dagen).
+- **KV-namespace:** `RATE_LIMIT_KV` (id `11bb2f5f3c7d406d959e6a8193c56602`), gebruikt voor de daglimiet van 200 aanroepen per toegangscode per dag (UTC-datum in de sleutel, TTL 2 dagen).
 - **Documentatie:** zie `proxy/README.md` voor de exacte request-/response-vorm, inclusief voorbeelden voor de flyer-aanroep (4000 tokens) en een gewone feedback-aanroep (800 tokens). Dat document is het uitgangspunt voor de volgende stap.
 
 ## Live & deployment
@@ -150,8 +158,8 @@ De ombouw van deze sessie (zie "Ombouw naar de proxy" hieronder) raakt: `useAnth
    ```
    Dit is de **enige** ontbrekende schakel; er hoeft verder niets gebouwd te worden.
 2. **End-to-end testen zodra de secret staat** (eigenaar, met zijn eigen toegangscode): module 0 doorlopen (code invoeren → welkomstbericht), de flyer in module 1 les 1, en minstens één feedback-opdracht (bv. module 1 les 4). Wat er zonder secret gebeurt: de code-validatie en alle schermen werken gewoon, maar een echte AI-aanroep geeft de generieke foutmelding (Anthropic-401 door de ontbrekende sleutel op de Worker).
-3. **Toegangscode uitdelen aan deelnemers** zodra alles getest is. De code staat als `TOEGANGSCODE`-secret op de Worker en is alleen bij de eigenaar bekend. Let op: de daglimiet (60 aanroepen/dag) geldt per code, dus gedeeld over iedereen die dezelfde code gebruikt. Bij grotere groepen is dat een aandachtspunt (limiet verhogen in `proxy/src/index.js` of meerdere codes ondersteunen; dat laatste vergt een Worker-aanpassing).
-4. **`.claude/skills/` en `context/Claude code skills/` staan nog untracked** (Saliegroen-designsysteem-skill, dubbel op twee plekken). Dit is Claude Code-tooling, geen cursusinhoud, en is bewust **niet** meegecommit. Opruimen of alsnog toevoegen is aan de eigenaar.
+3. **Toegangscode uitdelen aan deelnemers** zodra alles getest is. De code staat als `TOEGANGSCODE`-secret op de Worker en is alleen bij de eigenaar bekend. De daglimiet is op 2026-07-11 verhoogd naar 200 aanroepen per dag per code (gedeeld over iedereen met dezelfde code); een volledige cursusrun kost er ~9, dus dat dekt ruim 20 gelijktijdige deelnemers per dag.
+4. **`.claude/skills/` staat nog untracked** (Saliegroen-designsysteem-skill, Claude Code-tooling). Bewust niet meegecommit; de dubbele kopie in `context/Claude code skills/` is op 2026-07-11 verwijderd.
 
 ## Belangrijke aandachtspunten (algemeen)
 

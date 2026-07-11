@@ -53,7 +53,7 @@ grotendeels aanhouden:
 |---|---|---|
 | `400` | Ongeldige aanvraag (geen JSON, leeg bericht) | `{ "fout": "Bericht ontbreekt of is leeg." }` |
 | `401` | Toegangscode ontbreekt of klopt niet | `{ "fout": "Toegangscode klopt niet." }` |
-| `429` | Daglimiet van 60 aanroepen per toegangscode bereikt | `{ "fout": "Dagelijkse limiet bereikt, probeer morgen opnieuw." }` |
+| `429` | Daglimiet van 200 aanroepen per toegangscode bereikt | `{ "fout": "Dagelijkse limiet bereikt, probeer morgen opnieuw." }` |
 | `429` (van Anthropic zelf) | Anthropic's eigen rate limit | ruwe Anthropic-foutbody |
 | `401`/`403`/... (van Anthropic zelf) | bijvoorbeeld ongeldige `ANTHROPIC_API_KEY`-secret | ruwe Anthropic-foutbody |
 | `502` | Netwerkfout tussen Worker en Anthropic | `{ "fout": "Geen verbinding met Anthropic. Probeer opnieuw." }` |
@@ -100,7 +100,7 @@ worden dus door de browser geblokkeerd.
 ## Daglimiet
 
 Bijgehouden per toegangscode in de KV-namespace `RATE_LIMIT_KV`, sleutel
-`daglimiet:<toegangscode>:<YYYY-MM-DD>` (UTC-datum), maximaal 60 aanroepen
+`daglimiet:<toegangscode>:<YYYY-MM-DD>` (UTC-datum), maximaal 200 aanroepen
 per dag. De sleutel krijgt een TTL van 2 dagen mee zodat oude tellingen
 vanzelf verdwijnen. Dit is geen atomaire teller (Workers KV ondersteunt geen
 atomic increment zonder Durable Objects); bij losse, menselijke gebruikers is

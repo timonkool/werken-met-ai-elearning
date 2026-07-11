@@ -1,18 +1,36 @@
 import React, { useState } from 'react'
 
-// Standaard kennischeckpatroon: bij een juist antwoord groen vinkje + juiste optie
-// groen, bij een fout antwoord de gekozen optie gedempt oranje en het juiste antwoord
-// groen. Geen blokkade: de deelnemer ziet de correctie en kan direct door.
+// Kennischeck met herkansing: bij een fout antwoord kleurt alleen de gekozen
+// optie en mag de deelnemer opnieuw kiezen. Het juiste antwoord en de uitleg
+// verschijnen pas na een goede keuze of na een tweede fout antwoord. Zo moet
+// de deelnemer echt opnieuw nadenken in plaats van het antwoord te lezen.
+// Geen blokkade: na de onthulling kan hij altijd gewoon door.
 export default function Kennischeck({ check, onBeantwoord }) {
-  const [gekozen, setGekozen] = useState(null)
-  const beantwoord = gekozen !== null
-  const goedGekozen = gekozen === check.correct
+  const [foutGekozen, setFoutGekozen] = useState([])
+  const [klaar, setKlaar] = useState(false)
+  const [goedGekozen, setGoedGekozen] = useState(false)
 
   function kies(i) {
-    if (beantwoord) return
-    setGekozen(i)
-    if (onBeantwoord) onBeantwoord(i)
+    if (klaar || foutGekozen.includes(i)) return
+
+    if (i === check.correct) {
+      setGoedGekozen(true)
+      setKlaar(true)
+      if (onBeantwoord) onBeantwoord(i)
+      return
+    }
+
+    const nieuweFouten = [...foutGekozen, i]
+    setFoutGekozen(nieuweFouten)
+
+    // Na een tweede fout antwoord onthullen we het juiste antwoord alsnog
+    if (nieuweFouten.length >= 2) {
+      setKlaar(true)
+      if (onBeantwoord) onBeantwoord(i)
+    }
   }
+
+  const herkansing = !klaar && foutGekozen.length > 0
 
   return (
     <section className="kennischeck">
@@ -21,19 +39,17 @@ export default function Kennischeck({ check, onBeantwoord }) {
       <ul className="kennischeck-opties">
         {check.opties.map((optie, i) => {
           let klasse = 'kennischeck-optie'
-          if (beantwoord) {
-            if (i === check.correct) klasse += ' kennischeck-optie--correct'
-            else if (i === gekozen) klasse += ' kennischeck-optie--fout'
-          }
+          if (foutGekozen.includes(i)) klasse += ' kennischeck-optie--fout'
+          if (klaar && i === check.correct) klasse += ' kennischeck-optie--correct'
           return (
             <li key={i}>
               <button
                 className={klasse}
                 onClick={() => kies(i)}
-                disabled={beantwoord}
+                disabled={klaar || foutGekozen.includes(i)}
               >
                 <span className="kennischeck-optie-tekst">{optie}</span>
-                {beantwoord && i === check.correct && (
+                {klaar && i === check.correct && (
                   <span className="kennischeck-vink"><i className="ph-bold ph-check" aria-hidden="true" /></span>
                 )}
               </button>
@@ -42,10 +58,20 @@ export default function Kennischeck({ check, onBeantwoord }) {
         })}
       </ul>
 
-      {beantwoord && (
+      {herkansing && (
         <div className="kennischeck-uitleg">
           <p className="kennischeck-oordeel">
-            {goedGekozen ? 'Goed gekozen.' : 'Net niet, maar geen probleem. Je kunt gewoon door.'}
+            Dat is hem niet. Lees de vraag nog eens en probeer opnieuw.
+          </p>
+        </div>
+      )}
+
+      {klaar && (
+        <div className="kennischeck-uitleg">
+          <p className="kennischeck-oordeel">
+            {goedGekozen
+              ? (foutGekozen.length > 0 ? 'Goed gekozen, bij de tweede poging.' : 'Goed gekozen.')
+              : 'Net niet, maar geen probleem. Je kunt gewoon door.'}
           </p>
           <p>{check.uitleg_correct}</p>
         </div>

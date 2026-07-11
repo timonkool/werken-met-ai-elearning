@@ -160,7 +160,7 @@ Foutmeldingen verschijnen in een oranje blok in de UI. Nooit als browser `alert(
 
 ### Daglimiet (vervangt de oude kostenwaarschuwing)
 
-De proxy hanteert een daglimiet van 60 aanroepen per toegangscode per dag (UTC), bijgehouden in Cloudflare KV. De cursus zelf telt niets meer en toont geen kostenmelding; het oude mechanisme (`api_aanroepen_totaal`, `kostenwaarschuwing_getoond`) is verwijderd. Bij het bereiken van de limiet toont de cursus de 429-daglimiet-melding uit de tabel hierboven.
+De proxy hanteert een daglimiet van 200 aanroepen per toegangscode per dag (UTC), bijgehouden in Cloudflare KV. De cursus zelf telt niets meer en toont geen kostenmelding; het oude mechanisme (`api_aanroepen_totaal`, `kostenwaarschuwing_getoond`) is verwijderd. Bij het bereiken van de limiet toont de cursus de 429-daglimiet-melding uit de tabel hierboven.
 
 ### Leegte-validatie
 
@@ -192,7 +192,7 @@ Controleer altijd via `trim()` of een tekstinvoerveld niet leeg is voordat een A
   "id": "les-1-1",
   "titel": "...",
   "externe_tool_vereist": false,
-  "theorie": { "tekst": "...", "video_url": null, "video_beschrijving": "..." },
+  "theorie": { "tekst": "..." },
   "kennischeck": {
     "vraag": "...",
     "opties": ["...", "...", "...", "..."],
@@ -423,7 +423,7 @@ De oude keys `anthropic_api_key`, `api_aanroepen_totaal` en `kostenwaarschuwing_
 | `App.jsx` | Layout, actieve module bijhouden, voortgang laden uit localStorage |
 | `Navigatie.jsx` | Zijbalk met alle modules, voortgangsindicator, hamburger-menu op mobiel |
 | `ModuleWeergave.jsx` | Wrapper die de juiste module-component laadt op basis van actieve module |
-| `LesBlok.jsx` | Rendert een les: theorie, video-placeholder, kennischeck, opdracht, feedback |
+| `LesBlok.jsx` | Rendert een les: theorie, kennischeck, opdracht, feedback |
 | `useAnthropicApi.js` | Alle API-aanroep logica, foutafhandeling, budgetlimiet |
 | `useVoortgang.js` | Lezen en schrijven van voortgang in localStorage |
 

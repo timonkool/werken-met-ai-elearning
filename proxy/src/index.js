@@ -17,7 +17,7 @@ const MAX_TOKENS_LIMIET = 8000 // harde bovengrens, ongeacht wat de client vraag
 
 const DEFAULT_TEMPERATURE = 0.4
 
-const DAGLIMIET_PER_CODE = 60
+const DAGLIMIET_PER_CODE = 200
 const KV_TTL_SECONDEN = 60 * 60 * 24 * 2 // 2 dagen, ruim genoeg om de daglimiet-sleutel te laten verlopen
 
 // Domeinen die deze proxy mogen aanroepen. Voeg hier eventuele extra
