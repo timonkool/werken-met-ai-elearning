@@ -866,10 +866,12 @@ textarea:focus {
 }
 
 .api-succes-welkom-tekst {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 300;
-  font-size: 17px;
+  /* Bewust geen cursief: de AI gebruikt weleens emoji's en die
+     ogen scheef in een italic serif. */
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
   line-height: 1.7;
   color: var(--text);
   border-left: 3px solid var(--sage-deep);
@@ -2470,6 +2472,13 @@ textarea:focus {
 }
 
 /* Certificaat: naamveld */
+.m5-naam-toelichting {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 4px 0 12px;
+}
+
 .m5-naam-veld {
   width: 100%;
   height: 48px;

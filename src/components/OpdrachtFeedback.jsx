@@ -19,6 +19,8 @@ const AI_DISCLAIMER = 'Dit is feedback van een AI. Gebruik je eigen oordeel, AI 
 // - afrondLabel      label van de afrondknop (standaard 'Markeer als afgerond')
 // - onAfgerond       optionele extra actie bij afronden (bv. module voltooid markeren)
 // - renderNaFeedback optioneel (feedback) => JSX, getoond na de feedback en vóór de afrondknop
+// - valideerAfronding optioneel () => foutmelding of null. Blokkeert het afronden
+//                    zolang er een melding terugkomt (bv. een leeg vervolgvraag-veld)
 export default function OpdrachtFeedback({
   lesId,
   opdracht,
@@ -28,6 +30,7 @@ export default function OpdrachtFeedback({
   afrondLabel = 'Markeer als afgerond',
   onAfgerond,
   renderNaFeedback,
+  valideerAfronding,
 }) {
   const { getLesVoortgang, setLesVoortgang } = useVoortgang()
   const { stuurVerzoek, laden, fout } = useAnthropicApi()
@@ -38,6 +41,7 @@ export default function OpdrachtFeedback({
   const [heeftVerstuurd, setHeeftVerstuurd] = useState(false)
   const [voorbeeldOpen, setVoorbeeldOpen] = useState(false)
   const [inlineFout, setInlineFout] = useState(null)
+  const [afrondFout, setAfrondFout] = useState(null)
 
   async function verstuurAntwoord() {
     if (!antwoord.trim()) {
@@ -64,6 +68,14 @@ export default function OpdrachtFeedback({
   }
 
   function markeerAfgerond() {
+    if (valideerAfronding) {
+      const melding = valideerAfronding()
+      if (melding) {
+        setAfrondFout(melding)
+        return
+      }
+    }
+    setAfrondFout(null)
     setAfgerond(true)
     setLesVoortgang(lesId, { afgerond: true, antwoord })
     if (onAfgerond) onAfgerond()
@@ -137,6 +149,8 @@ export default function OpdrachtFeedback({
           )}
 
           {renderNaFeedback && renderNaFeedback(feedback)}
+
+          {afrondFout && <p className="lesblok-inline-fout">{afrondFout}</p>}
 
           <div className="feedbackblok-acties">
             <button className="secondary" onClick={pasAntwoordAan}>

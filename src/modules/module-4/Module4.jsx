@@ -180,13 +180,27 @@ function EigenTaakLes({ les, onAfgerond }) {
   )
   const [bewaard, setBewaard] = useState(false)
   const [afgerond, setAfgerond] = useState(false)
+  const [fout, setFout] = useState(null)
+
+  const LEEG_MELDING =
+    'Schrijf eerst je prompt op. Hij hoeft niet perfect te zijn, je kunt hem later altijd aanpassen.'
 
   function bewaar() {
+    if (!prompt.trim()) {
+      setFout(LEEG_MELDING)
+      return
+    }
+    setFout(null)
     localStorage.setItem(taak.opslag_key, prompt)
     setBewaard(true)
   }
 
   function afronden() {
+    if (!prompt.trim()) {
+      setFout(LEEG_MELDING)
+      return
+    }
+    setFout(null)
     localStorage.setItem(taak.opslag_key, prompt)
     setAfgerond(true)
     onAfgerond()
@@ -208,9 +222,15 @@ function EigenTaakLes({ les, onAfgerond }) {
         <textarea
           className="opdrachtblok-veld"
           value={prompt}
-          onChange={(e) => { setPrompt(e.target.value); setBewaard(false) }}
+          onChange={(e) => {
+            setPrompt(e.target.value)
+            setBewaard(false)
+            if (fout) setFout(null)
+          }}
           placeholder={taak.placeholder}
         />
+
+        {fout && <p className="lesblok-inline-fout">{fout}</p>}
 
         <div className="m4-eigen-taak-acties">
           {!bewaard ? (

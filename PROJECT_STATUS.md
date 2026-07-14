@@ -3,6 +3,18 @@
 > Overdracht voor de volgende Claude Code-sessie. Lees ook `CLAUDE.md` (werkinstructie) volledig.
 > Laatste update: 2026-07-11 (didactische review verwerkt; daarvoor: ombouw naar Cloudflare-proxy met toegangscode)
 
+## Testfeedback eigenaar (verwerkt, na de eerste volledige end-to-end test)
+
+De eigenaar heeft de cursus volledig doorlopen met werkende AI (secret staat op de Worker, alles werkt). Zijn vijf feedbackpunten zijn verwerkt en in de preview getest:
+
+- **Welkomstbericht niet meer cursief** (`.api-succes-welkom-tekst`): stond in Fraunces italic waardoor emoji's er scheef uitzagen; nu gewone sans, normaal, 15px.
+- **"Acht weken"-zin doet mee in les 1-3**: de zin over de behandeltermijn stond als "goed" gemarkeerd en viel daardoor buiten de beoordeling en uitleg. Nu `fout: true` met een eigen uitleg (half waar: de termijn klopt, de uitbetaling-in-één-keer niet). De les heeft nu **4** foute zinnen (was 3).
+- **Opdracht 4-3 als stappenplan**: de opdracht was een te grote stap in één alinea; nu een rustige intro plus vijf genummerde stappen (rendert via de bestaande `white-space: pre-line` van `.opdrachtblok-tekst`).
+- **Lege velden blokkeren overal, met motiverende meldingen**: `OpdrachtFeedback` heeft een nieuwe optionele prop `valideerAfronding` (() => melding of null) die het afronden blokkeert; gebruikt door module 1 les 4 (afsluitvraag). Daarnaast eigen validatie in de flyer-reflectie (module 1 les 1), de eigen taak (module 4 les 4, beide knoppen) en het actieplan (module 5, alle drie velden verplicht). Meldingen in de stijl "Eén zin is al genoeg." Bestaande leegte-validaties (verstuurknop, certificaatnaam, toegangscode) waren er al.
+- **Reclamebord-opmerking bij de certificaatnaam** (`certificaat.naam_toelichting` + `.m5-naam-toelichting`): knipoog naar de gouden regel uit module 2, letterlijke tekst van de eigenaar.
+
+Niet in de preview testbaar (vereisen een echte AI-aanroep, code onbekend bij de assistent): de lege-veld-blokkade van de flyer-reflectie en de afsluitvraag van module 1 les 4 zelf; die volgen exact hetzelfde geteste patroon.
+
 ## Afrondingsronde (verwerkt op 2026-07-11, na de technische review)
 
 - **Daglimiet verhoogd naar 200** aanroepen per toegangscode per dag (`DAGLIMIET_PER_CODE` in `proxy/src/index.js`, docs bijgewerkt). **Let op: de Worker moet hiervoor nog opnieuw gedeployed worden door de eigenaar** (`cd proxy` en `CLOUDFLARE_API_TOKEN=<token> npx wrangler deploy`); tot die tijd draait de oude limiet van 60 live.

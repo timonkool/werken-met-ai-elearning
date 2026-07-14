@@ -68,6 +68,7 @@ function FlyerLes({ les, onKlaar }) {
     () => localStorage.getItem(les.reflectie.opslag_key) || ''
   )
   const [reflectieKlaar, setReflectieKlaar] = useState(false)
+  const [reflectieFout, setReflectieFout] = useState(null)
   const [gekozenTaken, setGekozenTaken] = useState([])
   const [herkenningKlaar, setHerkenningKlaar] = useState(false)
 
@@ -94,6 +95,11 @@ function FlyerLes({ les, onKlaar }) {
   }
 
   function bewaarReflectie() {
+    if (!reflectie.trim()) {
+      setReflectieFout('Schrijf eerst kort op wat je opvalt. Eén zin is al genoeg.')
+      return
+    }
+    setReflectieFout(null)
     localStorage.setItem(les.reflectie.opslag_key, reflectie)
     setReflectieKlaar(true)
     onKlaar()
@@ -184,9 +190,13 @@ function FlyerLes({ les, onKlaar }) {
           <textarea
             className="opdrachtblok-veld"
             value={reflectie}
-            onChange={(e) => setReflectie(e.target.value)}
+            onChange={(e) => {
+              setReflectie(e.target.value)
+              if (reflectieFout) setReflectieFout(null)
+            }}
             placeholder="Schrijf hier kort wat je opvalt..."
           />
+          {reflectieFout && <p className="lesblok-inline-fout">{reflectieFout}</p>}
           {!reflectieKlaar ? (
             <button className="primary" onClick={bewaarReflectie}>{les.reflectie.knop}</button>
           ) : (
@@ -403,6 +413,11 @@ function EersteOpdrachtLes({ les, onAfgerond }) {
         afrondLabel={les.afsluitvraag.knop}
         onAfgerond={afronden}
         renderNaFeedback={afsluitvraagBlok}
+        valideerAfronding={() =>
+          eigenTaak.trim()
+            ? null
+            : 'Vul eerst in welke taak jij als eerste wilt proberen. Een paar woorden is genoeg.'
+        }
       />
     </section>
   )

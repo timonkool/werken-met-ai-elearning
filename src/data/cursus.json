@@ -148,7 +148,7 @@
               [
                 { "tekst": "De gemeente hanteert een inkomensgrens van 120 procent van de bijstandsnorm.", "fout": true, "uitleg": "Dit percentage varieert per gemeente. AI presenteert één getal alsof het universeel geldt." },
                 { "tekst": "Kosten die voor vergoeding in aanmerking komen zijn onder meer medische hulpmiddelen, schoolkosten voor kinderen en woonkosten bij calamiteiten.", "fout": false },
-                { "tekst": "Een aanvraag wordt binnen acht weken behandeld en de uitkering wordt in één keer uitbetaald.", "fout": false }
+                { "tekst": "Een aanvraag wordt binnen acht weken behandeld en de uitkering wordt in één keer uitbetaald.", "fout": true, "uitleg": "Half waar, en juist daardoor gevaarlijk. De beslistermijn van acht weken bestaat echt, maar bijzondere bijstand wordt lang niet altijd in één keer uitbetaald; dat kan ook periodiek gebeuren. AI plakt hier een echte regel en een aanname aan elkaar tot één stellige zin." }
               ],
               [
                 { "tekst": "Schulden bij woningcorporaties worden in principe niet vergoed, tenzij het gaat om een dreigende huisuitzetting waarbij het gezinsbelang in het geding is.", "fout": false },
@@ -500,7 +500,7 @@
             ]
           },
           "opdracht": {
-            "tekst": "Combineer het draaiboek van oefening 1 en de actielijst van oefening 2 met de statusupdate van Joost. Pak daarvoor het tabblad met je eerdere AI-gesprek er weer bij. Vraag AI om twee dingen: (1) het draaiboek bij te werken met de nieuwe informatie en (2) een korte informele update-mail naar het team te schrijven over de voortgang. Beide in één prompt, één resultaat. Gebruik het instructieblok. Plak je prompt en de eerste vijf regels van het resultaat terug.",
+            "tekst": "Dit is de grootste oefening van de cursus: je combineert alles wat je in oefening 1 en 2 hebt gemaakt met de nieuwe informatie van Joost. Neem er rustig de tijd voor en volg de stappen één voor één.\n\nStap 1. Open het tabblad met je AI-gesprek van oefening 1 en 2. Daar staan je draaiboek en je actielijst nog in.\n\nStap 2. Lees de update van Joost hierboven nog een keer. Let op wat er nieuw is: twee gemeentetafels, kinderactiviteiten in afwachting, en het schmink-idee.\n\nStap 3. Schrijf in datzelfde AI-gesprek één prompt waarin je AI twee dingen vraagt: werk het draaiboek bij met de nieuwe informatie van Joost, en schrijf daarnaast een korte informele update-mail aan het team over de voortgang.\n\nStap 4. Plak de update van Joost onder je prompt, zodat AI precies weet wat er veranderd is. Je draaiboek en actielijst staan al in het gesprek, die hoef je niet opnieuw te plakken.\n\nStap 5. Bekijk het resultaat. Kopieer daarna je prompt en de eerste vijf regels van het resultaat terug in het veld hieronder.",
             "beoordelingsinstructie": "Je beoordeelt of de prompt de statusupdate van Joost heeft gecombineerd met het eerdere draaiboek en de actielijst. Controleer ook of de deelnemer AI heeft gevraagd om twee dingen te leveren: een bijgewerkt draaiboek én een update-mail. Sluit af met een oprecht compliment voor het doorlopen van alle drie de oefeningen. Maximaal 120 woorden. Schrijf in het Nederlands.",
             "voorbeeld_antwoord": "Je bent een coördinator bij een wijkorganisatie. Gebruik het volgende draaiboek [plak draaiboek], de actielijst [plak actielijst] en de statusupdate van een collega [plak update Joost].\n\nLever twee dingen op:\n1. Een bijgewerkt draaiboek dat de nieuwe informatie verwerkt: twee gemeentetafels, activiteiten voor kinderen (status: wachten op bevestiging), en de mogelijkheid voor schminkactiviteiten (nog te bevestigen).\n2. Een korte, informele update-mail aan het team (maximaal 100 woorden) over de voortgang en wat er nog open staat.\n\nHoud het draaiboek maximaal twee pagina's A4. Toon voor de mail: collegiaal en praktisch."
           }
@@ -557,6 +557,7 @@
       "certificaat": {
         "titel": "Jouw certificaat",
         "naam_label": "Hoe moet jouw naam op het certificaat staan?",
+        "naam_toelichting": "Wil je dat dit certificaat op een reclamebord komt? Vul dan je naam in. Vul anders een bijnaam in en ontvang alsnog een mooi certificaat.",
         "naam_placeholder": "Bijvoorbeeld: Jan Klaassen",
         "voorvertoning_label": "Voorvertoning",
         "eyebrow": "Certificaat van voltooiing",

@@ -95,13 +95,21 @@ function Actieplan({ data, onVerder }) {
     return init
   })
   const [bewaard, setBewaard] = useState(Boolean(localStorage.getItem(data.opslag_key)))
+  const [fout, setFout] = useState(null)
 
   function wijzig(id, waarde) {
     setAntwoorden((huidig) => ({ ...huidig, [id]: waarde }))
     setBewaard(false)
+    if (fout) setFout(null)
   }
 
   function bewaar() {
+    const leeg = data.vragen.some((v) => !antwoorden[v.id].trim())
+    if (leeg) {
+      setFout('Vul eerst alle drie de vragen in. Eén zin per vraag is genoeg.')
+      return
+    }
+    setFout(null)
     localStorage.setItem(data.opslag_key, JSON.stringify(antwoorden))
     setBewaard(true)
   }
@@ -123,6 +131,8 @@ function Actieplan({ data, onVerder }) {
             />
           </div>
         ))}
+
+        {fout && <p className="lesblok-inline-fout">{fout}</p>}
 
         <button className="primary" onClick={bewaar}>{data.knop}</button>
 
@@ -169,6 +179,7 @@ function Certificaat({ data, openModules, onAfgerond }) {
 
       <div className="opdrachtblok">
         <label className="m5-actieplan-label" htmlFor="certificaat-naam">{data.naam_label}</label>
+        <p className="m5-naam-toelichting">{data.naam_toelichting}</p>
         <input
           id="certificaat-naam"
           className="m5-naam-veld"
